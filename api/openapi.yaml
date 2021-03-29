@@ -1,0 +1,1824 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: apis@croct.com
+    name: Croct
+    url: https://croct.com
+  license:
+    name: MIT
+    url: https://choosealicense.com/licenses/mit
+  title: Croct Export
+  version: 0.2.0
+servers:
+- description: Production endpoint
+  url: https://api.croct.io/export
+- description: Staging endpoint
+  url: https://api.test.croct.io/export
+- description: Local development endpoint
+  url: http://localhost:4000
+security:
+- ApiKeyAuth: []
+tags:
+- name: export
+paths:
+  /events:
+    get:
+      operationId: exportEvents
+      parameters:
+      - explode: true
+        in: query
+        name: start
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: end
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: events
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/EventType'
+          type: array
+        style: form
+      responses:
+        "2XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+          description: Success response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProblem'
+          description: Request error
+      tags:
+      - export
+      x-accepts: application/json
+  /session:
+    get:
+      operationId: exportSessions
+      parameters:
+      - explode: true
+        in: query
+        name: start
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: end
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "2XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+          description: Success response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProblem'
+          description: Request error
+      tags:
+      - export
+      x-accepts: application/json
+  /user:
+    get:
+      operationId: exportUsers
+      parameters:
+      - explode: true
+        in: query
+        name: start
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: end
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "2XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: Success response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiProblem'
+          description: Request error
+      tags:
+      - export
+      x-accepts: application/json
+components:
+  parameters:
+    WindowStart:
+      explode: true
+      in: query
+      name: start
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+    WindowEnd:
+      explode: true
+      in: query
+      name: end
+      required: false
+      schema:
+        format: int64
+        type: integer
+      style: form
+    PageSize:
+      explode: true
+      in: query
+      name: pageSize
+      required: false
+      schema:
+        format: int32
+        maximum: 1000
+        minimum: 1
+        type: integer
+      style: form
+    Cursor:
+      explode: true
+      in: query
+      name: cursor
+      required: false
+      schema:
+        type: string
+      style: form
+    EventFilter:
+      explode: true
+      in: query
+      name: events
+      required: false
+      schema:
+        items:
+          $ref: '#/components/schemas/EventType'
+        type: array
+      style: form
+  responses:
+    ApiProblem:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiProblem'
+      description: Request error
+    EventSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EventResponse'
+      description: Success response
+    SessionSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SessionResponse'
+      description: Success response
+    UserSuccess:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserResponse'
+      description: Success response
+  schemas:
+    ApiProblem:
+      additionalProperties: {}
+      properties:
+        title:
+          type: string
+        type:
+          format: url
+          type: string
+        details:
+          type: string
+      required:
+      - title
+      - type
+      type: object
+    Browser:
+      description: The available information about a browser.
+      example:
+        name: name
+        version: version
+      properties:
+        name:
+          description: The name of the browser, non-empty. For example, "Chrome".
+          nullable: true
+          type: string
+        version:
+          description: The version of the browser, non-empty. For example, "79.0.3945.130",
+            "11" or "160.1".
+          nullable: true
+          type: string
+        type:
+          $ref: '#/components/schemas/BrowserType'
+      required:
+      - name
+      - type
+      - version
+      type: object
+    BrowserType:
+      description: The type of the browser.
+      enum:
+      - WEB
+      - IN_APP
+      - CRAWLER
+      - OTHER
+      - UNKNOWN
+      type: string
+      x-enum-varnames:
+      - WEB
+      - IN_APP
+      - CRAWLER
+      - OTHER
+      - UNKNOWN
+    Campaign:
+      example:
+        name: name
+        term: term
+        source: source
+        medium: medium
+        content: content
+      properties:
+        name:
+          description: The product promotion or strategic campaign. For example, "super_promo".
+          nullable: true
+          type: string
+        source:
+          description: The advertiser that sent traffic to the application. For example,
+            "newsletter4".
+          nullable: true
+          type: string
+        medium:
+          description: The advertising or marketing medium. For example, "email".
+          nullable: true
+          type: string
+        content:
+          description: The specific content item related the campaign. For example,
+            "Buy now!".
+          nullable: true
+          type: string
+        term:
+          description: The search keywords. Foe example, "web personalization"
+          nullable: true
+          type: string
+      type: object
+    Cart:
+      description: A shopping cart in an online store.
+      properties:
+        currency:
+          description: The currency in which the monetary values are expressed in
+            the shopping cart. The currency should be specified using the 3-letter
+            currency codes defined by the ISO 4217 standard. For currencies having
+            no official recognition in ISO 4217, as is the case with cryptocurrencies,
+            it is allowed the use of non-ISO codes adopted locally or commercially.
+            For example, "BRL" for Brazilian real or "BTC" for Bitcoin.
+          type: string
+        items:
+          description: The list of items in the shopping cart.
+          items:
+            $ref: '#/components/schemas/CartItem'
+          type: array
+        subtotal:
+          description: The total of all items and quantities in the shopping cart
+            including applied item promotions. Applied order discounts, estimated
+            shipping, and applied shipping discounts should be excluded from the subtotal
+            amount.
+          format: double
+          nullable: true
+          type: number
+        shippingPrice:
+          description: The total shipping price for the items in the shopping cart,
+            including any handling charges.
+          format: double
+          nullable: true
+          type: number
+        taxes:
+          description: The taxes associated with the transaction.
+          nullable: true
+          type: object
+        costs:
+          description: The costs associated with the transaction, such as manufacturing
+            costs, shipping expenses not borne by the customer, or any other costs.
+          nullable: true
+          type: object
+        discount:
+          description: The amount of the discount applied to the shopping cart.
+          format: double
+          nullable: true
+          type: number
+        total:
+          description: The total revenue or grand total associated with the transaction.
+            It includes shipping, tax, and any other adjustment.
+          format: double
+          type: number
+        coupon:
+          description: The coupon applied to the shopping cart. For example, "SUPER_DEALS".
+          nullable: true
+          type: string
+        lastUpdateTime:
+          description: The timestamp when the shopping cart was last updated, in milliseconds
+            since epoch.
+          format: int64
+          type: integer
+      required:
+      - costs
+      - coupon
+      - currency
+      - discount
+      - items
+      - lastUpdateTime
+      - shippingPrice
+      - subtotal
+      - taxes
+      - total
+      type: object
+    CartItem:
+      description: An item in a shopping cart.
+      properties:
+        index:
+          description: The index, starting from zero, representing the order in which
+            the item was added to the shopping cart.
+          format: int32
+          type: integer
+        product:
+          $ref: '#/components/schemas/ProductDetails'
+        quantity:
+          description: The number of units of the item in the shopping cart.
+          format: int32
+          type: integer
+        total:
+          description: The total for the item. It includes discounts and any other
+            adjustment.
+          format: double
+          type: number
+        discount:
+          description: The amount of the discount applied to the item.
+          format: double
+          nullable: true
+          type: number
+        coupon:
+          description: The coupon applied to the item. For example, "SUPER_DEALS".
+          nullable: true
+          type: string
+      required:
+      - coupon
+      - discount
+      - index
+      - product
+      - quantity
+      - total
+      type: object
+    CartModified:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a shopping cart was modified.
+      properties:
+        cart:
+          $ref: '#/components/schemas/Cart'
+      required:
+      - cart
+      type: object
+    CartViewed:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a shopping cart was viewed.
+      properties:
+        cart:
+          $ref: '#/components/schemas/Cart'
+      required:
+      - cart
+      type: object
+    CheckoutStarted:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a shopping cart started the checkout process.
+      properties:
+        cart:
+          $ref: '#/components/schemas/Cart'
+        orderId:
+          description: The ID that uniquely identifies the order across the store.
+          format: uuid
+          nullable: true
+          type: string
+      required:
+      - cart
+      - orderId
+      type: object
+    ClientDetected:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that the user's client was detected.
+      properties:
+        client:
+          $ref: '#/components/schemas/WebClient'
+      required:
+      - client
+      type: object
+    Device:
+      description: The available information about a device.
+      example:
+        vendor: vendor
+        name: name
+        operatingSystem:
+          name: name
+          version: version
+      properties:
+        name:
+          description: The name of the device, non-empty. For example, "Mac", "iPhone"
+            or "Nexus 10".
+          nullable: true
+          type: string
+        vendor:
+          description: The vendor of the device, non-empty. For example, "Apple",
+            "Samsung" or "LG".
+          nullable: true
+          type: string
+        category:
+          $ref: '#/components/schemas/DeviceCategory'
+        operatingSystem:
+          $ref: '#/components/schemas/OperatingSystem'
+      required:
+      - category
+      - name
+      - operatingSystem
+      - vendor
+      type: object
+    DeviceCategory:
+      description: The category of the device.
+      enum:
+      - DESKTOP
+      - TABLET
+      - MOBILE
+      - BOT
+      - OTHER
+      - UNKNOWN
+      type: string
+      x-enum-varnames:
+      - DESKTOP
+      - TABLET
+      - MOBILE
+      - BOT
+      - OTHER
+      - UNKNOWN
+    Event:
+      example:
+        payload:
+          '@type': '@type'
+        context:
+          metadata:
+            key: metadata
+          type: web
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        timestamp: 0
+      properties:
+        sessionId:
+          description: The ID of the session assigned to the event.
+          format: uuid
+          type: string
+        userId:
+          description: The internal ID of the user who originated the event.
+          format: uuid
+          type: string
+        timestamp:
+          description: The timestamp when the event was tracked, in milliseconds since
+            epoch.
+          format: int64
+          type: integer
+        context:
+          $ref: '#/components/schemas/EventContext'
+        payload:
+          $ref: '#/components/schemas/EventPayload'
+      required:
+      - context
+      - payload
+      - sessionId
+      - timestamp
+      - userId
+      type: object
+    EventContext:
+      description: The context of the client when the event was tracked.
+      discriminator:
+        mapping:
+          web: '#/components/schemas/WebContext'
+        propertyName: type
+      example:
+        metadata:
+          key: metadata
+        type: web
+      nullable: true
+      properties:
+        type:
+          default: web
+          type: string
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - type
+      type: object
+    EventOccurred:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording a domain-specific occurrence.
+      properties:
+        name:
+          description: The name of the event. For example, "pollAnswered" or "onboardingStarted".
+          type: string
+        personalizationId:
+          description: The ID of the personalization associated with the event.
+          nullable: true
+          type: string
+        audience:
+          description: The name of the audience associated with the event.
+          nullable: true
+          type: string
+        testId:
+          description: The ID of the test associated with the event.
+          nullable: true
+          type: string
+        groupId:
+          description: The ID of the test group associated with the event, also known
+            as "variant".
+          nullable: true
+          type: string
+        details:
+          description: The details about the event.
+          nullable: false
+          type: object
+      required:
+      - audience
+      - details
+      - groupId
+      - name
+      - personalizationId
+      - testId
+      type: object
+    EventPayload:
+      description: The event details, specific to the type of event.
+      discriminator:
+        mapping:
+          userSignedUp: '#/components/schemas/UserSignedUp'
+          userSignedIn: '#/components/schemas/UserSignedIn'
+          userSignedOut: '#/components/schemas/UserSignedOut'
+          tabUrlChanged: '#/components/schemas/TabUrlChanged'
+          tabOpened: '#/components/schemas/TabOpened'
+          tabVisibilityChanged: '#/components/schemas/TabVisibilityChanged'
+          testGroupAssigned: '#/components/schemas/TestGroupAssigned'
+          eventOccurred: '#/components/schemas/EventOccurred'
+          locationDetected: '#/components/schemas/LocationDetected'
+          clientDetected: '#/components/schemas/ClientDetected'
+          goalCompleted: '#/components/schemas/GoalCompleted'
+          pageLoaded: '#/components/schemas/PageLoaded'
+          pageOpened: '#/components/schemas/PageOpened'
+          nothingChanged: '#/components/schemas/NothingChanged'
+          cartModified: '#/components/schemas/CartModified'
+          cartViewed: '#/components/schemas/CartViewed'
+          checkoutStarted: '#/components/schemas/CheckoutStarted'
+          orderPlaced: '#/components/schemas/OrderPlaced'
+          productViewed: '#/components/schemas/ProductViewed'
+        propertyName: '@type'
+      example:
+        '@type': '@type'
+      properties:
+        '@type':
+          type: string
+      required:
+      - '@type'
+      type: object
+    EventResponse:
+      example:
+        nextCursor: nextCursor
+        items:
+        - payload:
+            '@type': '@type'
+          context:
+            metadata:
+              key: metadata
+            type: web
+          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          timestamp: 0
+        - payload:
+            '@type': '@type'
+          context:
+            metadata:
+              key: metadata
+            type: web
+          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          timestamp: 0
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Event'
+          type: array
+        nextCursor:
+          type: string
+      required:
+      - items
+      - nextCursor
+      type: object
+    EventType:
+      enum:
+      - userSignedUp
+      - userSignedIn
+      - userSignedOut
+      - tabOpened
+      - tabUrlChanged
+      - tabVisibilityChanged
+      - locationDetected
+      - clientDetected
+      - pageOpened
+      - pageLoaded
+      - productViewed
+      - cartViewed
+      - cartModified
+      - checkoutStarted
+      - orderPlaced
+      - testGroupAssigned
+      - nothingChanged
+      - goalCompleted
+      - eventOccurred
+      type: string
+      x-enum-varnames:
+      - USER_SIGNED_UP
+      - USER_SIGNED_IN
+      - USER_SIGNED_OUT
+      - TAB_OPENED
+      - TAB_URL_CHANGED
+      - TAB_VISIBILITY_CHANGED
+      - LOCATION_DETECTED
+      - CLIENT_DETECTED
+      - PAGE_OPENED
+      - PAGE_LOADED
+      - PRODUCT_VIEWED
+      - CART_VIEWED
+      - CART_MODIFIED
+      - CHECKOUT_STARTED
+      - ORDER_PLACED
+      - TEST_GROUP_ASSIGNED
+      - NOTHING_CHANGED
+      - GOAL_COMPLETED
+      - EVENT_OCCURRED
+    GeoPoint:
+      description: A geographic location represented by a latitude and longitude coordinates
+        pair.
+      example:
+        latitude: 5.962133916683182
+        longitude: 5.637376656633329
+      nullable: true
+      properties:
+        latitude:
+          description: The latitude of the geo-point, may be either negative or positive.
+          format: double
+          type: number
+        longitude:
+          description: The longitude of the geo-point, may be either negative or positive.
+          format: double
+          type: number
+      required:
+      - latitude
+      - longitude
+      type: object
+    GoalCompleted:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording a completed activity, such as a purchase.
+      properties:
+        goalId:
+          description: The ID of the goal.
+          type: string
+        value:
+          description: The monetary value associated to the completion of the goal.
+            This can represent an estimated value or a symbolic value. For example,
+            if the sales team can close 10% of people who sign up for a newsletter,
+            and the average transaction is $500, then a possible value for newsletter
+            sign-ups can be $50 (i.e., 10% of $500).
+          nullable: true
+          type: string
+        currency:
+          description: The currency in which the monetary value is expressed. The
+            currency should be specified using the 3-letter currency codes defined
+            by the ISO 4217 standard. For currencies having no official recognition
+            in ISO 4217, as is the case with cryptocurrencies, it is allowed the use
+            of non-ISO codes adopted locally or commercially. For example, "BRL" for
+            Brazilian real or "BTC" for Bitcoin.
+          nullable: true
+          type: string
+      required:
+      - currency
+      - goalId
+      - value
+      type: object
+    Location:
+      description: An identification or estimation of a geographic location of an
+        object.
+      example:
+        country: country
+        city: city
+        timezone: timezone
+        district: district
+        coordinates:
+          latitude: 5.962133916683182
+          longitude: 5.637376656633329
+        region:
+          code: code
+          name: name
+      properties:
+        continent:
+          $ref: '#/components/schemas/LocationContinent'
+        country:
+          description: The highest administrative division, also known as a nation.
+            The value is a two-letter country code, as defined in ISO 3166. For example,
+            US for United States, BR for Brazil and DE for Germany.
+          nullable: true
+          type: string
+        region:
+          $ref: '#/components/schemas/Region'
+        city:
+          description: The name of the incorporated city or town political entity.
+            For example, "Sao Paulo".
+          nullable: true
+          type: string
+        district:
+          description: An administrative division smaller than a city and larger than
+            a neighborhood. For example, the district of Manhattan in New York.
+          nullable: true
+          type: string
+        timezone:
+          description: The time-zone ID as defined in IANA Time Zone Database. For
+            example, "America/New_York".
+          nullable: true
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        source:
+          $ref: '#/components/schemas/LocationSource'
+      required:
+      - city
+      - continent
+      - coordinates
+      - country
+      - district
+      - region
+      - source
+      - timezone
+      type: object
+    LocationContinent:
+      description: The continent of the location.
+      enum:
+      - AF
+      - AN
+      - AS
+      - EU
+      - NA
+      - OC
+      - SA
+      nullable: true
+      type: string
+      x-enum-varnames:
+      - AF
+      - AN
+      - AS
+      - EU
+      - NA
+      - OC
+      - SA
+    LocationDetected:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that the location of a user was detected.
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+      required:
+      - location
+      type: object
+    LocationSource:
+      description: The source of information used to determine the location.
+      enum:
+      - UNKNOWN
+      - IP
+      - INPUT
+      - BROWSER
+      - GPS
+      nullable: true
+      type: string
+      x-enum-varnames:
+      - UNKNOWN
+      - IP
+      - INPUT
+      - BROWSER
+      - GPS
+    NothingChanged:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording a period of inactivity.
+      properties:
+        sinceTime:
+          description: The timestamp when an activity was last observed, in milliseconds
+            since epoch.
+          format: int64
+          type: integer
+      required:
+      - sinceTime
+      type: object
+    OperatingSystem:
+      description: The available information about an operating system.
+      example:
+        name: name
+        version: version
+      properties:
+        name:
+          description: The name of the operating system, non-empty. For example, "macOS",
+            "iOS" or "Android".
+          nullable: true
+          type: string
+        version:
+          description: The version of operating system, non-empty. For example, "10.15.1",
+            "NT 5.1" or "8.4".
+          nullable: true
+          type: string
+      required:
+      - name
+      - version
+      type: object
+    Order:
+      description: An order placed in an online store.
+      properties:
+        orderId:
+          description: The ID that uniquely identifies the order across the store.
+          format: uuid
+          type: string
+        currency:
+          description: The currency in which the monetary values are expressed in
+            the order. The currency should be specified using the 3-letter currency
+            codes defined by the ISO 4217 standard. For currencies having no official
+            recognition in ISO 4217, as is the case with cryptocurrencies, it is allowed
+            the use of non-ISO codes adopted locally or commercially. For example,
+            "BRL" for Brazilian real or "BTC" for Bitcoin.
+          type: string
+        items:
+          description: The list of items in the order.
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          type: array
+        subtotal:
+          description: The total of all items and quantities in the order including
+            applied item promotions. Applied order discounts, estimated shipping,
+            and applied shipping discounts should be excluded from the subtotal amount.
+          format: double
+          nullable: true
+          type: number
+        shippingPrice:
+          description: The total shipping price for the order, including any handling
+            charges.
+          format: double
+          nullable: true
+          type: number
+        taxes:
+          description: The taxes associated with the transaction.
+          nullable: true
+          type: object
+        costs:
+          description: The costs associated with the transaction, such as manufacturing
+            costs, shipping expenses not borne by the customer, or any other costs.
+          nullable: true
+          type: object
+        discount:
+          description: The amount of the discount applied to the order.
+          format: double
+          nullable: true
+          type: number
+        total:
+          description: The total revenue or grand total associated with the transaction.
+            It includes shipping, tax, and any other adjustment.
+          format: double
+          type: number
+        coupon:
+          description: The coupon applied to the order. For example, "SUPER_DEALS".
+          nullable: true
+          type: string
+        paymentMethod:
+          description: The payment method used in the payment. For example, "Credit
+            Card", "Paypal" or "Wallet".
+          nullable: true
+          type: string
+        installments:
+          description: The number of installments of the transaction, non-negative.
+          format: int32
+          nullable: true
+          type: integer
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+      required:
+      - costs
+      - coupon
+      - currency
+      - discount
+      - installments
+      - items
+      - orderId
+      - paymentMethod
+      - shippingPrice
+      - status
+      - subtotal
+      - taxes
+      - total
+      type: object
+    OrderItem:
+      description: An item of an order.
+      properties:
+        index:
+          description: The index, starting from zero, representing the order in which
+            the item was added to the shopping cart.
+          format: int32
+          type: integer
+        product:
+          $ref: '#/components/schemas/ProductDetails'
+        quantity:
+          description: The number of units of the item ordered.
+          format: int32
+          type: integer
+        total:
+          description: The total for the item. It includes discounts and any other
+            adjustment.
+          format: double
+          type: number
+        discount:
+          description: The amount of the discount applied to the item.
+          format: double
+          nullable: true
+          type: number
+        coupon:
+          description: The coupon applied to the item. For example, "SUPER_DEALS".
+          nullable: true
+          type: string
+      required:
+      - coupon
+      - discount
+      - index
+      - product
+      - quantity
+      - total
+      type: object
+    OrderPlaced:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that an order was placed.
+      properties:
+        order:
+          $ref: '#/components/schemas/Order'
+      required:
+      - order
+      type: object
+    OrderStatus:
+      description: The current status of the order.
+      enum:
+      - PLACED
+      - PAID
+      - COMPLETED
+      nullable: true
+      type: string
+      x-enum-varnames:
+      - PLACED
+      - PAID
+      - COMPLETED
+    PageLoaded:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a page was loaded.
+      properties:
+        url:
+          description: The URL of the page.
+          format: uri
+          pattern: ^https?://
+          type: string
+        title:
+          description: The title of the page.
+          type: string
+        lastModifiedTime:
+          description: The last time the page was modified.
+          format: int64
+          type: integer
+      required:
+      - lastModifiedTime
+      - title
+      - url
+      type: object
+    PageOpened:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a page was opened.
+      properties:
+        url:
+          description: The URL of the page.
+          format: uri
+          pattern: ^https?://
+          type: string
+        userAgent:
+          description: The user-agent of the client.
+          nullable: true
+          type: string
+        preferredLanguages:
+          description: An ordered list of the user's preferred languages.
+          nullable: true
+          type: string
+        referrer:
+          description: The URI of the page that linked to the page that was opened.
+            The value is null when the user navigated to the page directly (not through
+            a link, but by using a bookmark, for example).
+          format: uri
+          nullable: true
+          type: string
+      required:
+      - preferredLanguages
+      - referrer
+      - url
+      - userAgent
+      type: object
+    ProductDetails:
+      description: The detailed information of a product.
+      properties:
+        productId:
+          description: The ID that uniquely identifies the product across the store,
+            non-empty. For example, "3108" or "yO7q4r".
+          type: string
+        sku:
+          description: The code that uniquely identifies the product variant across
+            the store, non-empty. For example, "IPH-GRE-64".
+          nullable: true
+          type: string
+        name:
+          description: The name of the product, non-empty. For example "iPhone".
+          type: string
+        category:
+          description: The category of the product, non-empty. For example, "Phone".
+          nullable: true
+          type: string
+        brand:
+          description: The brand associated with the product. For example, "Apple".
+          nullable: true
+          type: string
+        variant:
+          description: The variant of the product, such as size, color and style.
+            For example, "64GB Green".
+          nullable: true
+          type: string
+        displayPrice:
+          description: The price of the product displayed in the store. For example,
+            59.90.
+          format: double
+          type: number
+        originalPrice:
+          description: The original price of the product. For example, 99.90.
+          format: double
+          nullable: true
+          type: number
+        url:
+          description: The URL of the product page. For example, "https://apple.com/iphone".
+          nullable: true
+          type: string
+        imageUrl:
+          description: The URL of the main product image. For example, "https://img.apple.com/iphone.png".
+          nullable: true
+          type: string
+      required:
+      - brand
+      - category
+      - displayPrice
+      - imageUrl
+      - name
+      - originalPrice
+      - productId
+      - sku
+      - url
+      - variant
+      type: object
+    ProductViewed:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a shopping cart was modified.
+      properties:
+        product:
+          $ref: '#/components/schemas/ProductDetails'
+      required:
+      - product
+      type: object
+    Region:
+      description: A subsection of a country, typically a state or province.
+      example:
+        code: code
+        name: name
+      properties:
+        name:
+          description: The subdivision name, non-empty. For example, "Sao Paulo".
+          nullable: true
+          type: string
+        code:
+          description: The 2-letter code as defined by the ISO 3166-2 standard. For
+            example, "SP".
+          nullable: true
+          type: string
+      required:
+      - code
+      - name
+      type: object
+    Session:
+      example:
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        referrer: referrer
+        isAnonymous: true
+        closeTime: 1
+        campaign:
+          name: name
+          term: term
+          source: source
+          medium: medium
+          content: content
+        client:
+          browser:
+            name: name
+            version: version
+          device:
+            vendor: vendor
+            name: name
+            operatingSystem:
+              name: name
+              version: version
+        location:
+          country: country
+          city: city
+          timezone: timezone
+          district: district
+          coordinates:
+            latitude: 5.962133916683182
+            longitude: 5.637376656633329
+          region:
+            code: code
+            name: name
+        attributes:
+          key: ""
+        window:
+          start: 0
+          end: 6
+        landingPageUrl: landingPageUrl
+        statistics:
+          pageViews: 2
+          tabViews: 7
+          orders: 9
+      properties:
+        sessionId:
+          description: The ID that uniquely identifies the session across the application.
+          format: uuid
+          type: string
+        userId:
+          description: The ID that uniquely identifies the user across the cluster.
+          format: uuid
+          type: string
+        parentId:
+          description: The ID of the session that superseded this session. Usually,
+            a session receives a parent ID when a user is identified, causing the
+            current anonymous session to end and a new identified session to begin.
+            In this case, the ID of the new session is assigned as the parent ID of
+            the anonymous session.
+          format: uuid
+          nullable: true
+          type: string
+        isAnonymous:
+          description: The flag that indicates whether the user is anonymous.
+          type: boolean
+        window:
+          $ref: '#/components/schemas/Session_window'
+        closeTime:
+          description: The time from which the session is closed for new events, but
+            still may accept late-arriving events. The close time may be extended
+            if new events arrive before the session is closed.
+          format: int64
+          type: integer
+        referrer:
+          description: The URI of the content that linked to the page that started
+            the session.
+          nullable: true
+          type: string
+        landingPageUrl:
+          description: The page that started the session.
+          nullable: true
+          type: string
+        campaign:
+          $ref: '#/components/schemas/Campaign'
+        location:
+          $ref: '#/components/schemas/Location'
+        client:
+          $ref: '#/components/schemas/WebClient'
+        attributes:
+          additionalProperties:
+            nullable: true
+          description: The custom attributes.
+          type: object
+        statistics:
+          $ref: '#/components/schemas/Session_statistics'
+      required:
+      - organizationId
+      type: object
+    SessionResponse:
+      example:
+        nextCursor: nextCursor
+        items:
+        - sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          referrer: referrer
+          isAnonymous: true
+          closeTime: 1
+          campaign:
+            name: name
+            term: term
+            source: source
+            medium: medium
+            content: content
+          client:
+            browser:
+              name: name
+              version: version
+            device:
+              vendor: vendor
+              name: name
+              operatingSystem:
+                name: name
+                version: version
+          location:
+            country: country
+            city: city
+            timezone: timezone
+            district: district
+            coordinates:
+              latitude: 5.962133916683182
+              longitude: 5.637376656633329
+            region:
+              code: code
+              name: name
+          attributes:
+            key: ""
+          window:
+            start: 0
+            end: 6
+          landingPageUrl: landingPageUrl
+          statistics:
+            pageViews: 2
+            tabViews: 7
+            orders: 9
+        - sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          referrer: referrer
+          isAnonymous: true
+          closeTime: 1
+          campaign:
+            name: name
+            term: term
+            source: source
+            medium: medium
+            content: content
+          client:
+            browser:
+              name: name
+              version: version
+            device:
+              vendor: vendor
+              name: name
+              operatingSystem:
+                name: name
+                version: version
+          location:
+            country: country
+            city: city
+            timezone: timezone
+            district: district
+            coordinates:
+              latitude: 5.962133916683182
+              longitude: 5.637376656633329
+            region:
+              code: code
+              name: name
+          attributes:
+            key: ""
+          window:
+            start: 0
+            end: 6
+          landingPageUrl: landingPageUrl
+          statistics:
+            pageViews: 2
+            tabViews: 7
+            orders: 9
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Session'
+          type: array
+        nextCursor:
+          type: string
+      required:
+      - items
+      - nextCursor
+      type: object
+    TabOpened:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a new tab was opened.
+      properties:
+        tabId:
+          description: The ID that uniquely identifies the tab across the session.
+          format: uuid
+          type: string
+      required:
+      - tabId
+      type: object
+    TabUrlChanged:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that the URL of a tab has changed.
+      properties:
+        tabId:
+          description: The ID that uniquely identifies the tab across the session.
+          format: uuid
+          type: string
+        url:
+          description: The URL the page that the tab was on.
+          format: uri
+          pattern: ^https?://
+          type: string
+      required:
+      - tabId
+      - url
+      type: object
+    TabVisibility:
+      description: The visibility of the tab.
+      enum:
+      - VISIBLE
+      - HIDDEN
+      type: string
+      x-enum-varnames:
+      - VISIBLE
+      - HIDDLE
+    TabVisibilityChanged:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that the visibility of a tab has changed.
+      properties:
+        tabId:
+          description: The ID that uniquely identifies the tab across the session.
+          format: uuid
+          type: string
+        visibility:
+          $ref: '#/components/schemas/TabVisibility'
+      required:
+      - tabId
+      - visibility
+      type: object
+    TestGroupAssigned:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a test group was assigned to a user.
+      properties:
+        testId:
+          description: The ID of the test. For example, "black-friday-banner" or "home-banner-cta".
+          type: string
+        groupId:
+          description: The ID of the test group, also known as "variant". For example,
+            "black-friday-promo" or "black-friday-shipping".
+          type: string
+      required:
+      - groupId
+      - testId
+      type: object
+    User:
+      example:
+        lastName: lastName
+        alternateEmail: alternateEmail
+        address:
+          country: country
+          city: city
+          street: street
+          district: district
+          postalCode: postalCode
+          region: region
+        lastModifiedTime: 6
+        gender: gender
+        jobTitle: jobTitle
+        alternatePhone: alternatePhone
+        avatar: avatar
+        companyUrl: companyUrl
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        birthDate: 0
+        firstName: firstName
+        externalUserId: externalUserId
+        phone: phone
+        activities: activities
+        company: company
+        interests: interests
+        email: email
+        customAttributes:
+          key: ""
+        statistics:
+          sessions: 5
+          orders: 1
+      properties:
+        userId:
+          description: The internal ID assigned to the user, unique across the cluster.
+          format: uuid
+          type: string
+        externalUserId:
+          description: The external user ID that is used to identify the user on the
+            application side, unique across the cluster. It is always null for anonymous
+            users.
+          nullable: true
+          type: string
+        firstName:
+          description: The first name attribute.
+          nullable: true
+          type: string
+        lastName:
+          description: The last name attribute.
+          nullable: true
+          type: string
+        birthDate:
+          description: The birth date attribute.
+          format: int64
+          nullable: true
+          type: integer
+        gender:
+          description: The gender attribute.
+          nullable: true
+          type: string
+        email:
+          description: The email attribute.
+          nullable: true
+          type: string
+        alternateEmail:
+          description: The alternate email attribute.
+          nullable: true
+          type: string
+        phone:
+          description: The phone attribute.
+          nullable: true
+          type: string
+        alternatePhone:
+          description: The alternate phone attribute.
+          nullable: true
+          type: string
+        address:
+          $ref: '#/components/schemas/User_address'
+        avatar:
+          description: The avatar attribute.
+          nullable: true
+          type: string
+        company:
+          description: The company attribute.
+          nullable: true
+          type: string
+        companyUrl:
+          description: The company URL attribute.
+          nullable: true
+          type: string
+        jobTitle:
+          description: The job title attribute.
+          nullable: true
+          type: string
+        activities:
+          description: The activities attribute.
+          nullable: true
+          type: string
+        interests:
+          description: The interests attribute.
+          nullable: true
+          type: string
+        customAttributes:
+          additionalProperties: {}
+          description: The custom attributes.
+          type: object
+        lastModifiedTime:
+          description: The timestamp when the user was last modified, in milliseconds
+            since epoch. It is not updated on sync.
+          format: int64
+          type: integer
+        statistics:
+          $ref: '#/components/schemas/User_statistics'
+      type: object
+    UserResponse:
+      example:
+        nextCursor: nextCursor
+        items:
+        - lastName: lastName
+          alternateEmail: alternateEmail
+          address:
+            country: country
+            city: city
+            street: street
+            district: district
+            postalCode: postalCode
+            region: region
+          lastModifiedTime: 6
+          gender: gender
+          jobTitle: jobTitle
+          alternatePhone: alternatePhone
+          avatar: avatar
+          companyUrl: companyUrl
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          birthDate: 0
+          firstName: firstName
+          externalUserId: externalUserId
+          phone: phone
+          activities: activities
+          company: company
+          interests: interests
+          email: email
+          customAttributes:
+            key: ""
+          statistics:
+            sessions: 5
+            orders: 1
+        - lastName: lastName
+          alternateEmail: alternateEmail
+          address:
+            country: country
+            city: city
+            street: street
+            district: district
+            postalCode: postalCode
+            region: region
+          lastModifiedTime: 6
+          gender: gender
+          jobTitle: jobTitle
+          alternatePhone: alternatePhone
+          avatar: avatar
+          companyUrl: companyUrl
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          birthDate: 0
+          firstName: firstName
+          externalUserId: externalUserId
+          phone: phone
+          activities: activities
+          company: company
+          interests: interests
+          email: email
+          customAttributes:
+            key: ""
+          statistics:
+            sessions: 5
+            orders: 1
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+        nextCursor:
+          type: string
+      required:
+      - items
+      - nextCursor
+      type: object
+    UserSignedIn:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a user has signed in.
+      properties:
+        externalUserId:
+          description: The external ID of the user.
+          type: string
+      required:
+      - externalUserId
+      type: object
+    UserSignedOut:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a user has signed out.
+      properties:
+        externalUserId:
+          description: The external ID of the user.
+          type: string
+      required:
+      - externalUserId
+      type: object
+    UserSignedUp:
+      allOf:
+      - $ref: '#/components/schemas/EventPayload'
+      description: An event recording that a user has signed up.
+      properties:
+        externalUserId:
+          description: The external ID of the user.
+          type: string
+      required:
+      - externalUserId
+      type: object
+    WebClient:
+      description: The available information about a web client.
+      example:
+        browser:
+          name: name
+          version: version
+        device:
+          vendor: vendor
+          name: name
+          operatingSystem:
+            name: name
+            version: version
+      properties:
+        browser:
+          $ref: '#/components/schemas/Browser'
+        device:
+          $ref: '#/components/schemas/Device'
+      required:
+      - browser
+      - device
+      type: object
+    WebContext:
+      allOf:
+      - $ref: '#/components/schemas/EventContext'
+      description: The context of the web client at the time the event was tracked.
+      properties:
+        tabId:
+          description: The ID that uniquely identifies the tab across the session.
+          format: uuid
+          type: string
+        url:
+          description: The URL of the page that the client was on.
+          format: uri
+          pattern: ^https?://
+          type: string
+      required:
+      - tabId
+      - url
+      type: object
+    Session_window:
+      description: The time window covering the first and last event of the session.
+      example:
+        start: 0
+        end: 6
+      properties:
+        start:
+          format: int64
+          type: integer
+        end:
+          format: int64
+          type: integer
+      type: object
+    Session_statistics:
+      description: The aggregated statistics of the session.
+      example:
+        pageViews: 2
+        tabViews: 7
+        orders: 9
+      properties:
+        pageViews:
+          description: The total number of page views.
+          format: int32
+          type: integer
+        tabViews:
+          description: The total number of tab views.
+          format: int32
+          type: integer
+        orders:
+          description: The total number of orders placed.
+          format: int32
+          type: integer
+      type: object
+    User_address:
+      description: The address attribute.
+      example:
+        country: country
+        city: city
+        street: street
+        district: district
+        postalCode: postalCode
+        region: region
+      properties:
+        street:
+          nullable: true
+          type: string
+        district:
+          nullable: true
+          type: string
+        city:
+          nullable: true
+          type: string
+        region:
+          nullable: true
+          type: string
+        country:
+          nullable: true
+          type: string
+        postalCode:
+          nullable: true
+          type: string
+      type: object
+    User_statistics:
+      description: The aggregated statistics of the user.
+      example:
+        sessions: 5
+        orders: 1
+      properties:
+        orders:
+          description: The total number of orders placed across all applications in
+            a cluster.
+          format: int32
+          type: integer
+        sessions:
+          description: The total number of sessions across all applications in a cluster.
+          format: int32
+          type: integer
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: X-Api-Key
+      type: apiKey
+

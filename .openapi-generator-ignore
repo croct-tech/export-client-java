@@ -1,0 +1,11 @@
+# Swagger Codegen Ignore
+/docs/
+/src/main/AndroidManifest.xml
+/src/test/
+/.travis.yml
+/build.sbt
+/gradle/
+*gradle*
+
+.gitignore
+README.md
