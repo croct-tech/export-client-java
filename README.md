@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-    <a href="https://img.shields.io/maven-central/v/com.croct.client/croct-export-client"><img alt="Validations" src="https://img.shields.io/maven-central/v/com.croct.client/croct-export-client"/></a>
-    <a href="https://github.com/croct-tech/export-client-java/actions/workflows/branch-validations.yaml"><img alt="Version" src="https://github.com/croct-tech/export-client-java/actions/workflows/branch-validations.yaml/badge.svg"/></a>
+    <a href="https://search.maven.org/artifact/com.croct.client/croct-export-client"><img alt="Version" src="https://img.shields.io/maven-central/v/com.croct.client/croct-export-client"/></a>
+    <a href="https://github.com/croct-tech/export-client-java/actions/workflows/branch-validations.yaml"><img alt="Validations" src="https://github.com/croct-tech/export-client-java/actions/workflows/branch-validations.yaml/badge.svg"/></a>
     <br />
     <br />
     <a href="https://github.com/croct-tech/exporter-client-java/releases">📦 Releases</a>
