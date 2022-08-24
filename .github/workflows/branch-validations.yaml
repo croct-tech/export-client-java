@@ -17,7 +17,7 @@ env:
 
 jobs:
   validate:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -36,7 +36,7 @@ jobs:
         run: mvn -s .github/maven_settings.xml validate
 
   security-checks:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
