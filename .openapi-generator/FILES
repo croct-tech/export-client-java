@@ -1,3 +1,4 @@
+.github/workflows/maven.yml
 api/openapi.yaml
 git_push.sh
 pom.xml
@@ -35,6 +36,7 @@ src/main/java/com/croct/client/export/model/EventContext.java
 src/main/java/com/croct/client/export/model/EventOccurred.java
 src/main/java/com/croct/client/export/model/EventPayload.java
 src/main/java/com/croct/client/export/model/EventResponse.java
+src/main/java/com/croct/client/export/model/EventResponseMetadata.java
 src/main/java/com/croct/client/export/model/EventType.java
 src/main/java/com/croct/client/export/model/GeoPoint.java
 src/main/java/com/croct/client/export/model/GoalCompleted.java
@@ -57,6 +59,10 @@ src/main/java/com/croct/client/export/model/Session.java
 src/main/java/com/croct/client/export/model/SessionResponse.java
 src/main/java/com/croct/client/export/model/SessionStatistics.java
 src/main/java/com/croct/client/export/model/SessionWindow.java
+src/main/java/com/croct/client/export/model/SlotPersonalized.java
+src/main/java/com/croct/client/export/model/SlotPersonalizedMetadata.java
+src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalization.java
+src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalizationAssignedVariant.java
 src/main/java/com/croct/client/export/model/TabOpened.java
 src/main/java/com/croct/client/export/model/TabUrlChanged.java
 src/main/java/com/croct/client/export/model/TabVisibility.java

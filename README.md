@@ -44,7 +44,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.croct.client</groupId>
   <artifactId>croct-export-client</artifactId>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -59,7 +59,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.croct.client:croct-export-client:0.2.0"
+    compile "com.croct.client:croct-export-client:0.3.0"
 }
 ```
 
@@ -388,6 +388,7 @@ The list possible event types are:
 | `nothingChanged`       | 1.0.0         |
 | `goalCompleted`        | 1.0.0         |
 | `eventOccurred`        | 1.0.0         |
+| `slotPersonalized`     | 1.1.0         |
 
 #### Code Sample
 
