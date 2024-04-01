@@ -14,7 +14,6 @@
 package com.croct.client.export.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.SlotPersonalizedMetadata;
@@ -24,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
 
@@ -36,7 +36,7 @@ import com.croct.client.export.JSON;
   SlotPersonalized.JSON_PROPERTY_PERSONALIZATION,
   SlotPersonalized.JSON_PROPERTY_METADATA
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
 public class SlotPersonalized {
   public static final String JSON_PROPERTY_AT_TYPE = "@type";
   private String atType;

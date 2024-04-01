@@ -82,7 +82,8 @@ paths:
           description: Request error
       tags:
       - export
-      x-accepts: application/json
+      x-accepts:
+      - application/json
   /session:
     get:
       operationId: exportSessions
@@ -135,7 +136,8 @@ paths:
           description: Request error
       tags:
       - export
-      x-accepts: application/json
+      x-accepts:
+      - application/json
   /user:
     get:
       operationId: exportUsers
@@ -188,7 +190,8 @@ paths:
           description: Request error
       tags:
       - export
-      x-accepts: application/json
+      x-accepts:
+      - application/json
 components:
   parameters:
     WindowStart:
@@ -266,6 +269,10 @@ components:
   schemas:
     ApiProblem:
       additionalProperties: {}
+      example:
+        details: details
+        title: title
+        type: http://example.com/aeiou
       properties:
         title:
           type: string

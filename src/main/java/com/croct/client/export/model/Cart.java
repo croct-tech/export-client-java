@@ -14,7 +14,6 @@
 package com.croct.client.export.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.CartItem;
@@ -24,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
@@ -44,7 +44,7 @@ import com.croct.client.export.JSON;
   Cart.JSON_PROPERTY_COUPON,
   Cart.JSON_PROPERTY_LAST_UPDATE_TIME
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
 public class Cart {
   public static final String JSON_PROPERTY_CURRENCY = "currency";
   private String currency;
@@ -110,6 +110,9 @@ public class Cart {
   }
 
   public Cart addItemsItem(CartItem itemsItem) {
+    if (this.items == null) {
+      this.items = new ArrayList<>();
+    }
     this.items.add(itemsItem);
     return this;
   }

@@ -14,7 +14,6 @@
 package com.croct.client.export.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.OrderItem;
@@ -25,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -49,7 +49,7 @@ import com.croct.client.export.JSON;
   Order.JSON_PROPERTY_INSTALLMENTS,
   Order.JSON_PROPERTY_STATUS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
 public class Order {
   public static final String JSON_PROPERTY_ORDER_ID = "orderId";
   private UUID orderId;
@@ -149,6 +149,9 @@ public class Order {
   }
 
   public Order addItemsItem(OrderItem itemsItem) {
+    if (this.items == null) {
+      this.items = new ArrayList<>();
+    }
     this.items.add(itemsItem);
     return this;
   }

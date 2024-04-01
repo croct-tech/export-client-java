@@ -14,7 +14,6 @@
 package com.croct.client.export.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.Campaign;
@@ -27,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -56,7 +56,7 @@ import com.croct.client.export.JSON;
   Session.JSON_PROPERTY_ATTRIBUTES,
   Session.JSON_PROPERTY_STATISTICS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
 public class Session {
   public static final String JSON_PROPERTY_SESSION_ID = "sessionId";
   private UUID sessionId;
@@ -92,7 +92,7 @@ public class Session {
   private WebClient client;
 
   public static final String JSON_PROPERTY_ATTRIBUTES = "attributes";
-  private Map<String, Object> attributes = null;
+  private Map<String, Object> attributes = new HashMap<>();
 
   public static final String JSON_PROPERTY_STATISTICS = "statistics";
   private SessionStatistics statistics;

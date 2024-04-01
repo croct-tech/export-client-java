@@ -14,7 +14,6 @@
 package com.croct.client.export.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.UserAddress;
@@ -24,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -60,7 +60,7 @@ import com.croct.client.export.JSON;
   User.JSON_PROPERTY_LAST_MODIFIED_TIME,
   User.JSON_PROPERTY_STATISTICS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
 public class User {
   public static final String JSON_PROPERTY_USER_ID = "userId";
   private UUID userId;
@@ -114,7 +114,7 @@ public class User {
   private JsonNullable<String> interests = JsonNullable.<String>undefined();
 
   public static final String JSON_PROPERTY_CUSTOM_ATTRIBUTES = "customAttributes";
-  private Map<String, Object> customAttributes = null;
+  private Map<String, Object> customAttributes = new HashMap<>();
 
   public static final String JSON_PROPERTY_LAST_MODIFIED_TIME = "lastModifiedTime";
   private Long lastModifiedTime;

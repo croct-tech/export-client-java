@@ -14,7 +14,6 @@
 package com.croct.client.export.model;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.User;
@@ -24,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
@@ -36,7 +36,7 @@ import com.croct.client.export.JSON;
   UserResponse.JSON_PROPERTY_ITEMS,
   UserResponse.JSON_PROPERTY_NEXT_CURSOR
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
 public class UserResponse {
   public static final String JSON_PROPERTY_ITEMS = "items";
   private List<User> items = new ArrayList<>();
@@ -53,6 +53,9 @@ public class UserResponse {
   }
 
   public UserResponse addItemsItem(User itemsItem) {
+    if (this.items == null) {
+      this.items = new ArrayList<>();
+    }
     this.items.add(itemsItem);
     return this;
   }
