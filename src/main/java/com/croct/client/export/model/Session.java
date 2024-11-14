@@ -16,27 +16,13 @@ package com.croct.client.export.model;
 import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
-import com.croct.client.export.model.Campaign;
-import com.croct.client.export.model.Location;
-import com.croct.client.export.model.SessionStatistics;
-import com.croct.client.export.model.SessionWindow;
-import com.croct.client.export.model.WebClient;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.util.NoSuchElementException;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.croct.client.export.JSON;
-
 
 /**
  * Session
@@ -45,7 +31,7 @@ import com.croct.client.export.JSON;
   Session.JSON_PROPERTY_SESSION_ID,
   Session.JSON_PROPERTY_USER_ID,
   Session.JSON_PROPERTY_PARENT_ID,
-  Session.JSON_PROPERTY_IS_ANONYMOUS,
+  Session.JSON_PROPERTY_EXTERNAL_USER_ID,
   Session.JSON_PROPERTY_WINDOW,
   Session.JSON_PROPERTY_CLOSE_TIME,
   Session.JSON_PROPERTY_REFERRER,
@@ -67,8 +53,8 @@ public class Session {
   public static final String JSON_PROPERTY_PARENT_ID = "parentId";
   private JsonNullable<UUID> parentId = JsonNullable.<UUID>undefined();
 
-  public static final String JSON_PROPERTY_IS_ANONYMOUS = "isAnonymous";
-  private Boolean isAnonymous;
+  public static final String JSON_PROPERTY_EXTERNAL_USER_ID = "externalUserId";
+  private String externalUserId;
 
   public static final String JSON_PROPERTY_WINDOW = "window";
   private SessionWindow window;
@@ -97,7 +83,7 @@ public class Session {
   public static final String JSON_PROPERTY_STATISTICS = "statistics";
   private SessionStatistics statistics;
 
-  public Session() { 
+  public Session() {
   }
 
   public Session sessionId(UUID sessionId) {
@@ -172,7 +158,7 @@ public class Session {
   public JsonNullable<UUID> getParentId_JsonNullable() {
     return parentId;
   }
-  
+
   @JsonProperty(JSON_PROPERTY_PARENT_ID)
   public void setParentId_JsonNullable(JsonNullable<UUID> parentId) {
     this.parentId = parentId;
@@ -183,28 +169,30 @@ public class Session {
   }
 
 
-  public Session isAnonymous(Boolean isAnonymous) {
-    this.isAnonymous = isAnonymous;
+  public Session externalUserId(String externalUserId) {
+    this.externalUserId = externalUserId;
     return this;
   }
 
    /**
-   * The flag that indicates whether the user is anonymous.
-   * @return isAnonymous
+   * The external user ID that is used to identify the user on
+   * the application side, unique across the workspace. It is always null for anonymous users.
+   *
+   * @return externalUserId
   **/
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_IS_ANONYMOUS)
+  @JsonProperty(JSON_PROPERTY_EXTERNAL_USER_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Boolean getIsAnonymous() {
-    return isAnonymous;
+  public String getExternalUserId() {
+    return externalUserId;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_IS_ANONYMOUS)
+  @JsonProperty(JSON_PROPERTY_EXTERNAL_USER_ID)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIsAnonymous(Boolean isAnonymous) {
-    this.isAnonymous = isAnonymous;
+  public void setExternalUserId(String externalUserId) {
+    this.externalUserId = externalUserId;
   }
 
 
@@ -280,7 +268,7 @@ public class Session {
   public JsonNullable<String> getReferrer_JsonNullable() {
     return referrer;
   }
-  
+
   @JsonProperty(JSON_PROPERTY_REFERRER)
   public void setReferrer_JsonNullable(JsonNullable<String> referrer) {
     this.referrer = referrer;
@@ -313,7 +301,7 @@ public class Session {
   public JsonNullable<String> getLandingPageUrl_JsonNullable() {
     return landingPageUrl;
   }
-  
+
   @JsonProperty(JSON_PROPERTY_LANDING_PAGE_URL)
   public void setLandingPageUrl_JsonNullable(JsonNullable<String> landingPageUrl) {
     this.landingPageUrl = landingPageUrl;
@@ -472,7 +460,7 @@ public class Session {
     return Objects.equals(this.sessionId, session.sessionId) &&
         Objects.equals(this.userId, session.userId) &&
         equalsNullable(this.parentId, session.parentId) &&
-        Objects.equals(this.isAnonymous, session.isAnonymous) &&
+        Objects.equals(this.externalUserId, session.externalUserId) &&
         Objects.equals(this.window, session.window) &&
         Objects.equals(this.closeTime, session.closeTime) &&
         equalsNullable(this.referrer, session.referrer) &&
@@ -490,7 +478,7 @@ public class Session {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sessionId, userId, hashCodeNullable(parentId), isAnonymous, window, closeTime, hashCodeNullable(referrer), hashCodeNullable(landingPageUrl), campaign, location, client, attributes, statistics);
+    return Objects.hash(sessionId, userId, hashCodeNullable(parentId), externalUserId, window, closeTime, hashCodeNullable(referrer), hashCodeNullable(landingPageUrl), campaign, location, client, attributes, statistics);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -507,7 +495,7 @@ public class Session {
     sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
     sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
     sb.append("    parentId: ").append(toIndentedString(parentId)).append("\n");
-    sb.append("    isAnonymous: ").append(toIndentedString(isAnonymous)).append("\n");
+    sb.append("    externalUserId: ").append(toIndentedString(externalUserId)).append("\n");
     sb.append("    window: ").append(toIndentedString(window)).append("\n");
     sb.append("    closeTime: ").append(toIndentedString(closeTime)).append("\n");
     sb.append("    referrer: ").append(toIndentedString(referrer)).append("\n");
