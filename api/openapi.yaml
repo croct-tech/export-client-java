@@ -1256,7 +1256,7 @@ components:
         userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         referrer: referrer
-        isAnonymous: true
+        externalUserId: j0hn
         closeTime: 1
         campaign:
           name: name
@@ -1317,9 +1317,12 @@ components:
           format: uuid
           nullable: true
           type: string
-        isAnonymous:
-          description: The flag that indicates whether the user is anonymous.
-          type: boolean
+        externalUserId:
+          description: "The external user ID that is used to identify the user on\
+            \ the application side, unique across the workspace. It is always null\
+            \ for anonymous users."
+          nullable: true
+          type: string
         window:
           $ref: '#/components/schemas/Session_window'
         closeTime:
@@ -1361,7 +1364,7 @@ components:
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           referrer: referrer
-          isAnonymous: true
+          externalUserId: j0hn
           closeTime: 1
           campaign:
             name: name
@@ -1408,7 +1411,7 @@ components:
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           referrer: referrer
-          isAnonymous: true
+          externalUserId: j0hn
           closeTime: 1
           campaign:
             name: name
