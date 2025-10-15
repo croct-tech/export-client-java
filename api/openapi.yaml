@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.3.0
+  version: 0.3.1
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -64,7 +64,7 @@ paths:
         required: false
         schema:
           items:
-            $ref: '#/components/schemas/EventType'
+            $ref: "#/components/schemas/EventType"
           type: array
         style: form
       responses:
@@ -72,13 +72,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventResponse'
+                $ref: "#/components/schemas/EventResponse"
           description: Success response
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiProblem'
+                $ref: "#/components/schemas/ApiProblem"
           description: Request error
       tags:
       - export
@@ -126,13 +126,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SessionResponse'
+                $ref: "#/components/schemas/SessionResponse"
           description: Success response
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiProblem'
+                $ref: "#/components/schemas/ApiProblem"
           description: Request error
       tags:
       - export
@@ -180,13 +180,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: "#/components/schemas/UserResponse"
           description: Success response
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiProblem'
+                $ref: "#/components/schemas/ApiProblem"
           description: Request error
       tags:
       - export
@@ -238,7 +238,7 @@ components:
       required: false
       schema:
         items:
-          $ref: '#/components/schemas/EventType'
+          $ref: "#/components/schemas/EventType"
         type: array
       style: form
   responses:
@@ -246,25 +246,25 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ApiProblem'
+            $ref: "#/components/schemas/ApiProblem"
       description: Request error
     EventSuccess:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/EventResponse'
+            $ref: "#/components/schemas/EventResponse"
       description: Success response
     SessionSuccess:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SessionResponse'
+            $ref: "#/components/schemas/SessionResponse"
       description: Success response
     UserSuccess:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserResponse'
+            $ref: "#/components/schemas/UserResponse"
       description: Success response
   schemas:
     ApiProblem:
@@ -289,7 +289,7 @@ components:
       description: The available information about a browser.
       example:
         name: name
-        type: null
+        type: WEB
         version: version
       properties:
         name:
@@ -303,7 +303,7 @@ components:
           nullable: true
           type: string
         type:
-          $ref: '#/components/schemas/BrowserType'
+          $ref: "#/components/schemas/BrowserType"
       required:
       - name
       - type
@@ -371,7 +371,7 @@ components:
         items:
           description: The list of items in the shopping cart.
           items:
-            $ref: '#/components/schemas/CartItem'
+            $ref: "#/components/schemas/CartItem"
           type: array
         subtotal:
           description: "The total of all items and quantities in the shopping cart\
@@ -437,7 +437,7 @@ components:
           format: int32
           type: integer
         product:
-          $ref: '#/components/schemas/ProductDetails'
+          $ref: "#/components/schemas/ProductDetails"
         quantity:
           description: The number of units of the item in the shopping cart.
           format: int32
@@ -465,33 +465,43 @@ components:
       - quantity
       - total
       type: object
+    CartAbandoned:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      description: An event recording that a shopping cart was abandoned.
+      properties:
+        cart:
+          $ref: "#/components/schemas/Cart"
+      required:
+      - cart
+      type: object
     CartModified:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a shopping cart was modified.
       properties:
         cart:
-          $ref: '#/components/schemas/Cart'
+          $ref: "#/components/schemas/Cart"
       required:
       - cart
       type: object
     CartViewed:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a shopping cart was viewed.
       properties:
         cart:
-          $ref: '#/components/schemas/Cart'
+          $ref: "#/components/schemas/Cart"
       required:
       - cart
       type: object
     CheckoutStarted:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a shopping cart started the checkout process.
       properties:
         cart:
-          $ref: '#/components/schemas/Cart'
+          $ref: "#/components/schemas/Cart"
         orderId:
           description: The ID that uniquely identifies the order across the store.
           format: uuid
@@ -503,11 +513,11 @@ components:
       type: object
     ClientDetected:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that the user's client was detected.
       properties:
         client:
-          $ref: '#/components/schemas/WebClient'
+          $ref: "#/components/schemas/WebClient"
       required:
       - client
       type: object
@@ -516,7 +526,7 @@ components:
       example:
         vendor: vendor
         name: name
-        category: null
+        category: DESKTOP
         operatingSystem:
           name: name
           version: version
@@ -532,9 +542,9 @@ components:
           nullable: true
           type: string
         category:
-          $ref: '#/components/schemas/DeviceCategory'
+          $ref: "#/components/schemas/DeviceCategory"
         operatingSystem:
-          $ref: '#/components/schemas/OperatingSystem'
+          $ref: "#/components/schemas/OperatingSystem"
       required:
       - category
       - name
@@ -584,9 +594,9 @@ components:
           format: int64
           type: integer
         context:
-          $ref: '#/components/schemas/EventContext'
+          $ref: "#/components/schemas/EventContext"
         payload:
-          $ref: '#/components/schemas/EventPayload'
+          $ref: "#/components/schemas/EventPayload"
       required:
       - context
       - payload
@@ -598,7 +608,7 @@ components:
       description: The context of the client when the event was tracked.
       discriminator:
         mapping:
-          web: '#/components/schemas/WebContext'
+          web: "#/components/schemas/WebContext"
         propertyName: type
       example:
         metadata:
@@ -618,66 +628,47 @@ components:
       type: object
     EventOccurred:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording a domain-specific occurrence.
       properties:
         name:
           description: "The name of the event. For example, \"pollAnswered\" or \"\
             onboardingStarted\"."
           type: string
-        personalizationId:
-          description: The ID of the personalization associated with the event.
-          nullable: true
-          type: string
-        audience:
-          description: The name of the audience associated with the event.
-          nullable: true
-          type: string
-        testId:
-          description: The ID of the test associated with the event.
-          nullable: true
-          type: string
-        groupId:
-          description: "The ID of the test group associated with the event, also known\
-            \ as \"variant\"."
-          nullable: true
-          type: string
         details:
           description: The details about the event.
           nullable: false
           type: object
       required:
-      - audience
       - details
-      - groupId
       - name
-      - personalizationId
-      - testId
       type: object
     EventPayload:
       description: "The event details, specific to the type of event."
       discriminator:
         mapping:
-          userSignedUp: '#/components/schemas/UserSignedUp'
-          userSignedIn: '#/components/schemas/UserSignedIn'
-          userSignedOut: '#/components/schemas/UserSignedOut'
-          tabUrlChanged: '#/components/schemas/TabUrlChanged'
-          tabOpened: '#/components/schemas/TabOpened'
-          tabVisibilityChanged: '#/components/schemas/TabVisibilityChanged'
-          testGroupAssigned: '#/components/schemas/TestGroupAssigned'
-          eventOccurred: '#/components/schemas/EventOccurred'
-          locationDetected: '#/components/schemas/LocationDetected'
-          clientDetected: '#/components/schemas/ClientDetected'
-          goalCompleted: '#/components/schemas/GoalCompleted'
-          pageLoaded: '#/components/schemas/PageLoaded'
-          pageOpened: '#/components/schemas/PageOpened'
-          nothingChanged: '#/components/schemas/NothingChanged'
-          cartModified: '#/components/schemas/CartModified'
-          cartViewed: '#/components/schemas/CartViewed'
-          checkoutStarted: '#/components/schemas/CheckoutStarted'
-          orderPlaced: '#/components/schemas/OrderPlaced'
-          productViewed: '#/components/schemas/ProductViewed'
-          slotPersonalized: '#/components/schemas/SlotPersonalized'
+          userSignedUp: "#/components/schemas/UserSignedUp"
+          userSignedIn: "#/components/schemas/UserSignedIn"
+          userSignedOut: "#/components/schemas/UserSignedOut"
+          tabUrlChanged: "#/components/schemas/TabUrlChanged"
+          tabOpened: "#/components/schemas/TabOpened"
+          tabVisibilityChanged: "#/components/schemas/TabVisibilityChanged"
+          testGroupAssigned: "#/components/schemas/TestGroupAssigned"
+          eventOccurred: "#/components/schemas/EventOccurred"
+          locationDetected: "#/components/schemas/LocationDetected"
+          clientDetected: "#/components/schemas/ClientDetected"
+          goalCompleted: "#/components/schemas/GoalCompleted"
+          pageLoaded: "#/components/schemas/PageLoaded"
+          pageOpened: "#/components/schemas/PageOpened"
+          nothingChanged: "#/components/schemas/NothingChanged"
+          cartAbandoned: "#/components/schemas/CartAbandoned"
+          cartModified: "#/components/schemas/CartModified"
+          cartViewed: "#/components/schemas/CartViewed"
+          checkoutStarted: "#/components/schemas/CheckoutStarted"
+          orderPlaced: "#/components/schemas/OrderPlaced"
+          productAbandoned: "#/components/schemas/ProductAbandoned"
+          productViewed: "#/components/schemas/ProductViewed"
+          slotPersonalized: "#/components/schemas/SlotPersonalized"
         propertyName: '@type'
       example:
         '@type': '@type'
@@ -719,10 +710,10 @@ components:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/Event'
+            $ref: "#/components/schemas/Event"
           type: array
         metadata:
-          $ref: '#/components/schemas/EventResponse_metadata'
+          $ref: "#/components/schemas/EventResponse_metadata"
         nextCursor:
           type: string
       required:
@@ -742,6 +733,7 @@ components:
       - clientDetected
       - pageOpened
       - pageLoaded
+      - productAbandoned
       - productViewed
       - cartViewed
       - cartModified
@@ -774,6 +766,22 @@ components:
       - GOAL_COMPLETED
       - EVENT_OCCURRED
       - SLOT_PERSONALIZED
+    Currency:
+      description: The official currency used in the location.
+      example:
+        code: code
+        name: name
+      nullable: true
+      properties:
+        name:
+          description: "The common name of the currency. For example, 'US Dollar'."
+          nullable: true
+          type: string
+        code:
+          description: "The currency code. For example, USD."
+          nullable: true
+          type: string
+      type: object
     GeoPoint:
       description: A geographic location represented by a latitude and longitude coordinates
         pair.
@@ -797,7 +805,7 @@ components:
       type: object
     GoalCompleted:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: "An event recording a completed activity, such as a purchase."
       properties:
         goalId:
@@ -829,21 +837,33 @@ components:
       description: An identification or estimation of a geographic location of an
         object.
       example:
-        continent: null
+        continent: AF
         country: country
+        languages:
+        - languages
+        - languages
         city: city
         timezone: timezone
-        district: district
+        postalCode: postalCode
         coordinates:
           latitude: 5.962133916683182
           longitude: 5.637376656633329
-        source: null
+        source: UNKNOWN
+        population: population
+        tags:
+        - tags
+        - tags
+        district: district
+        phoneCode: phoneCode
+        currency:
+          code: code
+          name: name
         region:
           code: code
           name: name
       properties:
         continent:
-          $ref: '#/components/schemas/LocationContinent'
+          $ref: "#/components/schemas/LocationContinent"
         country:
           description: "The highest administrative division, also known as a nation.\
             \ The value is a two-letter country code, as defined in ISO 3166. For\
@@ -851,7 +871,7 @@ components:
           nullable: true
           type: string
         region:
-          $ref: '#/components/schemas/Region'
+          $ref: "#/components/schemas/Region"
         city:
           description: "The name of the incorporated city or town political entity.\
             \ For example, \"Sao Paulo\"."
@@ -868,9 +888,40 @@ components:
           nullable: true
           type: string
         coordinates:
-          $ref: '#/components/schemas/GeoPoint'
+          $ref: "#/components/schemas/GeoPoint"
+        currency:
+          $ref: "#/components/schemas/Currency"
+        phoneCode:
+          description: "The international dialing code for this location. For example,\
+            \ '+1' or '+55'."
+          nullable: true
+          type: string
+        population:
+          description: The approximate number of people living within the borders
+            of the represented location.
+          nullable: true
+          type: string
+        postalCode:
+          description: "The general postal code for the location, such as a starting\
+            \ range, but it may also represent another relevant code for the area.\
+            \ For example, '12345-678'."
+          nullable: true
+          type: string
+        languages:
+          description: "A list of locales following the ISO 639-1 and ISO 3166-1 standards,\
+            \ representing the languages spoken in the location, ordered from the\
+            \ most spoken to the least spoken. For example, 'pt-br' or 'en-us'."
+          items:
+            type: string
+          type: array
+        tags:
+          description: "A list of tags addressing different aspects of a location.\
+            \ For example, 'beach' or 'ocean'."
+          items:
+            type: string
+          type: array
         source:
-          $ref: '#/components/schemas/LocationSource'
+          $ref: "#/components/schemas/LocationSource"
       required:
       - city
       - continent
@@ -903,11 +954,11 @@ components:
       - SA
     LocationDetected:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that the location of a user was detected.
       properties:
         location:
-          $ref: '#/components/schemas/Location'
+          $ref: "#/components/schemas/Location"
       required:
       - location
       type: object
@@ -929,7 +980,7 @@ components:
       - GPS
     NothingChanged:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording a period of inactivity.
       properties:
         sinceTime:
@@ -978,7 +1029,7 @@ components:
         items:
           description: The list of items in the order.
           items:
-            $ref: '#/components/schemas/OrderItem'
+            $ref: "#/components/schemas/OrderItem"
           type: array
         subtotal:
           description: "The total of all items and quantities in the order including\
@@ -1029,7 +1080,7 @@ components:
           nullable: true
           type: integer
         status:
-          $ref: '#/components/schemas/OrderStatus'
+          $ref: "#/components/schemas/OrderStatus"
       required:
       - costs
       - coupon
@@ -1054,7 +1105,7 @@ components:
           format: int32
           type: integer
         product:
-          $ref: '#/components/schemas/ProductDetails'
+          $ref: "#/components/schemas/ProductDetails"
         quantity:
           description: The number of units of the item ordered.
           format: int32
@@ -1084,11 +1135,11 @@ components:
       type: object
     OrderPlaced:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that an order was placed.
       properties:
         order:
-          $ref: '#/components/schemas/Order'
+          $ref: "#/components/schemas/Order"
       required:
       - order
       type: object
@@ -1106,7 +1157,7 @@ components:
       - COMPLETED
     PageLoaded:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a page was loaded.
       properties:
         url:
@@ -1128,7 +1179,7 @@ components:
       type: object
     PageOpened:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a page was opened.
       properties:
         url:
@@ -1220,13 +1271,26 @@ components:
       - url
       - variant
       type: object
+    ProductAbandoned:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      description: An event recording that a shopping cart item was abandoned.
+      properties:
+        cartItem:
+          $ref: "#/components/schemas/CartItem"
+        cart:
+          $ref: "#/components/schemas/Cart"
+      required:
+      - cart
+      - cartItem
+      type: object
     ProductViewed:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a shopping cart was modified.
       properties:
         product:
-          $ref: '#/components/schemas/ProductDetails'
+          $ref: "#/components/schemas/ProductDetails"
       required:
       - product
       type: object
@@ -1256,7 +1320,7 @@ components:
         userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         referrer: referrer
-        isAnonymous: true
+        externalUserId: externalUserId
         closeTime: 1
         campaign:
           name: name
@@ -1267,25 +1331,37 @@ components:
         client:
           browser:
             name: name
-            type: null
+            type: WEB
             version: version
           device:
             vendor: vendor
             name: name
-            category: null
+            category: DESKTOP
             operatingSystem:
               name: name
               version: version
         location:
-          continent: null
+          continent: AF
           country: country
+          languages:
+          - languages
+          - languages
           city: city
           timezone: timezone
-          district: district
+          postalCode: postalCode
           coordinates:
             latitude: 5.962133916683182
             longitude: 5.637376656633329
-          source: null
+          source: UNKNOWN
+          population: population
+          tags:
+          - tags
+          - tags
+          district: district
+          phoneCode: phoneCode
+          currency:
+            code: code
+            name: name
           region:
             code: code
             name: name
@@ -1317,11 +1393,14 @@ components:
           format: uuid
           nullable: true
           type: string
-        isAnonymous:
-          description: The flag that indicates whether the user is anonymous.
-          type: boolean
+        externalUserId:
+          description: "The external user ID that is used to identify the user on\
+            \ the application side, unique across the workspace. It is always null\
+            \ for anonymous users."
+          nullable: true
+          type: string
         window:
-          $ref: '#/components/schemas/Session_window'
+          $ref: "#/components/schemas/Session_window"
         closeTime:
           description: "The time from which the session is closed for new events,\
             \ but still may accept late-arriving events. The close time may be extended\
@@ -1338,18 +1417,18 @@ components:
           nullable: true
           type: string
         campaign:
-          $ref: '#/components/schemas/Campaign'
+          $ref: "#/components/schemas/Campaign"
         location:
-          $ref: '#/components/schemas/Location'
+          $ref: "#/components/schemas/Location"
         client:
-          $ref: '#/components/schemas/WebClient'
+          $ref: "#/components/schemas/WebClient"
         attributes:
           additionalProperties:
             nullable: true
           description: The custom attributes.
           type: object
         statistics:
-          $ref: '#/components/schemas/Session_statistics'
+          $ref: "#/components/schemas/Session_statistics"
       required:
       - organizationId
       type: object
@@ -1361,7 +1440,7 @@ components:
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           referrer: referrer
-          isAnonymous: true
+          externalUserId: externalUserId
           closeTime: 1
           campaign:
             name: name
@@ -1372,25 +1451,37 @@ components:
           client:
             browser:
               name: name
-              type: null
+              type: WEB
               version: version
             device:
               vendor: vendor
               name: name
-              category: null
+              category: DESKTOP
               operatingSystem:
                 name: name
                 version: version
           location:
-            continent: null
+            continent: AF
             country: country
+            languages:
+            - languages
+            - languages
             city: city
             timezone: timezone
-            district: district
+            postalCode: postalCode
             coordinates:
               latitude: 5.962133916683182
               longitude: 5.637376656633329
-            source: null
+            source: UNKNOWN
+            population: population
+            tags:
+            - tags
+            - tags
+            district: district
+            phoneCode: phoneCode
+            currency:
+              code: code
+              name: name
             region:
               code: code
               name: name
@@ -1408,7 +1499,7 @@ components:
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           referrer: referrer
-          isAnonymous: true
+          externalUserId: externalUserId
           closeTime: 1
           campaign:
             name: name
@@ -1419,25 +1510,37 @@ components:
           client:
             browser:
               name: name
-              type: null
+              type: WEB
               version: version
             device:
               vendor: vendor
               name: name
-              category: null
+              category: DESKTOP
               operatingSystem:
                 name: name
                 version: version
           location:
-            continent: null
+            continent: AF
             country: country
+            languages:
+            - languages
+            - languages
             city: city
             timezone: timezone
-            district: district
+            postalCode: postalCode
             coordinates:
               latitude: 5.962133916683182
               longitude: 5.637376656633329
-            source: null
+            source: UNKNOWN
+            population: population
+            tags:
+            - tags
+            - tags
+            district: district
+            phoneCode: phoneCode
+            currency:
+              code: code
+              name: name
             region:
               code: code
               name: name
@@ -1454,7 +1557,7 @@ components:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/Session'
+            $ref: "#/components/schemas/Session"
           type: array
         nextCursor:
           type: string
@@ -1464,7 +1567,7 @@ components:
       type: object
     TabOpened:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a new tab was opened.
       properties:
         tabId:
@@ -1476,7 +1579,7 @@ components:
       type: object
     TabUrlChanged:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that the URL of a tab has changed.
       properties:
         tabId:
@@ -1503,7 +1606,7 @@ components:
       - HIDDLE
     TabVisibilityChanged:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that the visibility of a tab has changed.
       properties:
         tabId:
@@ -1511,14 +1614,14 @@ components:
           format: uuid
           type: string
         visibility:
-          $ref: '#/components/schemas/TabVisibility'
+          $ref: "#/components/schemas/TabVisibility"
       required:
       - tabId
       - visibility
       type: object
     TestGroupAssigned:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a test group was assigned to a user.
       properties:
         testId:
@@ -1609,7 +1712,7 @@ components:
           nullable: true
           type: string
         address:
-          $ref: '#/components/schemas/User_address'
+          $ref: "#/components/schemas/User_address"
         avatar:
           description: The avatar attribute.
           nullable: true
@@ -1644,7 +1747,7 @@ components:
           format: int64
           type: integer
         statistics:
-          $ref: '#/components/schemas/User_statistics'
+          $ref: "#/components/schemas/User_statistics"
       type: object
     UserResponse:
       example:
@@ -1711,7 +1814,7 @@ components:
       properties:
         items:
           items:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
           type: array
         nextCursor:
           type: string
@@ -1721,7 +1824,7 @@ components:
       type: object
     UserSignedIn:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a user has signed in.
       properties:
         externalUserId:
@@ -1732,7 +1835,7 @@ components:
       type: object
     UserSignedOut:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a user has signed out.
       properties:
         externalUserId:
@@ -1743,7 +1846,7 @@ components:
       type: object
     UserSignedUp:
       allOf:
-      - $ref: '#/components/schemas/EventPayload'
+      - $ref: "#/components/schemas/EventPayload"
       description: An event recording that a user has signed up.
       properties:
         externalUserId:
@@ -1759,9 +1862,9 @@ components:
           description: The event type identifier.
           type: string
         personalization:
-          $ref: '#/components/schemas/SlotPersonalized_personalization'
+          $ref: "#/components/schemas/SlotPersonalized_personalization"
         metadata:
-          $ref: '#/components/schemas/SlotPersonalized_metadata'
+          $ref: "#/components/schemas/SlotPersonalized_metadata"
       required:
       - '@type'
       - metadata
@@ -1772,27 +1875,27 @@ components:
       example:
         browser:
           name: name
-          type: null
+          type: WEB
           version: version
         device:
           vendor: vendor
           name: name
-          category: null
+          category: DESKTOP
           operatingSystem:
             name: name
             version: version
       properties:
         browser:
-          $ref: '#/components/schemas/Browser'
+          $ref: "#/components/schemas/Browser"
         device:
-          $ref: '#/components/schemas/Device'
+          $ref: "#/components/schemas/Device"
       required:
       - browser
       - device
       type: object
     WebContext:
       allOf:
-      - $ref: '#/components/schemas/EventContext'
+      - $ref: "#/components/schemas/EventContext"
       description: The context of the web client at the time the event was tracked.
       properties:
         tabId:
@@ -1946,7 +2049,7 @@ components:
           format: uuid
           type: string
         assignedVariant:
-          $ref: '#/components/schemas/SlotPersonalized_personalization_assignedVariant'
+          $ref: "#/components/schemas/SlotPersonalized_personalization_assignedVariant"
       required:
       - assignedVariant
       - audienceId

@@ -25,86 +25,108 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.util.NoSuchElementException;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
 
 
 /**
- * A subsection of a country, typically a state or province.
+ * The official currency used in the location.
  */
 @JsonPropertyOrder({
-  Region.JSON_PROPERTY_NAME,
-  Region.JSON_PROPERTY_CODE
+  Currency.JSON_PROPERTY_NAME,
+  Currency.JSON_PROPERTY_CODE
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.17.0-SNAPSHOT")
-public class Region {
+public class Currency {
   public static final String JSON_PROPERTY_NAME = "name";
-  @javax.annotation.Nullable
-  private String name;
+  private JsonNullable<String> name = JsonNullable.<String>undefined();
 
   public static final String JSON_PROPERTY_CODE = "code";
-  @javax.annotation.Nullable
-  private String code;
+  private JsonNullable<String> code = JsonNullable.<String>undefined();
 
-  public Region() { 
+  public Currency() { 
   }
 
-  public Region name(@javax.annotation.Nullable String name) {
-    this.name = name;
+  public Currency name(@javax.annotation.Nullable String name) {
+    this.name = JsonNullable.<String>of(name);
     return this;
   }
 
   /**
-   * The subdivision name, non-empty. For example, \&quot;Sao Paulo\&quot;.
+   * The common name of the currency. For example, &#39;US Dollar&#39;.
    * @return name
    */
   @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonIgnore
 
   public String getName() {
-    return name;
+        return name.orElse(null);
   }
 
-
   @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setName(@javax.annotation.Nullable String name) {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<String> getName_JsonNullable() {
+    return name;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_NAME)
+  public void setName_JsonNullable(JsonNullable<String> name) {
     this.name = name;
   }
 
+  public void setName(@javax.annotation.Nullable String name) {
+    this.name = JsonNullable.<String>of(name);
+  }
 
-  public Region code(@javax.annotation.Nullable String code) {
-    this.code = code;
+
+  public Currency code(@javax.annotation.Nullable String code) {
+    this.code = JsonNullable.<String>of(code);
     return this;
   }
 
   /**
-   * The 2-letter code as defined by the ISO 3166-2 standard. For example, \&quot;SP\&quot;.
+   * The currency code. For example, USD.
    * @return code
    */
   @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_CODE, required = false)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonIgnore
 
   public String getCode() {
-    return code;
+        return code.orElse(null);
   }
 
-
   @JsonProperty(value = JSON_PROPERTY_CODE, required = false)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setCode(@javax.annotation.Nullable String code) {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<String> getCode_JsonNullable() {
+    return code;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_CODE)
+  public void setCode_JsonNullable(JsonNullable<String> code) {
     this.code = code;
+  }
+
+  public void setCode(@javax.annotation.Nullable String code) {
+    this.code = JsonNullable.<String>of(code);
   }
 
 
   /**
-   * Return true if this Region object is equal to o.
+   * Return true if this Currency object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o, false, null, true);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
@@ -112,10 +134,17 @@ public class Region {
     return HashCodeBuilder.reflectionHashCode(this);
   }
 
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Region {\n");
+    sb.append("class Currency {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("}");

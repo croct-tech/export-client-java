@@ -10,6 +10,8 @@ src/main/java/com/croct/client/export/JSON.java
 src/main/java/com/croct/client/export/JavaTimeFormatter.java
 src/main/java/com/croct/client/export/Pair.java
 src/main/java/com/croct/client/export/RFC3339DateFormat.java
+src/main/java/com/croct/client/export/RFC3339InstantDeserializer.java
+src/main/java/com/croct/client/export/RFC3339JavaTimeModule.java
 src/main/java/com/croct/client/export/ServerConfiguration.java
 src/main/java/com/croct/client/export/ServerVariable.java
 src/main/java/com/croct/client/export/StringUtil.java
@@ -24,11 +26,13 @@ src/main/java/com/croct/client/export/model/Browser.java
 src/main/java/com/croct/client/export/model/BrowserType.java
 src/main/java/com/croct/client/export/model/Campaign.java
 src/main/java/com/croct/client/export/model/Cart.java
+src/main/java/com/croct/client/export/model/CartAbandoned.java
 src/main/java/com/croct/client/export/model/CartItem.java
 src/main/java/com/croct/client/export/model/CartModified.java
 src/main/java/com/croct/client/export/model/CartViewed.java
 src/main/java/com/croct/client/export/model/CheckoutStarted.java
 src/main/java/com/croct/client/export/model/ClientDetected.java
+src/main/java/com/croct/client/export/model/Currency.java
 src/main/java/com/croct/client/export/model/Device.java
 src/main/java/com/croct/client/export/model/DeviceCategory.java
 src/main/java/com/croct/client/export/model/Event.java
@@ -52,6 +56,7 @@ src/main/java/com/croct/client/export/model/OrderPlaced.java
 src/main/java/com/croct/client/export/model/OrderStatus.java
 src/main/java/com/croct/client/export/model/PageLoaded.java
 src/main/java/com/croct/client/export/model/PageOpened.java
+src/main/java/com/croct/client/export/model/ProductAbandoned.java
 src/main/java/com/croct/client/export/model/ProductDetails.java
 src/main/java/com/croct/client/export/model/ProductViewed.java
 src/main/java/com/croct/client/export/model/Region.java

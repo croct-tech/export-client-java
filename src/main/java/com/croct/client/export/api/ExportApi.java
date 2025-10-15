@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.5.0-SNAPSHOT")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.17.0-SNAPSHOT")
 public class ExportApi {
   private ApiClient apiClient;
 
@@ -61,13 +61,14 @@ public class ExportApi {
    * @return EventResponse
    * @throws ApiException if fails to make API call
    * @http.response.details
-     <table summary="Response Details" border="1">
+     <table border="1">
+       <caption>Response Details</caption>
        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
        <tr><td> 2XX </td><td> Success response </td><td>  -  </td></tr>
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public EventResponse exportEvents(Long start, Long end, Integer pageSize, String cursor, List<EventType> events) throws ApiException {
+  public EventResponse exportEvents(@javax.annotation.Nullable Long start, @javax.annotation.Nullable Long end, @javax.annotation.Nullable Integer pageSize, @javax.annotation.Nullable String cursor, @javax.annotation.Nullable List<EventType> events) throws ApiException {
     return exportEventsWithHttpInfo(start, end, pageSize, cursor, events).getData();
   }
 
@@ -82,13 +83,14 @@ public class ExportApi {
    * @return ApiResponse&lt;EventResponse&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
-     <table summary="Response Details" border="1">
+     <table border="1">
+       <caption>Response Details</caption>
        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
        <tr><td> 2XX </td><td> Success response </td><td>  -  </td></tr>
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<EventResponse> exportEventsWithHttpInfo(Long start, Long end, Integer pageSize, String cursor, List<EventType> events) throws ApiException {
+  public ApiResponse<EventResponse> exportEventsWithHttpInfo(@javax.annotation.Nullable Long start, @javax.annotation.Nullable Long end, @javax.annotation.Nullable Integer pageSize, @javax.annotation.Nullable String cursor, @javax.annotation.Nullable List<EventType> events) throws ApiException {
     // Query parameters
     List<Pair> localVarQueryParams = new ArrayList<>(
             apiClient.parameterToPairs("", "start", start)
@@ -116,13 +118,14 @@ public class ExportApi {
    * @return SessionResponse
    * @throws ApiException if fails to make API call
    * @http.response.details
-     <table summary="Response Details" border="1">
+     <table border="1">
+       <caption>Response Details</caption>
        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
        <tr><td> 2XX </td><td> Success response </td><td>  -  </td></tr>
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public SessionResponse exportSessions(Long start, Long end, Integer pageSize, String cursor) throws ApiException {
+  public SessionResponse exportSessions(@javax.annotation.Nullable Long start, @javax.annotation.Nullable Long end, @javax.annotation.Nullable Integer pageSize, @javax.annotation.Nullable String cursor) throws ApiException {
     return exportSessionsWithHttpInfo(start, end, pageSize, cursor).getData();
   }
 
@@ -136,13 +139,14 @@ public class ExportApi {
    * @return ApiResponse&lt;SessionResponse&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
-     <table summary="Response Details" border="1">
+     <table border="1">
+       <caption>Response Details</caption>
        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
        <tr><td> 2XX </td><td> Success response </td><td>  -  </td></tr>
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<SessionResponse> exportSessionsWithHttpInfo(Long start, Long end, Integer pageSize, String cursor) throws ApiException {
+  public ApiResponse<SessionResponse> exportSessionsWithHttpInfo(@javax.annotation.Nullable Long start, @javax.annotation.Nullable Long end, @javax.annotation.Nullable Integer pageSize, @javax.annotation.Nullable String cursor) throws ApiException {
     // Query parameters
     List<Pair> localVarQueryParams = new ArrayList<>(
             apiClient.parameterToPairs("", "start", start)
@@ -169,13 +173,14 @@ public class ExportApi {
    * @return UserResponse
    * @throws ApiException if fails to make API call
    * @http.response.details
-     <table summary="Response Details" border="1">
+     <table border="1">
+       <caption>Response Details</caption>
        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
        <tr><td> 2XX </td><td> Success response </td><td>  -  </td></tr>
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public UserResponse exportUsers(Long start, Long end, Integer pageSize, String cursor) throws ApiException {
+  public UserResponse exportUsers(@javax.annotation.Nullable Long start, @javax.annotation.Nullable Long end, @javax.annotation.Nullable Integer pageSize, @javax.annotation.Nullable String cursor) throws ApiException {
     return exportUsersWithHttpInfo(start, end, pageSize, cursor).getData();
   }
 
@@ -189,13 +194,14 @@ public class ExportApi {
    * @return ApiResponse&lt;UserResponse&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
-     <table summary="Response Details" border="1">
+     <table border="1">
+       <caption>Response Details</caption>
        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
        <tr><td> 2XX </td><td> Success response </td><td>  -  </td></tr>
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<UserResponse> exportUsersWithHttpInfo(Long start, Long end, Integer pageSize, String cursor) throws ApiException {
+  public ApiResponse<UserResponse> exportUsersWithHttpInfo(@javax.annotation.Nullable Long start, @javax.annotation.Nullable Long end, @javax.annotation.Nullable Integer pageSize, @javax.annotation.Nullable String cursor) throws ApiException {
     // Query parameters
     List<Pair> localVarQueryParams = new ArrayList<>(
             apiClient.parameterToPairs("", "start", start)

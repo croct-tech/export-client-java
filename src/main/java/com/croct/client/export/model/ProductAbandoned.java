@@ -23,8 +23,9 @@ import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
+import com.croct.client.export.model.Cart;
+import com.croct.client.export.model.CartItem;
 import com.croct.client.export.model.EventPayload;
-import com.croct.client.export.model.ProductDetails;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,10 +40,11 @@ import com.croct.client.export.JSON;
 
 
 /**
- * An event recording that a shopping cart was modified.
+ * An event recording that a shopping cart item was abandoned.
  */
 @JsonPropertyOrder({
-  ProductViewed.JSON_PROPERTY_PRODUCT
+  ProductAbandoned.JSON_PROPERTY_CART_ITEM,
+  ProductAbandoned.JSON_PROPERTY_CART
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.17.0-SNAPSHOT")
 @JsonIgnoreProperties(
@@ -51,36 +53,65 @@ import com.croct.client.export.JSON;
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type", visible = true)
 
-public class ProductViewed extends EventPayload {
-  public static final String JSON_PROPERTY_PRODUCT = "product";
+public class ProductAbandoned extends EventPayload {
+  public static final String JSON_PROPERTY_CART_ITEM = "cartItem";
   @javax.annotation.Nonnull
-  private ProductDetails product;
+  private CartItem cartItem;
 
-  public ProductViewed() { 
+  public static final String JSON_PROPERTY_CART = "cart";
+  @javax.annotation.Nonnull
+  private Cart cart;
+
+  public ProductAbandoned() { 
   }
 
-  public ProductViewed product(@javax.annotation.Nonnull ProductDetails product) {
-    this.product = product;
+  public ProductAbandoned cartItem(@javax.annotation.Nonnull CartItem cartItem) {
+    this.cartItem = cartItem;
     return this;
   }
 
   /**
-   * Get product
-   * @return product
+   * Get cartItem
+   * @return cartItem
    */
   @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_PRODUCT, required = true)
+  @JsonProperty(value = JSON_PROPERTY_CART_ITEM, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public ProductDetails getProduct() {
-    return product;
+  public CartItem getCartItem() {
+    return cartItem;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_PRODUCT, required = true)
+  @JsonProperty(value = JSON_PROPERTY_CART_ITEM, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setProduct(@javax.annotation.Nonnull ProductDetails product) {
-    this.product = product;
+  public void setCartItem(@javax.annotation.Nonnull CartItem cartItem) {
+    this.cartItem = cartItem;
+  }
+
+
+  public ProductAbandoned cart(@javax.annotation.Nonnull Cart cart) {
+    this.cart = cart;
+    return this;
+  }
+
+  /**
+   * Get cart
+   * @return cart
+   */
+  @javax.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_CART, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public Cart getCart() {
+    return cart;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_CART, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setCart(@javax.annotation.Nonnull Cart cart) {
+    this.cart = cart;
   }
 
   /**
@@ -95,7 +126,7 @@ public class ProductViewed extends EventPayload {
    * If the property does not already exist, create it otherwise replace it.
    */
   @JsonAnySetter
-  public ProductViewed putAdditionalProperty(String key, Object value) {
+  public ProductAbandoned putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<>();
     }
@@ -122,7 +153,7 @@ public class ProductViewed extends EventPayload {
   }
 
   /**
-   * Return true if this ProductViewed object is equal to o.
+   * Return true if this ProductAbandoned object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -137,9 +168,10 @@ public class ProductViewed extends EventPayload {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ProductViewed {\n");
+    sb.append("class ProductAbandoned {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
+    sb.append("    cartItem: ").append(toIndentedString(cartItem)).append("\n");
+    sb.append("    cart: ").append(toIndentedString(cart)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -159,8 +191,8 @@ public class ProductViewed extends EventPayload {
   static {
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<>();
-    mappings.put("ProductViewed", ProductViewed.class);
-    JSON.registerDiscriminator(ProductViewed.class, "@type", mappings);
+    mappings.put("ProductAbandoned", ProductAbandoned.class);
+    JSON.registerDiscriminator(ProductAbandoned.class, "@type", mappings);
   }
 }
 
