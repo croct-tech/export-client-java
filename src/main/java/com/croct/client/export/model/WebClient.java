@@ -37,7 +37,7 @@ import com.croct.client.export.JSON;
   WebClient.JSON_PROPERTY_BROWSER,
   WebClient.JSON_PROPERTY_DEVICE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class WebClient {
   public static final String JSON_PROPERTY_BROWSER = "browser";
   @javax.annotation.Nonnull

@@ -40,7 +40,7 @@ import com.croct.client.export.JSON;
   Audience.JSON_PROPERTY_NAME,
   Audience.JSON_PROPERTY_CUSTOM_ID
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class Audience {
   public static final String JSON_PROPERTY_ID = "id";
   @javax.annotation.Nullable

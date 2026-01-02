@@ -40,7 +40,7 @@ import com.croct.client.export.JSON;
   OrderItem.JSON_PROPERTY_DISCOUNT,
   OrderItem.JSON_PROPERTY_COUPON
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class OrderItem {
   public static final String JSON_PROPERTY_INDEX = "index";
   @javax.annotation.Nonnull

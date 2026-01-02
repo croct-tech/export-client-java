@@ -367,12 +367,6 @@
             <artifactId>jersey-apache-connector</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1.1</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- For equals and hashCode using reflection -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -390,7 +384,7 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jersey-version>3.1.11</jersey-version>
+        <jersey-version>2.37</jersey-version>
         <jackson-version>2.19.2</jackson-version>
         <jackson-databind-version>2.20.1</jackson-databind-version>
         <jackson-databind-nullable-version>0.2.8</jackson-databind-nullable-version>

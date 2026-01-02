@@ -41,7 +41,7 @@ import com.croct.client.export.JSON;
   SlotPersonalizedMetadata.JSON_PROPERTY_VARIANT_NAME
 })
 @JsonTypeName("SlotPersonalized_metadata")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class SlotPersonalizedMetadata {
   public static final String JSON_PROPERTY_AUDIENCE_NAME = "audienceName";
   @javax.annotation.Nullable

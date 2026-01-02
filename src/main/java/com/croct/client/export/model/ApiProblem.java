@@ -40,7 +40,7 @@ import com.croct.client.export.JSON;
   ApiProblem.JSON_PROPERTY_TYPE,
   ApiProblem.JSON_PROPERTY_DETAILS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class ApiProblem {
   public static final String JSON_PROPERTY_TITLE = "title";
   @javax.annotation.Nonnull

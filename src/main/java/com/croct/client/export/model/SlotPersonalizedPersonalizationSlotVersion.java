@@ -36,7 +36,7 @@ import com.croct.client.export.JSON;
   SlotPersonalizedPersonalizationSlotVersion.JSON_PROPERTY_MINOR_VERSION
 })
 @JsonTypeName("SlotPersonalized_personalization_slotVersion")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class SlotPersonalizedPersonalizationSlotVersion {
   public static final String JSON_PROPERTY_MAJOR_VERSION = "majorVersion";
   @javax.annotation.Nullable

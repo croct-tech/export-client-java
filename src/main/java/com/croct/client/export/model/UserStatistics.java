@@ -36,7 +36,7 @@ import com.croct.client.export.JSON;
   UserStatistics.JSON_PROPERTY_SESSIONS
 })
 @JsonTypeName("User_statistics")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class UserStatistics {
   public static final String JSON_PROPERTY_ORDERS = "orders";
   @javax.annotation.Nullable

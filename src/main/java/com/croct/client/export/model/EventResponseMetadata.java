@@ -40,7 +40,7 @@ import com.croct.client.export.JSON;
   EventResponseMetadata.JSON_PROPERTY_APPLICATION_SLUG
 })
 @JsonTypeName("EventResponse_metadata")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class EventResponseMetadata {
   public static final String JSON_PROPERTY_ORGANIZATION_NAME = "organizationName";
   @javax.annotation.Nonnull

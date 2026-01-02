@@ -36,7 +36,7 @@ import com.croct.client.export.JSON;
   SessionWindow.JSON_PROPERTY_END
 })
 @JsonTypeName("Session_window")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class SessionWindow {
   public static final String JSON_PROPERTY_START = "start";
   @javax.annotation.Nullable

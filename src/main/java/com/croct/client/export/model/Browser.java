@@ -37,7 +37,7 @@ import com.croct.client.export.JSON;
   Browser.JSON_PROPERTY_VERSION,
   Browser.JSON_PROPERTY_TYPE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class Browser {
   public static final String JSON_PROPERTY_NAME = "name";
   @javax.annotation.Nullable

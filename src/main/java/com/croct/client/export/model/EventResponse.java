@@ -40,7 +40,7 @@ import com.croct.client.export.JSON;
   EventResponse.JSON_PROPERTY_METADATA,
   EventResponse.JSON_PROPERTY_NEXT_CURSOR
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class EventResponse {
   public static final String JSON_PROPERTY_ITEMS = "items";
   @javax.annotation.Nonnull

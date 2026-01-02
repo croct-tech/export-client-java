@@ -38,7 +38,7 @@ import com.croct.client.export.JSON;
   SlotPersonalized.JSON_PROPERTY_PERSONALIZATION,
   SlotPersonalized.JSON_PROPERTY_METADATA
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class SlotPersonalized {
   public static final String JSON_PROPERTY_AT_TYPE = "@type";
   @javax.annotation.Nonnull

@@ -58,7 +58,7 @@ import com.croct.client.export.JSON;
   Location.JSON_PROPERTY_TAGS,
   Location.JSON_PROPERTY_SOURCE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class Location {
   public static final String JSON_PROPERTY_CONTINENT = "continent";
   @javax.annotation.Nullable

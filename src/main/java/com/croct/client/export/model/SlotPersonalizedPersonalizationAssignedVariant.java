@@ -37,7 +37,7 @@ import com.croct.client.export.JSON;
   SlotPersonalizedPersonalizationAssignedVariant.JSON_PROPERTY_VARIANT_ID
 })
 @JsonTypeName("SlotPersonalized_personalization_assignedVariant")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class SlotPersonalizedPersonalizationAssignedVariant {
   public static final String JSON_PROPERTY_EXPERIMENT_ID = "experimentId";
   @javax.annotation.Nullable

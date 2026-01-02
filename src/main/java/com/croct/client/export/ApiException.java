@@ -21,12 +21,12 @@ import java.util.TreeMap;
 /**
  * API Exception
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class ApiException extends Exception {
     private static final long serialVersionUID = 1L;
 
     private int code = 0;
-    private Map<String, List<String>> responseHeaders = null;
+    private transient Map<String, List<String>> responseHeaders = null;
     private String responseBody = null;
 
     public ApiException() {}

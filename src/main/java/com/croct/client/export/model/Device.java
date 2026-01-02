@@ -39,7 +39,7 @@ import com.croct.client.export.JSON;
   Device.JSON_PROPERTY_CATEGORY,
   Device.JSON_PROPERTY_OPERATING_SYSTEM
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class Device {
   public static final String JSON_PROPERTY_NAME = "name";
   @javax.annotation.Nullable

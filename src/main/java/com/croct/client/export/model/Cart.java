@@ -46,7 +46,7 @@ import com.croct.client.export.JSON;
   Cart.JSON_PROPERTY_COUPON,
   Cart.JSON_PROPERTY_LAST_UPDATE_TIME
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class Cart {
   public static final String JSON_PROPERTY_CURRENCY = "currency";
   @javax.annotation.Nonnull

@@ -62,7 +62,7 @@ import com.croct.client.export.JSON;
   User.JSON_PROPERTY_LAST_MODIFIED_TIME,
   User.JSON_PROPERTY_STATISTICS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class User {
   public static final String JSON_PROPERTY_USER_ID = "userId";
   @javax.annotation.Nullable

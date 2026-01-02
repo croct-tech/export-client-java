@@ -51,7 +51,7 @@ import com.croct.client.export.JSON;
   Order.JSON_PROPERTY_INSTALLMENTS,
   Order.JSON_PROPERTY_STATUS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class Order {
   public static final String JSON_PROPERTY_ORDER_ID = "orderId";
   @javax.annotation.Nonnull

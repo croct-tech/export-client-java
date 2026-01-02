@@ -44,7 +44,7 @@ import com.croct.client.export.JSON;
   UserAddress.JSON_PROPERTY_POSTAL_CODE
 })
 @JsonTypeName("User_address")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 public class UserAddress {
   public static final String JSON_PROPERTY_STREET = "street";
   private JsonNullable<String> street = JsonNullable.<String>undefined();
