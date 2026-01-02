@@ -22,6 +22,8 @@ src/main/java/com/croct/client/export/auth/HttpBasicAuth.java
 src/main/java/com/croct/client/export/auth/HttpBearerAuth.java
 src/main/java/com/croct/client/export/model/AbstractOpenApiSchema.java
 src/main/java/com/croct/client/export/model/ApiProblem.java
+src/main/java/com/croct/client/export/model/Audience.java
+src/main/java/com/croct/client/export/model/AudienceMatched.java
 src/main/java/com/croct/client/export/model/Browser.java
 src/main/java/com/croct/client/export/model/BrowserType.java
 src/main/java/com/croct/client/export/model/Campaign.java
@@ -44,6 +46,7 @@ src/main/java/com/croct/client/export/model/EventResponseMetadata.java
 src/main/java/com/croct/client/export/model/EventType.java
 src/main/java/com/croct/client/export/model/GeoPoint.java
 src/main/java/com/croct/client/export/model/GoalCompleted.java
+src/main/java/com/croct/client/export/model/LeadGenerated.java
 src/main/java/com/croct/client/export/model/Location.java
 src/main/java/com/croct/client/export/model/LocationContinent.java
 src/main/java/com/croct/client/export/model/LocationDetected.java
@@ -68,11 +71,11 @@ src/main/java/com/croct/client/export/model/SlotPersonalized.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedMetadata.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalization.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalizationAssignedVariant.java
+src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalizationSlotVersion.java
 src/main/java/com/croct/client/export/model/TabOpened.java
 src/main/java/com/croct/client/export/model/TabUrlChanged.java
 src/main/java/com/croct/client/export/model/TabVisibility.java
 src/main/java/com/croct/client/export/model/TabVisibilityChanged.java
-src/main/java/com/croct/client/export/model/TestGroupAssigned.java
 src/main/java/com/croct/client/export/model/User.java
 src/main/java/com/croct/client/export/model/UserAddress.java
 src/main/java/com/croct/client/export/model/UserResponse.java

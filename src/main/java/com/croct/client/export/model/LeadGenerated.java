@@ -31,19 +31,18 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.net.URI;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
 
 
 /**
- * PageLoaded
+ * LeadGenerated
  */
 @JsonPropertyOrder({
-  PageLoaded.JSON_PROPERTY_URL,
-  PageLoaded.JSON_PROPERTY_TITLE,
-  PageLoaded.JSON_PROPERTY_LAST_MODIFIED_TIME
+  LeadGenerated.JSON_PROPERTY_LEAD_ID,
+  LeadGenerated.JSON_PROPERTY_CURRENCY,
+  LeadGenerated.JSON_PROPERTY_VALUE
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 @JsonIgnoreProperties(
@@ -52,94 +51,94 @@ import com.croct.client.export.JSON;
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type", visible = true)
 
-public class PageLoaded extends EventPayload {
-  public static final String JSON_PROPERTY_URL = "url";
-  @javax.annotation.Nonnull
-  private URI url;
+public class LeadGenerated extends EventPayload {
+  public static final String JSON_PROPERTY_LEAD_ID = "leadId";
+  @javax.annotation.Nullable
+  private String leadId;
 
-  public static final String JSON_PROPERTY_TITLE = "title";
-  @javax.annotation.Nonnull
-  private String title;
+  public static final String JSON_PROPERTY_CURRENCY = "currency";
+  @javax.annotation.Nullable
+  private String currency;
 
-  public static final String JSON_PROPERTY_LAST_MODIFIED_TIME = "lastModifiedTime";
-  @javax.annotation.Nonnull
-  private Long lastModifiedTime;
+  public static final String JSON_PROPERTY_VALUE = "value";
+  @javax.annotation.Nullable
+  private String value;
 
-  public PageLoaded() { 
+  public LeadGenerated() { 
   }
 
-  public PageLoaded url(@javax.annotation.Nonnull URI url) {
-    this.url = url;
+  public LeadGenerated leadId(@javax.annotation.Nullable String leadId) {
+    this.leadId = leadId;
     return this;
   }
 
   /**
-   * The URL of the page.
-   * @return url
+   * An identifier supplied by the application to uniquely identify the lead.
+   * @return leadId
    */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_URL, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_LEAD_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public URI getUrl() {
-    return url;
+  public String getLeadId() {
+    return leadId;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_URL, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUrl(@javax.annotation.Nonnull URI url) {
-    this.url = url;
+  @JsonProperty(value = JSON_PROPERTY_LEAD_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setLeadId(@javax.annotation.Nullable String leadId) {
+    this.leadId = leadId;
   }
 
 
-  public PageLoaded title(@javax.annotation.Nonnull String title) {
-    this.title = title;
+  public LeadGenerated currency(@javax.annotation.Nullable String currency) {
+    this.currency = currency;
     return this;
   }
 
   /**
-   * The title of the page.
-   * @return title
+   * The currency in which the lead value is accounted.
+   * @return currency
    */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_CURRENCY, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getTitle() {
-    return title;
+  public String getCurrency() {
+    return currency;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setTitle(@javax.annotation.Nonnull String title) {
-    this.title = title;
+  @JsonProperty(value = JSON_PROPERTY_CURRENCY, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCurrency(@javax.annotation.Nullable String currency) {
+    this.currency = currency;
   }
 
 
-  public PageLoaded lastModifiedTime(@javax.annotation.Nonnull Long lastModifiedTime) {
-    this.lastModifiedTime = lastModifiedTime;
+  public LeadGenerated value(@javax.annotation.Nullable String value) {
+    this.value = value;
     return this;
   }
 
   /**
-   * The last time the page was modified.
-   * @return lastModifiedTime
+   * The total value associated with the lead.
+   * @return value
    */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_LAST_MODIFIED_TIME, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_VALUE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Long getLastModifiedTime() {
-    return lastModifiedTime;
+  public String getValue() {
+    return value;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_LAST_MODIFIED_TIME, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setLastModifiedTime(@javax.annotation.Nonnull Long lastModifiedTime) {
-    this.lastModifiedTime = lastModifiedTime;
+  @JsonProperty(value = JSON_PROPERTY_VALUE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setValue(@javax.annotation.Nullable String value) {
+    this.value = value;
   }
 
   /**
@@ -154,7 +153,7 @@ public class PageLoaded extends EventPayload {
    * If the property does not already exist, create it otherwise replace it.
    */
   @JsonAnySetter
-  public PageLoaded putAdditionalProperty(String key, Object value) {
+  public LeadGenerated putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<>();
     }
@@ -181,7 +180,7 @@ public class PageLoaded extends EventPayload {
   }
 
   /**
-   * Return true if this PageLoaded object is equal to o.
+   * Return true if this LeadGenerated object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -196,11 +195,11 @@ public class PageLoaded extends EventPayload {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PageLoaded {\n");
+    sb.append("class LeadGenerated {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    lastModifiedTime: ").append(toIndentedString(lastModifiedTime)).append("\n");
+    sb.append("    leadId: ").append(toIndentedString(leadId)).append("\n");
+    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -220,8 +219,8 @@ public class PageLoaded extends EventPayload {
   static {
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<>();
-    mappings.put("PageLoaded", PageLoaded.class);
-    JSON.registerDiscriminator(PageLoaded.class, "@type", mappings);
+    mappings.put("LeadGenerated", LeadGenerated.class);
+    JSON.registerDiscriminator(LeadGenerated.class, "@type", mappings);
   }
 }
 

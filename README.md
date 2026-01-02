@@ -44,7 +44,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.croct.client</groupId>
   <artifactId>croct-export-client</artifactId>
-  <version>0.3.1</version>
+  <version>0.5.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -59,7 +59,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.croct.client:croct-export-client:0.3.1"
+    compile "com.croct.client:croct-export-client:0.5.0"
 }
 ```
 

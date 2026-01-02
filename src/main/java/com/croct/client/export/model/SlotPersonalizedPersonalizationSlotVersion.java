@@ -29,78 +29,78 @@ import com.croct.client.export.JSON;
 
 
 /**
- * The time window covering the first and last event of the session.
+ * SlotPersonalizedPersonalizationSlotVersion
  */
 @JsonPropertyOrder({
-  SessionWindow.JSON_PROPERTY_START,
-  SessionWindow.JSON_PROPERTY_END
+  SlotPersonalizedPersonalizationSlotVersion.JSON_PROPERTY_MAJOR_VERSION,
+  SlotPersonalizedPersonalizationSlotVersion.JSON_PROPERTY_MINOR_VERSION
 })
-@JsonTypeName("Session_window")
+@JsonTypeName("SlotPersonalized_personalization_slotVersion")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
-public class SessionWindow {
-  public static final String JSON_PROPERTY_START = "start";
+public class SlotPersonalizedPersonalizationSlotVersion {
+  public static final String JSON_PROPERTY_MAJOR_VERSION = "majorVersion";
   @javax.annotation.Nullable
-  private Long start;
+  private String majorVersion;
 
-  public static final String JSON_PROPERTY_END = "end";
+  public static final String JSON_PROPERTY_MINOR_VERSION = "minorVersion";
   @javax.annotation.Nullable
-  private Long end;
+  private String minorVersion;
 
-  public SessionWindow() { 
+  public SlotPersonalizedPersonalizationSlotVersion() { 
   }
 
-  public SessionWindow start(@javax.annotation.Nullable Long start) {
-    this.start = start;
+  public SlotPersonalizedPersonalizationSlotVersion majorVersion(@javax.annotation.Nullable String majorVersion) {
+    this.majorVersion = majorVersion;
     return this;
   }
 
   /**
-   * Get start
-   * @return start
+   * The major version.
+   * @return majorVersion
    */
   @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_START, required = false)
+  @JsonProperty(value = JSON_PROPERTY_MAJOR_VERSION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Long getStart() {
-    return start;
+  public String getMajorVersion() {
+    return majorVersion;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_START, required = false)
+  @JsonProperty(value = JSON_PROPERTY_MAJOR_VERSION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setStart(@javax.annotation.Nullable Long start) {
-    this.start = start;
+  public void setMajorVersion(@javax.annotation.Nullable String majorVersion) {
+    this.majorVersion = majorVersion;
   }
 
 
-  public SessionWindow end(@javax.annotation.Nullable Long end) {
-    this.end = end;
+  public SlotPersonalizedPersonalizationSlotVersion minorVersion(@javax.annotation.Nullable String minorVersion) {
+    this.minorVersion = minorVersion;
     return this;
   }
 
   /**
-   * Get end
-   * @return end
+   * The minor version.
+   * @return minorVersion
    */
   @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_END, required = false)
+  @JsonProperty(value = JSON_PROPERTY_MINOR_VERSION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Long getEnd() {
-    return end;
+  public String getMinorVersion() {
+    return minorVersion;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_END, required = false)
+  @JsonProperty(value = JSON_PROPERTY_MINOR_VERSION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEnd(@javax.annotation.Nullable Long end) {
-    this.end = end;
+  public void setMinorVersion(@javax.annotation.Nullable String minorVersion) {
+    this.minorVersion = minorVersion;
   }
 
 
   /**
-   * Return true if this Session_window object is equal to o.
+   * Return true if this SlotPersonalized_personalization_slotVersion object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -115,9 +115,9 @@ public class SessionWindow {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SessionWindow {\n");
-    sb.append("    start: ").append(toIndentedString(start)).append("\n");
-    sb.append("    end: ").append(toIndentedString(end)).append("\n");
+    sb.append("class SlotPersonalizedPersonalizationSlotVersion {\n");
+    sb.append("    majorVersion: ").append(toIndentedString(majorVersion)).append("\n");
+    sb.append("    minorVersion: ").append(toIndentedString(minorVersion)).append("\n");
     sb.append("}");
     return sb.toString();
   }

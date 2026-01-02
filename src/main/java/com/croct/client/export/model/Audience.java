@@ -33,30 +33,60 @@ import com.croct.client.export.JSON;
 
 
 /**
- * The official currency used in the location.
+ * The information about an audience.
  */
 @JsonPropertyOrder({
-  Currency.JSON_PROPERTY_NAME,
-  Currency.JSON_PROPERTY_CODE
+  Audience.JSON_PROPERTY_ID,
+  Audience.JSON_PROPERTY_NAME,
+  Audience.JSON_PROPERTY_CUSTOM_ID
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
-public class Currency {
+public class Audience {
+  public static final String JSON_PROPERTY_ID = "id";
+  @javax.annotation.Nullable
+  private String id;
+
   public static final String JSON_PROPERTY_NAME = "name";
   private JsonNullable<String> name = JsonNullable.<String>undefined();
 
-  public static final String JSON_PROPERTY_CODE = "code";
-  private JsonNullable<String> code = JsonNullable.<String>undefined();
+  public static final String JSON_PROPERTY_CUSTOM_ID = "customId";
+  private JsonNullable<String> customId = JsonNullable.<String>undefined();
 
-  public Currency() { 
+  public Audience() { 
   }
 
-  public Currency name(@javax.annotation.Nullable String name) {
+  public Audience id(@javax.annotation.Nullable String id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * The ID that uniquely identifies the audience.
+   * @return id
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getId() {
+    return id;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setId(@javax.annotation.Nullable String id) {
+    this.id = id;
+  }
+
+
+  public Audience name(@javax.annotation.Nullable String name) {
     this.name = JsonNullable.<String>of(name);
     return this;
   }
 
   /**
-   * The common name of the currency. For example, &#39;US Dollar&#39;.
+   * The name of the audience.
    * @return name
    */
   @javax.annotation.Nullable
@@ -83,41 +113,41 @@ public class Currency {
   }
 
 
-  public Currency code(@javax.annotation.Nullable String code) {
-    this.code = JsonNullable.<String>of(code);
+  public Audience customId(@javax.annotation.Nullable String customId) {
+    this.customId = JsonNullable.<String>of(customId);
     return this;
   }
 
   /**
-   * The currency code. For example, USD.
-   * @return code
+   * The custom ID of the audience.
+   * @return customId
    */
   @javax.annotation.Nullable
   @JsonIgnore
 
-  public String getCode() {
-        return code.orElse(null);
+  public String getCustomId() {
+        return customId.orElse(null);
   }
 
-  @JsonProperty(value = JSON_PROPERTY_CODE, required = false)
+  @JsonProperty(value = JSON_PROPERTY_CUSTOM_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public JsonNullable<String> getCode_JsonNullable() {
-    return code;
+  public JsonNullable<String> getCustomId_JsonNullable() {
+    return customId;
   }
   
-  @JsonProperty(JSON_PROPERTY_CODE)
-  public void setCode_JsonNullable(JsonNullable<String> code) {
-    this.code = code;
+  @JsonProperty(JSON_PROPERTY_CUSTOM_ID)
+  public void setCustomId_JsonNullable(JsonNullable<String> customId) {
+    this.customId = customId;
   }
 
-  public void setCode(@javax.annotation.Nullable String code) {
-    this.code = JsonNullable.<String>of(code);
+  public void setCustomId(@javax.annotation.Nullable String customId) {
+    this.customId = JsonNullable.<String>of(customId);
   }
 
 
   /**
-   * Return true if this Currency object is equal to o.
+   * Return true if this Audience object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -143,9 +173,10 @@ public class Currency {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Currency {\n");
+    sb.append("class Audience {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    customId: ").append(toIndentedString(customId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

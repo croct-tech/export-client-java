@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.3.1
+  version: 0.5.0
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -468,59 +468,75 @@ components:
     CartAbandoned:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a shopping cart was abandoned.
-      properties:
-        cart:
-          $ref: "#/components/schemas/Cart"
-      required:
-      - cart
+      - description: An event recording that a shopping cart was abandoned.
+        properties:
+          cart:
+            $ref: "#/components/schemas/Cart"
+        required:
+        - cart
+        type: object
+        example: null
       type: object
+      example: null
     CartModified:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a shopping cart was modified.
-      properties:
-        cart:
-          $ref: "#/components/schemas/Cart"
-      required:
-      - cart
+      - description: An event recording that a shopping cart was modified.
+        properties:
+          cart:
+            $ref: "#/components/schemas/Cart"
+        required:
+        - cart
+        type: object
+        example: null
       type: object
+      example: null
     CartViewed:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a shopping cart was viewed.
-      properties:
-        cart:
-          $ref: "#/components/schemas/Cart"
-      required:
-      - cart
+      - description: An event recording that a shopping cart was viewed.
+        properties:
+          cart:
+            $ref: "#/components/schemas/Cart"
+        required:
+        - cart
+        type: object
+        example: null
       type: object
+      example: null
     CheckoutStarted:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a shopping cart started the checkout process.
-      properties:
-        cart:
-          $ref: "#/components/schemas/Cart"
-        orderId:
-          description: The ID that uniquely identifies the order across the store.
-          format: uuid
-          nullable: true
-          type: string
-      required:
-      - cart
-      - orderId
+      - description: An event recording that a shopping cart started the checkout
+          process.
+        properties:
+          cart:
+            $ref: "#/components/schemas/Cart"
+          orderId:
+            description: The ID that uniquely identifies the order across the store.
+            format: uuid
+            nullable: true
+            type: string
+        required:
+        - cart
+        - orderId
+        type: object
+        example: null
       type: object
+      example: null
     ClientDetected:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that the user's client was detected.
-      properties:
-        client:
-          $ref: "#/components/schemas/WebClient"
-      required:
-      - client
+      - description: An event recording that the user's client was detected.
+        properties:
+          client:
+            $ref: "#/components/schemas/WebClient"
+        required:
+        - client
+        type: object
+        example: null
       type: object
+      example: null
     Device:
       description: The available information about a device.
       example:
@@ -629,20 +645,21 @@ components:
     EventOccurred:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording a domain-specific occurrence.
-      properties:
-        name:
-          description: "The name of the event. For example, \"pollAnswered\" or \"\
-            onboardingStarted\"."
-          type: string
-        details:
-          description: The details about the event.
-          nullable: false
-          type: object
-      required:
-      - details
-      - name
+      - description: An event recording a domain-specific occurrence.
+        properties:
+          name:
+            description: "The name of the event. For example, \"pollAnswered\" or\
+              \ \"onboardingStarted\"."
+            type: string
+          details:
+            $ref: "#/components/schemas/EventOccurred_allOf_details"
+        required:
+        - details
+        - name
+        type: object
+        example: null
       type: object
+      example: null
     EventPayload:
       description: "The event details, specific to the type of event."
       discriminator:
@@ -653,7 +670,6 @@ components:
           tabUrlChanged: "#/components/schemas/TabUrlChanged"
           tabOpened: "#/components/schemas/TabOpened"
           tabVisibilityChanged: "#/components/schemas/TabVisibilityChanged"
-          testGroupAssigned: "#/components/schemas/TestGroupAssigned"
           eventOccurred: "#/components/schemas/EventOccurred"
           locationDetected: "#/components/schemas/LocationDetected"
           clientDetected: "#/components/schemas/ClientDetected"
@@ -669,6 +685,8 @@ components:
           productAbandoned: "#/components/schemas/ProductAbandoned"
           productViewed: "#/components/schemas/ProductViewed"
           slotPersonalized: "#/components/schemas/SlotPersonalized"
+          leadGenerated: "#/components/schemas/LeadGenerated"
+          audienceMatched: "#/components/schemas/AudienceMatched"
         propertyName: '@type'
       example:
         '@type': '@type'
@@ -735,15 +753,17 @@ components:
       - pageLoaded
       - productAbandoned
       - productViewed
+      - cartAbandoned
       - cartViewed
       - cartModified
       - checkoutStarted
       - orderPlaced
-      - testGroupAssigned
       - nothingChanged
       - goalCompleted
       - eventOccurred
       - slotPersonalized
+      - leadGenerated
+      - audienceMatched
       type: string
       x-enum-varnames:
       - USER_SIGNED_UP
@@ -766,6 +786,8 @@ components:
       - GOAL_COMPLETED
       - EVENT_OCCURRED
       - SLOT_PERSONALIZED
+      - LEAD_GENERATED
+      - AUDIENCE_MATCHED
     Currency:
       description: The official currency used in the location.
       example:
@@ -806,33 +828,36 @@ components:
     GoalCompleted:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: "An event recording a completed activity, such as a purchase."
-      properties:
-        goalId:
-          description: The ID of the goal.
-          type: string
-        value:
-          description: "The monetary value associated to the completion of the goal.\
-            \ This can represent an estimated value or a symbolic value. For example,\
-            \ if the sales team can close 10% of people who sign up for a newsletter,\
-            \ and the average transaction is $500, then a possible value for newsletter\
-            \ sign-ups can be $50 (i.e., 10% of $500)."
-          nullable: true
-          type: string
-        currency:
-          description: "The currency in which the monetary value is expressed. The\
-            \ currency should be specified using the 3-letter currency codes defined\
-            \ by the ISO 4217 standard. For currencies having no official recognition\
-            \ in ISO 4217, as is the case with cryptocurrencies, it is allowed the\
-            \ use of non-ISO codes adopted locally or commercially. For example, \"\
-            BRL\" for Brazilian real or \"BTC\" for Bitcoin."
-          nullable: true
-          type: string
-      required:
-      - currency
-      - goalId
-      - value
+      - description: "An event recording a completed activity, such as a purchase."
+        properties:
+          goalId:
+            description: The ID of the goal.
+            type: string
+          value:
+            description: "The monetary value associated to the completion of the goal.\
+              \ This can represent an estimated value or a symbolic value. For example,\
+              \ if the sales team can close 10% of people who sign up for a newsletter,\
+              \ and the average transaction is $500, then a possible value for newsletter\
+              \ sign-ups can be $50 (i.e., 10% of $500)."
+            nullable: true
+            type: string
+          currency:
+            description: "The currency in which the monetary value is expressed. The\
+              \ currency should be specified using the 3-letter currency codes defined\
+              \ by the ISO 4217 standard. For currencies having no official recognition\
+              \ in ISO 4217, as is the case with cryptocurrencies, it is allowed the\
+              \ use of non-ISO codes adopted locally or commercially. For example,\
+              \ \"BRL\" for Brazilian real or \"BTC\" for Bitcoin."
+            nullable: true
+            type: string
+        required:
+        - currency
+        - goalId
+        - value
+        type: object
+        example: null
       type: object
+      example: null
     Location:
       description: An identification or estimation of a geographic location of an
         object.
@@ -955,13 +980,16 @@ components:
     LocationDetected:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that the location of a user was detected.
-      properties:
-        location:
-          $ref: "#/components/schemas/Location"
-      required:
-      - location
+      - description: An event recording that the location of a user was detected.
+        properties:
+          location:
+            $ref: "#/components/schemas/Location"
+        required:
+        - location
+        type: object
+        example: null
       type: object
+      example: null
     LocationSource:
       description: The source of information used to determine the location.
       enum:
@@ -981,16 +1009,19 @@ components:
     NothingChanged:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording a period of inactivity.
-      properties:
-        sinceTime:
-          description: "The timestamp when an activity was last observed, in milliseconds\
-            \ since epoch."
-          format: int64
-          type: integer
-      required:
-      - sinceTime
+      - description: An event recording a period of inactivity.
+        properties:
+          sinceTime:
+            description: "The timestamp when an activity was last observed, in milliseconds\
+              \ since epoch."
+            format: int64
+            type: integer
+        required:
+        - sinceTime
+        type: object
+        example: null
       type: object
+      example: null
     OperatingSystem:
       description: The available information about an operating system.
       example:
@@ -1136,13 +1167,16 @@ components:
     OrderPlaced:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that an order was placed.
-      properties:
-        order:
-          $ref: "#/components/schemas/Order"
-      required:
-      - order
+      - description: An event recording that an order was placed.
+        properties:
+          order:
+            $ref: "#/components/schemas/Order"
+        required:
+        - order
+        type: object
+        example: null
       type: object
+      example: null
     OrderStatus:
       description: The current status of the order.
       enum:
@@ -1158,56 +1192,62 @@ components:
     PageLoaded:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a page was loaded.
-      properties:
-        url:
-          description: The URL of the page.
-          format: uri
-          pattern: ^https?://
-          type: string
-        title:
-          description: The title of the page.
-          type: string
-        lastModifiedTime:
-          description: The last time the page was modified.
-          format: int64
-          type: integer
-      required:
-      - lastModifiedTime
-      - title
-      - url
+      - description: An event recording that a page was loaded.
+        properties:
+          url:
+            description: The URL of the page.
+            format: uri
+            pattern: ^https?://
+            type: string
+          title:
+            description: The title of the page.
+            type: string
+          lastModifiedTime:
+            description: The last time the page was modified.
+            format: int64
+            type: integer
+        required:
+        - lastModifiedTime
+        - title
+        - url
+        type: object
+        example: null
       type: object
+      example: null
     PageOpened:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a page was opened.
-      properties:
-        url:
-          description: The URL of the page.
-          format: uri
-          pattern: ^https?://
-          type: string
-        userAgent:
-          description: The user-agent of the client.
-          nullable: true
-          type: string
-        preferredLanguages:
-          description: An ordered list of the user's preferred languages.
-          nullable: true
-          type: string
-        referrer:
-          description: "The URI of the page that linked to the page that was opened.\
-            \ The value is null when the user navigated to the page directly (not\
-            \ through a link, but by using a bookmark, for example)."
-          format: uri
-          nullable: true
-          type: string
-      required:
-      - preferredLanguages
-      - referrer
-      - url
-      - userAgent
+      - description: An event recording that a page was opened.
+        properties:
+          url:
+            description: The URL of the page.
+            format: uri
+            pattern: ^https?://
+            type: string
+          userAgent:
+            description: The user-agent of the client.
+            nullable: true
+            type: string
+          preferredLanguages:
+            description: An ordered list of the user's preferred languages.
+            nullable: true
+            type: string
+          referrer:
+            description: "The URI of the page that linked to the page that was opened.\
+              \ The value is null when the user navigated to the page directly (not\
+              \ through a link, but by using a bookmark, for example)."
+            format: uri
+            nullable: true
+            type: string
+        required:
+        - preferredLanguages
+        - referrer
+        - url
+        - userAgent
+        type: object
+        example: null
       type: object
+      example: null
     ProductDetails:
       description: The detailed information of a product.
       properties:
@@ -1274,26 +1314,32 @@ components:
     ProductAbandoned:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a shopping cart item was abandoned.
-      properties:
-        cartItem:
-          $ref: "#/components/schemas/CartItem"
-        cart:
-          $ref: "#/components/schemas/Cart"
-      required:
-      - cart
-      - cartItem
+      - description: An event recording that a shopping cart item was abandoned.
+        properties:
+          cartItem:
+            $ref: "#/components/schemas/CartItem"
+          cart:
+            $ref: "#/components/schemas/Cart"
+        required:
+        - cart
+        - cartItem
+        type: object
+        example: null
       type: object
+      example: null
     ProductViewed:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a shopping cart was modified.
-      properties:
-        product:
-          $ref: "#/components/schemas/ProductDetails"
-      required:
-      - product
+      - description: An event recording that a shopping cart was modified.
+        properties:
+          product:
+            $ref: "#/components/schemas/ProductDetails"
+        required:
+        - product
+        type: object
+        example: null
       type: object
+      example: null
     Region:
       description: "A subsection of a country, typically a state or province."
       example:
@@ -1568,33 +1614,39 @@ components:
     TabOpened:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a new tab was opened.
-      properties:
-        tabId:
-          description: The ID that uniquely identifies the tab across the session.
-          format: uuid
-          type: string
-      required:
-      - tabId
+      - description: An event recording that a new tab was opened.
+        properties:
+          tabId:
+            description: The ID that uniquely identifies the tab across the session.
+            format: uuid
+            type: string
+        required:
+        - tabId
+        type: object
+        example: null
       type: object
+      example: null
     TabUrlChanged:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that the URL of a tab has changed.
-      properties:
-        tabId:
-          description: The ID that uniquely identifies the tab across the session.
-          format: uuid
-          type: string
-        url:
-          description: The URL the page that the tab was on.
-          format: uri
-          pattern: ^https?://
-          type: string
-      required:
-      - tabId
-      - url
+      - description: An event recording that the URL of a tab has changed.
+        properties:
+          tabId:
+            description: The ID that uniquely identifies the tab across the session.
+            format: uuid
+            type: string
+          url:
+            description: The URL the page that the tab was on.
+            format: uri
+            pattern: ^https?://
+            type: string
+        required:
+        - tabId
+        - url
+        type: object
+        example: null
       type: object
+      example: null
     TabVisibility:
       description: The visibility of the tab.
       enum:
@@ -1607,35 +1659,21 @@ components:
     TabVisibilityChanged:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that the visibility of a tab has changed.
-      properties:
-        tabId:
-          description: The ID that uniquely identifies the tab across the session.
-          format: uuid
-          type: string
-        visibility:
-          $ref: "#/components/schemas/TabVisibility"
-      required:
-      - tabId
-      - visibility
+      - description: An event recording that the visibility of a tab has changed.
+        properties:
+          tabId:
+            description: The ID that uniquely identifies the tab across the session.
+            format: uuid
+            type: string
+          visibility:
+            $ref: "#/components/schemas/TabVisibility"
+        required:
+        - tabId
+        - visibility
+        type: object
+        example: null
       type: object
-    TestGroupAssigned:
-      allOf:
-      - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a test group was assigned to a user.
-      properties:
-        testId:
-          description: "The ID of the test. For example, \"black-friday-banner\" or\
-            \ \"home-banner-cta\"."
-          type: string
-        groupId:
-          description: "The ID of the test group, also known as \"variant\". For example,\
-            \ \"black-friday-promo\" or \"black-friday-shipping\"."
-          type: string
-      required:
-      - groupId
-      - testId
-      type: object
+      example: null
     User:
       example:
         lastName: lastName
@@ -1825,36 +1863,45 @@ components:
     UserSignedIn:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a user has signed in.
-      properties:
-        externalUserId:
-          description: The external ID of the user.
-          type: string
-      required:
-      - externalUserId
+      - description: An event recording that a user has signed in.
+        properties:
+          externalUserId:
+            description: The external ID of the user.
+            type: string
+        required:
+        - externalUserId
+        type: object
+        example: null
       type: object
+      example: null
     UserSignedOut:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a user has signed out.
-      properties:
-        externalUserId:
-          description: The external ID of the user.
-          type: string
-      required:
-      - externalUserId
+      - description: An event recording that a user has signed out.
+        properties:
+          externalUserId:
+            description: The external ID of the user.
+            type: string
+        required:
+        - externalUserId
+        type: object
+        example: null
       type: object
+      example: null
     UserSignedUp:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
-      description: An event recording that a user has signed up.
-      properties:
-        externalUserId:
-          description: The external ID of the user.
-          type: string
-      required:
-      - externalUserId
+      - description: An event recording that a user has signed up.
+        properties:
+          externalUserId:
+            description: The external ID of the user.
+            type: string
+        required:
+        - externalUserId
+        type: object
+        example: null
       type: object
+      example: null
     SlotPersonalized:
       description: An event recording a slot personalization.
       properties:
@@ -1870,6 +1917,39 @@ components:
       - metadata
       - personalization
       type: object
+    LeadGenerated:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a user became a lead.
+        properties:
+          leadId:
+            description: An identifier supplied by the application to uniquely identify
+              the lead.
+            type: string
+          currency:
+            description: The currency in which the lead value is accounted.
+            type: string
+          value:
+            description: The total value associated with the lead.
+            type: string
+        type: object
+        example: null
+      type: object
+      example: null
+    AudienceMatched:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a user meets the criteria of one or more
+          audiences.
+        properties:
+          audienceIds:
+            items:
+              $ref: "#/components/schemas/Audience"
+            type: array
+        type: object
+        example: null
+      type: object
+      example: null
     WebClient:
       description: The available information about a web client.
       example:
@@ -1896,20 +1976,45 @@ components:
     WebContext:
       allOf:
       - $ref: "#/components/schemas/EventContext"
-      description: The context of the web client at the time the event was tracked.
+      - description: The context of the web client at the time the event was tracked.
+        properties:
+          tabId:
+            description: The ID that uniquely identifies the tab across the session.
+            format: uuid
+            type: string
+          url:
+            description: The URL of the page that the client was on.
+            format: uri
+            pattern: ^https?://
+            type: string
+        required:
+        - tabId
+        - url
+        type: object
+        example: null
+      type: object
+      example: null
+    Audience:
+      description: The information about an audience.
       properties:
-        tabId:
-          description: The ID that uniquely identifies the tab across the session.
-          format: uuid
+        id:
+          description: The ID that uniquely identifies the audience.
+          nullable: false
           type: string
-        url:
-          description: The URL of the page that the client was on.
-          format: uri
-          pattern: ^https?://
+        name:
+          description: The name of the audience.
+          nullable: true
+          type: string
+        customId:
+          description: The custom ID of the audience.
+          nullable: true
           type: string
       required:
-      - tabId
-      - url
+      - audienceId
+      type: object
+    EventOccurred_allOf_details:
+      description: The details about the event.
+      nullable: false
       type: object
     EventResponse_metadata:
       example:
@@ -2018,6 +2123,16 @@ components:
           format: int32
           type: integer
       type: object
+    SlotPersonalized_personalization_slotVersion:
+      nullable: true
+      properties:
+        majorVersion:
+          description: The major version.
+          type: string
+        minorVersion:
+          description: The minor version.
+          type: string
+      type: object
     SlotPersonalized_personalization_assignedVariant:
       nullable: true
       properties:
@@ -2048,6 +2163,8 @@ components:
           description: The ID that uniquely identifies the content.
           format: uuid
           type: string
+        slotVersion:
+          $ref: "#/components/schemas/SlotPersonalized_personalization_slotVersion"
         assignedVariant:
           $ref: "#/components/schemas/SlotPersonalized_personalization_assignedVariant"
       required:

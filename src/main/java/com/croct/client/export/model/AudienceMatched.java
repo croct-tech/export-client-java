@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
+import com.croct.client.export.model.Audience;
 import com.croct.client.export.model.EventPayload;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,19 +32,18 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
 
 
 /**
- * PageLoaded
+ * AudienceMatched
  */
 @JsonPropertyOrder({
-  PageLoaded.JSON_PROPERTY_URL,
-  PageLoaded.JSON_PROPERTY_TITLE,
-  PageLoaded.JSON_PROPERTY_LAST_MODIFIED_TIME
+  AudienceMatched.JSON_PROPERTY_AUDIENCE_IDS
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.19.0-SNAPSHOT")
 @JsonIgnoreProperties(
@@ -52,94 +52,44 @@ import com.croct.client.export.JSON;
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type", visible = true)
 
-public class PageLoaded extends EventPayload {
-  public static final String JSON_PROPERTY_URL = "url";
-  @javax.annotation.Nonnull
-  private URI url;
+public class AudienceMatched extends EventPayload {
+  public static final String JSON_PROPERTY_AUDIENCE_IDS = "audienceIds";
+  @javax.annotation.Nullable
+  private List<Audience> audienceIds = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_TITLE = "title";
-  @javax.annotation.Nonnull
-  private String title;
-
-  public static final String JSON_PROPERTY_LAST_MODIFIED_TIME = "lastModifiedTime";
-  @javax.annotation.Nonnull
-  private Long lastModifiedTime;
-
-  public PageLoaded() { 
+  public AudienceMatched() { 
   }
 
-  public PageLoaded url(@javax.annotation.Nonnull URI url) {
-    this.url = url;
+  public AudienceMatched audienceIds(@javax.annotation.Nullable List<Audience> audienceIds) {
+    this.audienceIds = audienceIds;
+    return this;
+  }
+
+  public AudienceMatched addAudienceIdsItem(Audience audienceIdsItem) {
+    if (this.audienceIds == null) {
+      this.audienceIds = new ArrayList<>();
+    }
+    this.audienceIds.add(audienceIdsItem);
     return this;
   }
 
   /**
-   * The URL of the page.
-   * @return url
+   * Get audienceIds
+   * @return audienceIds
    */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_URL, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_AUDIENCE_IDS, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public URI getUrl() {
-    return url;
+  public List<Audience> getAudienceIds() {
+    return audienceIds;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_URL, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUrl(@javax.annotation.Nonnull URI url) {
-    this.url = url;
-  }
-
-
-  public PageLoaded title(@javax.annotation.Nonnull String title) {
-    this.title = title;
-    return this;
-  }
-
-  /**
-   * The title of the page.
-   * @return title
-   */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
-  public String getTitle() {
-    return title;
-  }
-
-
-  @JsonProperty(value = JSON_PROPERTY_TITLE, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setTitle(@javax.annotation.Nonnull String title) {
-    this.title = title;
-  }
-
-
-  public PageLoaded lastModifiedTime(@javax.annotation.Nonnull Long lastModifiedTime) {
-    this.lastModifiedTime = lastModifiedTime;
-    return this;
-  }
-
-  /**
-   * The last time the page was modified.
-   * @return lastModifiedTime
-   */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_LAST_MODIFIED_TIME, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
-  public Long getLastModifiedTime() {
-    return lastModifiedTime;
-  }
-
-
-  @JsonProperty(value = JSON_PROPERTY_LAST_MODIFIED_TIME, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setLastModifiedTime(@javax.annotation.Nonnull Long lastModifiedTime) {
-    this.lastModifiedTime = lastModifiedTime;
+  @JsonProperty(value = JSON_PROPERTY_AUDIENCE_IDS, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAudienceIds(@javax.annotation.Nullable List<Audience> audienceIds) {
+    this.audienceIds = audienceIds;
   }
 
   /**
@@ -154,7 +104,7 @@ public class PageLoaded extends EventPayload {
    * If the property does not already exist, create it otherwise replace it.
    */
   @JsonAnySetter
-  public PageLoaded putAdditionalProperty(String key, Object value) {
+  public AudienceMatched putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<>();
     }
@@ -181,7 +131,7 @@ public class PageLoaded extends EventPayload {
   }
 
   /**
-   * Return true if this PageLoaded object is equal to o.
+   * Return true if this AudienceMatched object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -196,11 +146,9 @@ public class PageLoaded extends EventPayload {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PageLoaded {\n");
+    sb.append("class AudienceMatched {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    url: ").append(toIndentedString(url)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    lastModifiedTime: ").append(toIndentedString(lastModifiedTime)).append("\n");
+    sb.append("    audienceIds: ").append(toIndentedString(audienceIds)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -220,8 +168,8 @@ public class PageLoaded extends EventPayload {
   static {
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<>();
-    mappings.put("PageLoaded", PageLoaded.class);
-    JSON.registerDiscriminator(PageLoaded.class, "@type", mappings);
+    mappings.put("AudienceMatched", AudienceMatched.class);
+    JSON.registerDiscriminator(AudienceMatched.class, "@type", mappings);
   }
 }
 
