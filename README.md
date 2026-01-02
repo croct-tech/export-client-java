@@ -16,7 +16,7 @@
 
 <p align="center">
     <a href="https://www.npmjs.com/package/@croct/export"><img alt="Version" src="https://img.shields.io/npm/v/@croct/export"/></a>
-    <a href="https://github.com/croct-tech/export-client-java/actions/workflows/validations.yaml"><img alt="Validations" src="https://github.com/croct-tech/export-client-java/actions/workflows/validations.yaml/badge.svg"/></a>
+    <a href="https://github.com/croct-tech/export-client-java/actions/workflows/branch-validations.yaml"><img alt="Validations" src="https://github.com/croct-tech/export-client-java/actions/workflows/branch-validations.yaml/badge.svg"/></a>
     <br />
     <br />
     <a href="https://github.com/croct-tech/exporter-client-java/releases">📦 Releases</a>
