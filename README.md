@@ -10,6 +10,7 @@
   </a>
   <br/>
   <strong>Export API Java Client</strong>
+  <br/>
   Java client for the Croct Export API.
 </p>
 
