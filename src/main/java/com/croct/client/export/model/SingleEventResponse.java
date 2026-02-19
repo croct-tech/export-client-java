@@ -18,99 +18,90 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
-import com.croct.client.export.model.Session;
+import com.croct.client.export.model.Event;
+import com.croct.client.export.model.EventResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.croct.client.export.JSON;
 
 
 /**
- * SessionResponse
+ * SingleEventResponse
  */
 @JsonPropertyOrder({
-  SessionResponse.JSON_PROPERTY_ITEMS,
-  SessionResponse.JSON_PROPERTY_NEXT_CURSOR
+  SingleEventResponse.JSON_PROPERTY_METADATA,
+  SingleEventResponse.JSON_PROPERTY_EVENT
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.21.0-SNAPSHOT")
-public class SessionResponse {
-  public static final String JSON_PROPERTY_ITEMS = "items";
+public class SingleEventResponse {
+  public static final String JSON_PROPERTY_METADATA = "metadata";
   @javax.annotation.Nonnull
-  private List<Session> items = new ArrayList<>();
+  private EventResponseMetadata metadata;
 
-  public static final String JSON_PROPERTY_NEXT_CURSOR = "nextCursor";
+  public static final String JSON_PROPERTY_EVENT = "event";
   @javax.annotation.Nonnull
-  private String nextCursor;
+  private Event event;
 
-  public SessionResponse() { 
+  public SingleEventResponse() { 
   }
 
-  public SessionResponse items(@javax.annotation.Nonnull List<Session> items) {
-    this.items = items;
-    return this;
-  }
-
-  public SessionResponse addItemsItem(Session itemsItem) {
-    if (this.items == null) {
-      this.items = new ArrayList<>();
-    }
-    this.items.add(itemsItem);
+  public SingleEventResponse metadata(@javax.annotation.Nonnull EventResponseMetadata metadata) {
+    this.metadata = metadata;
     return this;
   }
 
   /**
-   * Get items
-   * @return items
+   * Get metadata
+   * @return metadata
    */
   @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_ITEMS, required = true)
+  @JsonProperty(value = JSON_PROPERTY_METADATA, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public List<Session> getItems() {
-    return items;
+  public EventResponseMetadata getMetadata() {
+    return metadata;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_ITEMS, required = true)
+  @JsonProperty(value = JSON_PROPERTY_METADATA, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setItems(@javax.annotation.Nonnull List<Session> items) {
-    this.items = items;
+  public void setMetadata(@javax.annotation.Nonnull EventResponseMetadata metadata) {
+    this.metadata = metadata;
   }
 
 
-  public SessionResponse nextCursor(@javax.annotation.Nonnull String nextCursor) {
-    this.nextCursor = nextCursor;
+  public SingleEventResponse event(@javax.annotation.Nonnull Event event) {
+    this.event = event;
     return this;
   }
 
   /**
-   * Get nextCursor
-   * @return nextCursor
+   * Get event
+   * @return event
    */
   @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_NEXT_CURSOR, required = true)
+  @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public String getNextCursor() {
-    return nextCursor;
+  public Event getEvent() {
+    return event;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_NEXT_CURSOR, required = true)
+  @JsonProperty(value = JSON_PROPERTY_EVENT, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setNextCursor(@javax.annotation.Nonnull String nextCursor) {
-    this.nextCursor = nextCursor;
+  public void setEvent(@javax.annotation.Nonnull Event event) {
+    this.event = event;
   }
 
 
   /**
-   * Return true if this SessionResponse object is equal to o.
+   * Return true if this SingleEventResponse object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -125,9 +116,9 @@ public class SessionResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SessionResponse {\n");
-    sb.append("    items: ").append(toIndentedString(items)).append("\n");
-    sb.append("    nextCursor: ").append(toIndentedString(nextCursor)).append("\n");
+    sb.append("class SingleEventResponse {\n");
+    sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
+    sb.append("    event: ").append(toIndentedString(event)).append("\n");
     sb.append("}");
     return sb.toString();
   }

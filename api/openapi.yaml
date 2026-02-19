@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.5.0
+  version: 0.6.0
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -182,6 +182,114 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserResponse"
           description: Success response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiProblem"
+          description: Request error
+      tags:
+      - export
+      x-accepts:
+      - application/json
+  /events/{id}:
+    get:
+      operationId: exportEventById
+      parameters:
+      - description: The unique identifier of the event
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SingleEventResponse"
+          description: Event found
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiProblem"
+          description: Request error
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiProblem"
+          description: Request error
+      tags:
+      - export
+      x-accepts:
+      - application/json
+  /session/{sessionId}:
+    get:
+      operationId: exportSessionById
+      parameters:
+      - description: The unique identifier of the session
+        explode: false
+        in: path
+        name: sessionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Session found
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiProblem"
+          description: Request error
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiProblem"
+          description: Request error
+      tags:
+      - export
+      x-accepts:
+      - application/json
+  /user/{userId}:
+    get:
+      operationId: exportUserById
+      parameters:
+      - description: The unique identifier of the user
+        explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+          description: User found
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiProblem"
+          description: Request error
         default:
           content:
             application/json:
@@ -592,10 +700,14 @@ components:
           metadata:
             key: metadata
           type: web
+        id: id
         sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         timestamp: 0
       properties:
+        id:
+          description: The unique identifier of the event.
+          type: string
         sessionId:
           description: The ID of the session assigned to the event.
           format: uuid
@@ -615,6 +727,7 @@ components:
           $ref: "#/components/schemas/EventPayload"
       required:
       - context
+      - id
       - payload
       - sessionId
       - timestamp
@@ -713,6 +826,7 @@ components:
             metadata:
               key: metadata
             type: web
+          id: id
           sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           timestamp: 0
@@ -722,6 +836,7 @@ components:
             metadata:
               key: metadata
             type: web
+          id: id
           sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           timestamp: 0
@@ -738,6 +853,35 @@ components:
       - items
       - metadata
       - nextCursor
+      type: object
+    SingleEventResponse:
+      example:
+        metadata:
+          organizationSlug: organizationSlug
+          applicationSlug: applicationSlug
+          organizationName: organizationName
+          workspaceName: workspaceName
+          workspaceSlug: workspaceSlug
+          applicationName: applicationName
+        event:
+          payload:
+            '@type': '@type'
+          context:
+            metadata:
+              key: metadata
+            type: web
+          id: id
+          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          timestamp: 0
+      properties:
+        metadata:
+          $ref: "#/components/schemas/EventResponse_metadata"
+        event:
+          $ref: "#/components/schemas/Event"
+      required:
+      - event
+      - metadata
       type: object
     EventType:
       enum:

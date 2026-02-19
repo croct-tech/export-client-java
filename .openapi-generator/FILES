@@ -67,6 +67,7 @@ src/main/java/com/croct/client/export/model/Session.java
 src/main/java/com/croct/client/export/model/SessionResponse.java
 src/main/java/com/croct/client/export/model/SessionStatistics.java
 src/main/java/com/croct/client/export/model/SessionWindow.java
+src/main/java/com/croct/client/export/model/SingleEventResponse.java
 src/main/java/com/croct/client/export/model/SlotPersonalized.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedMetadata.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalization.java
