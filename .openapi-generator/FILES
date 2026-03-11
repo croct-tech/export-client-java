@@ -59,6 +59,7 @@ src/main/java/com/croct/client/export/model/OrderPlaced.java
 src/main/java/com/croct/client/export/model/OrderStatus.java
 src/main/java/com/croct/client/export/model/PageLoaded.java
 src/main/java/com/croct/client/export/model/PageOpened.java
+src/main/java/com/croct/client/export/model/Point.java
 src/main/java/com/croct/client/export/model/ProductAbandoned.java
 src/main/java/com/croct/client/export/model/ProductDetails.java
 src/main/java/com/croct/client/export/model/ProductViewed.java
@@ -68,6 +69,7 @@ src/main/java/com/croct/client/export/model/SessionResponse.java
 src/main/java/com/croct/client/export/model/SessionStatistics.java
 src/main/java/com/croct/client/export/model/SessionWindow.java
 src/main/java/com/croct/client/export/model/SingleEventResponse.java
+src/main/java/com/croct/client/export/model/Size.java
 src/main/java/com/croct/client/export/model/SlotPersonalized.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedMetadata.java
 src/main/java/com/croct/client/export/model/SlotPersonalizedPersonalization.java
@@ -79,7 +81,9 @@ src/main/java/com/croct/client/export/model/TabVisibility.java
 src/main/java/com/croct/client/export/model/TabVisibilityChanged.java
 src/main/java/com/croct/client/export/model/User.java
 src/main/java/com/croct/client/export/model/UserAddress.java
+src/main/java/com/croct/client/export/model/UserClicked.java
 src/main/java/com/croct/client/export/model/UserResponse.java
+src/main/java/com/croct/client/export/model/UserScrolled.java
 src/main/java/com/croct/client/export/model/UserSignedIn.java
 src/main/java/com/croct/client/export/model/UserSignedOut.java
 src/main/java/com/croct/client/export/model/UserSignedUp.java
