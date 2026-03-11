@@ -5,7 +5,7 @@
     <artifactId>croct-export-client</artifactId>
     <packaging>jar</packaging>
     <name>croct-export-client</name>
-    <version>0.6.0</version>
+    <version>0.7.0</version>
     <url>https://github.com/croct-tech/export-client-java</url>
     <description>Java client for the Croct Exporter API.</description>
     <scm>
@@ -339,7 +339,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-version}</version>
+            <version>${jackson-annotations-version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -385,8 +385,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jersey-version>2.37</jersey-version>
-        <jackson-version>2.19.2</jackson-version>
-        <jackson-databind-version>2.19.2</jackson-databind-version>
+        <jackson-version>2.21.1</jackson-version>
+        <jackson-annotations-version>2.21</jackson-annotations-version>
+        <jackson-databind-version>2.21.1</jackson-databind-version>
         <jackson-databind-nullable-version>0.2.9</jackson-databind-nullable-version>
         <jakarta-annotation-version>1.3.5</jakarta-annotation-version>
         <beanvalidation-version>2.0.2</beanvalidation-version>

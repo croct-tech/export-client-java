@@ -29,78 +29,77 @@ import com.croct.client.export.JSON;
 
 
 /**
- * The time window covering the first and last event of the session.
+ * A position in a two-dimensional space.
  */
 @JsonPropertyOrder({
-  SessionWindow.JSON_PROPERTY_START,
-  SessionWindow.JSON_PROPERTY_END
+  Point.JSON_PROPERTY_X,
+  Point.JSON_PROPERTY_Y
 })
-@JsonTypeName("Session_window")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.21.0-SNAPSHOT")
-public class SessionWindow {
-  public static final String JSON_PROPERTY_START = "start";
-  @javax.annotation.Nullable
-  private Long start;
+public class Point {
+  public static final String JSON_PROPERTY_X = "x";
+  @javax.annotation.Nonnull
+  private Integer x;
 
-  public static final String JSON_PROPERTY_END = "end";
-  @javax.annotation.Nullable
-  private Long end;
+  public static final String JSON_PROPERTY_Y = "y";
+  @javax.annotation.Nonnull
+  private Integer y;
 
-  public SessionWindow() { 
+  public Point() { 
   }
 
-  public SessionWindow start(@javax.annotation.Nullable Long start) {
-    this.start = start;
+  public Point x(@javax.annotation.Nonnull Integer x) {
+    this.x = x;
     return this;
   }
 
   /**
-   * Get start
-   * @return start
+   * The horizontal position in pixels.
+   * @return x
    */
-  @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_START, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @javax.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_X, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Long getStart() {
-    return start;
+  public Integer getX() {
+    return x;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_START, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setStart(@javax.annotation.Nullable Long start) {
-    this.start = start;
+  @JsonProperty(value = JSON_PROPERTY_X, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setX(@javax.annotation.Nonnull Integer x) {
+    this.x = x;
   }
 
 
-  public SessionWindow end(@javax.annotation.Nullable Long end) {
-    this.end = end;
+  public Point y(@javax.annotation.Nonnull Integer y) {
+    this.y = y;
     return this;
   }
 
   /**
-   * Get end
-   * @return end
+   * The vertical position in pixels.
+   * @return y
    */
-  @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_END, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @javax.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_Y, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Long getEnd() {
-    return end;
+  public Integer getY() {
+    return y;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_END, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEnd(@javax.annotation.Nullable Long end) {
-    this.end = end;
+  @JsonProperty(value = JSON_PROPERTY_Y, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setY(@javax.annotation.Nonnull Integer y) {
+    this.y = y;
   }
 
 
   /**
-   * Return true if this Session_window object is equal to o.
+   * Return true if this Point object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -115,9 +114,9 @@ public class SessionWindow {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SessionWindow {\n");
-    sb.append("    start: ").append(toIndentedString(start)).append("\n");
-    sb.append("    end: ").append(toIndentedString(end)).append("\n");
+    sb.append("class Point {\n");
+    sb.append("    x: ").append(toIndentedString(x)).append("\n");
+    sb.append("    y: ").append(toIndentedString(y)).append("\n");
     sb.append("}");
     return sb.toString();
   }

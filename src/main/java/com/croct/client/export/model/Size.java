@@ -29,78 +29,77 @@ import com.croct.client.export.JSON;
 
 
 /**
- * The time window covering the first and last event of the session.
+ * A two-dimensional size.
  */
 @JsonPropertyOrder({
-  SessionWindow.JSON_PROPERTY_START,
-  SessionWindow.JSON_PROPERTY_END
+  Size.JSON_PROPERTY_WIDTH,
+  Size.JSON_PROPERTY_HEIGHT
 })
-@JsonTypeName("Session_window")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.21.0-SNAPSHOT")
-public class SessionWindow {
-  public static final String JSON_PROPERTY_START = "start";
-  @javax.annotation.Nullable
-  private Long start;
+public class Size {
+  public static final String JSON_PROPERTY_WIDTH = "width";
+  @javax.annotation.Nonnull
+  private Integer width;
 
-  public static final String JSON_PROPERTY_END = "end";
-  @javax.annotation.Nullable
-  private Long end;
+  public static final String JSON_PROPERTY_HEIGHT = "height";
+  @javax.annotation.Nonnull
+  private Integer height;
 
-  public SessionWindow() { 
+  public Size() { 
   }
 
-  public SessionWindow start(@javax.annotation.Nullable Long start) {
-    this.start = start;
+  public Size width(@javax.annotation.Nonnull Integer width) {
+    this.width = width;
     return this;
   }
 
   /**
-   * Get start
-   * @return start
+   * The width in pixels.
+   * @return width
    */
-  @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_START, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @javax.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_WIDTH, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Long getStart() {
-    return start;
+  public Integer getWidth() {
+    return width;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_START, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setStart(@javax.annotation.Nullable Long start) {
-    this.start = start;
+  @JsonProperty(value = JSON_PROPERTY_WIDTH, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setWidth(@javax.annotation.Nonnull Integer width) {
+    this.width = width;
   }
 
 
-  public SessionWindow end(@javax.annotation.Nullable Long end) {
-    this.end = end;
+  public Size height(@javax.annotation.Nonnull Integer height) {
+    this.height = height;
     return this;
   }
 
   /**
-   * Get end
-   * @return end
+   * The height in pixels.
+   * @return height
    */
-  @javax.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_END, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @javax.annotation.Nonnull
+  @JsonProperty(value = JSON_PROPERTY_HEIGHT, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Long getEnd() {
-    return end;
+  public Integer getHeight() {
+    return height;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_END, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEnd(@javax.annotation.Nullable Long end) {
-    this.end = end;
+  @JsonProperty(value = JSON_PROPERTY_HEIGHT, required = true)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setHeight(@javax.annotation.Nonnull Integer height) {
+    this.height = height;
   }
 
 
   /**
-   * Return true if this Session_window object is equal to o.
+   * Return true if this Size object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -115,9 +114,9 @@ public class SessionWindow {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SessionWindow {\n");
-    sb.append("    start: ").append(toIndentedString(start)).append("\n");
-    sb.append("    end: ").append(toIndentedString(end)).append("\n");
+    sb.append("class Size {\n");
+    sb.append("    width: ").append(toIndentedString(width)).append("\n");
+    sb.append("    height: ").append(toIndentedString(height)).append("\n");
     sb.append("}");
     return sb.toString();
   }

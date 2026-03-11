@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.EventPayload;
+import com.croct.client.export.model.Point;
+import com.croct.client.export.model.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,11 +39,11 @@ import com.croct.client.export.JSON;
 
 
 /**
- * EventOccurred
+ * UserClicked
  */
 @JsonPropertyOrder({
-  EventOccurred.JSON_PROPERTY_NAME,
-  EventOccurred.JSON_PROPERTY_DETAILS
+  UserClicked.JSON_PROPERTY_POINT,
+  UserClicked.JSON_PROPERTY_SURFACE_SIZE
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.21.0-SNAPSHOT")
 @JsonIgnoreProperties(
@@ -50,65 +52,65 @@ import com.croct.client.export.JSON;
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type", visible = true)
 
-public class EventOccurred extends EventPayload {
-  public static final String JSON_PROPERTY_NAME = "name";
+public class UserClicked extends EventPayload {
+  public static final String JSON_PROPERTY_POINT = "point";
   @javax.annotation.Nonnull
-  private String name;
+  private Point point;
 
-  public static final String JSON_PROPERTY_DETAILS = "details";
-  @javax.annotation.Nonnull
-  private Object details;
+  public static final String JSON_PROPERTY_SURFACE_SIZE = "surfaceSize";
+  @javax.annotation.Nullable
+  private Size surfaceSize;
 
-  public EventOccurred() { 
+  public UserClicked() { 
   }
 
-  public EventOccurred name(@javax.annotation.Nonnull String name) {
-    this.name = name;
+  public UserClicked point(@javax.annotation.Nonnull Point point) {
+    this.point = point;
     return this;
   }
 
   /**
-   * The name of the event. For example, \&quot;pollAnswered\&quot; or \&quot;onboardingStarted\&quot;.
-   * @return name
+   * Get point
+   * @return point
    */
   @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+  @JsonProperty(value = JSON_PROPERTY_POINT, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public String getName() {
-    return name;
+  public Point getPoint() {
+    return point;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
+  @JsonProperty(value = JSON_PROPERTY_POINT, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setName(@javax.annotation.Nonnull String name) {
-    this.name = name;
+  public void setPoint(@javax.annotation.Nonnull Point point) {
+    this.point = point;
   }
 
 
-  public EventOccurred details(@javax.annotation.Nonnull Object details) {
-    this.details = details;
+  public UserClicked surfaceSize(@javax.annotation.Nullable Size surfaceSize) {
+    this.surfaceSize = surfaceSize;
     return this;
   }
 
   /**
-   * The details about the event.
-   * @return details
+   * Get surfaceSize
+   * @return surfaceSize
    */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_DETAILS, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_SURFACE_SIZE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Object getDetails() {
-    return details;
+  public Size getSurfaceSize() {
+    return surfaceSize;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_DETAILS, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDetails(@javax.annotation.Nonnull Object details) {
-    this.details = details;
+  @JsonProperty(value = JSON_PROPERTY_SURFACE_SIZE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSurfaceSize(@javax.annotation.Nullable Size surfaceSize) {
+    this.surfaceSize = surfaceSize;
   }
 
   /**
@@ -123,7 +125,7 @@ public class EventOccurred extends EventPayload {
    * If the property does not already exist, create it otherwise replace it.
    */
   @JsonAnySetter
-  public EventOccurred putAdditionalProperty(String key, Object value) {
+  public UserClicked putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<>();
     }
@@ -150,7 +152,7 @@ public class EventOccurred extends EventPayload {
   }
 
   /**
-   * Return true if this EventOccurred object is equal to o.
+   * Return true if this UserClicked object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -165,10 +167,10 @@ public class EventOccurred extends EventPayload {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EventOccurred {\n");
+    sb.append("class UserClicked {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    details: ").append(toIndentedString(details)).append("\n");
+    sb.append("    point: ").append(toIndentedString(point)).append("\n");
+    sb.append("    surfaceSize: ").append(toIndentedString(surfaceSize)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -188,8 +190,8 @@ public class EventOccurred extends EventPayload {
   static {
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<>();
-    mappings.put("EventOccurred", EventOccurred.class);
-    JSON.registerDiscriminator(EventOccurred.class, "@type", mappings);
+    mappings.put("UserClicked", UserClicked.class);
+    JSON.registerDiscriminator(UserClicked.class, "@type", mappings);
   }
 }
 

@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.6.0
+  version: 0.7.0
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -800,6 +800,8 @@ components:
           slotPersonalized: "#/components/schemas/SlotPersonalized"
           leadGenerated: "#/components/schemas/LeadGenerated"
           audienceMatched: "#/components/schemas/AudienceMatched"
+          userClicked: "#/components/schemas/UserClicked"
+          userScrolled: "#/components/schemas/UserScrolled"
         propertyName: '@type'
       example:
         '@type': '@type'
@@ -908,6 +910,8 @@ components:
       - slotPersonalized
       - leadGenerated
       - audienceMatched
+      - userClicked
+      - userScrolled
       type: string
       x-enum-varnames:
       - USER_SIGNED_UP
@@ -920,18 +924,21 @@ components:
       - CLIENT_DETECTED
       - PAGE_OPENED
       - PAGE_LOADED
+      - PRODUCT_ABANDONED
       - PRODUCT_VIEWED
+      - CART_ABANDONED
       - CART_VIEWED
       - CART_MODIFIED
       - CHECKOUT_STARTED
       - ORDER_PLACED
-      - TEST_GROUP_ASSIGNED
       - NOTHING_CHANGED
       - GOAL_COMPLETED
       - EVENT_OCCURRED
       - SLOT_PERSONALIZED
       - LEAD_GENERATED
       - AUDIENCE_MATCHED
+      - USER_CLICKED
+      - USER_SCROLLED
     Currency:
       description: The official currency used in the location.
       example:
@@ -1333,6 +1340,32 @@ components:
       - PLACED
       - PAID
       - COMPLETED
+    Point:
+      description: A position in a two-dimensional space.
+      properties:
+        x:
+          description: The horizontal position in pixels.
+          type: integer
+        "y":
+          description: The vertical position in pixels.
+          type: integer
+      required:
+      - x
+      - "y"
+      type: object
+    Size:
+      description: A two-dimensional size.
+      properties:
+        width:
+          description: The width in pixels.
+          type: integer
+        height:
+          description: The height in pixels.
+          type: integer
+      required:
+      - height
+      - width
+      type: object
     PageLoaded:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
@@ -1433,6 +1466,11 @@ components:
           format: double
           nullable: true
           type: number
+        currency:
+          description: The currency in which the monetary values are expressed in
+            the shopping cart.
+          nullable: true
+          type: string
         url:
           description: "The URL of the product page. For example, \"https://apple.com/iphone\"\
             ."
@@ -2094,6 +2132,40 @@ components:
         example: null
       type: object
       example: null
+    UserClicked:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that the user clicked on the screen.
+        properties:
+          point:
+            $ref: "#/components/schemas/Point"
+          surfaceSize:
+            $ref: "#/components/schemas/Size"
+        required:
+        - point
+        type: object
+        example: null
+      type: object
+      example: null
+    UserScrolled:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that the user scrolled.
+        properties:
+          start:
+            $ref: "#/components/schemas/Point"
+          end:
+            $ref: "#/components/schemas/Point"
+          surfaceSize:
+            $ref: "#/components/schemas/Size"
+          viewportSize:
+            $ref: "#/components/schemas/Size"
+        required:
+        - end
+        type: object
+        example: null
+      type: object
+      example: null
     WebClient:
       description: The available information about a web client.
       example:
@@ -2311,6 +2383,10 @@ components:
           $ref: "#/components/schemas/SlotPersonalized_personalization_slotVersion"
         assignedVariant:
           $ref: "#/components/schemas/SlotPersonalized_personalization_assignedVariant"
+        locale:
+          description: The locale of the content.
+          nullable: true
+          type: string
       required:
       - assignedVariant
       - audienceId

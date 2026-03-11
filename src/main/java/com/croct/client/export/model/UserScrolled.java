@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Map;
 import java.util.HashMap;
 import com.croct.client.export.model.EventPayload;
+import com.croct.client.export.model.Point;
+import com.croct.client.export.model.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,11 +39,13 @@ import com.croct.client.export.JSON;
 
 
 /**
- * EventOccurred
+ * UserScrolled
  */
 @JsonPropertyOrder({
-  EventOccurred.JSON_PROPERTY_NAME,
-  EventOccurred.JSON_PROPERTY_DETAILS
+  UserScrolled.JSON_PROPERTY_START,
+  UserScrolled.JSON_PROPERTY_END,
+  UserScrolled.JSON_PROPERTY_SURFACE_SIZE,
+  UserScrolled.JSON_PROPERTY_VIEWPORT_SIZE
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.21.0-SNAPSHOT")
 @JsonIgnoreProperties(
@@ -50,65 +54,123 @@ import com.croct.client.export.JSON;
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type", visible = true)
 
-public class EventOccurred extends EventPayload {
-  public static final String JSON_PROPERTY_NAME = "name";
-  @javax.annotation.Nonnull
-  private String name;
+public class UserScrolled extends EventPayload {
+  public static final String JSON_PROPERTY_START = "start";
+  @javax.annotation.Nullable
+  private Point start;
 
-  public static final String JSON_PROPERTY_DETAILS = "details";
+  public static final String JSON_PROPERTY_END = "end";
   @javax.annotation.Nonnull
-  private Object details;
+  private Point end;
 
-  public EventOccurred() { 
+  public static final String JSON_PROPERTY_SURFACE_SIZE = "surfaceSize";
+  @javax.annotation.Nullable
+  private Size surfaceSize;
+
+  public static final String JSON_PROPERTY_VIEWPORT_SIZE = "viewportSize";
+  @javax.annotation.Nullable
+  private Size viewportSize;
+
+  public UserScrolled() { 
   }
 
-  public EventOccurred name(@javax.annotation.Nonnull String name) {
-    this.name = name;
+  public UserScrolled start(@javax.annotation.Nullable Point start) {
+    this.start = start;
     return this;
   }
 
   /**
-   * The name of the event. For example, \&quot;pollAnswered\&quot; or \&quot;onboardingStarted\&quot;.
-   * @return name
+   * Get start
+   * @return start
    */
-  @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_START, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getName() {
-    return name;
+  public Point getStart() {
+    return start;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_NAME, required = true)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setName(@javax.annotation.Nonnull String name) {
-    this.name = name;
+  @JsonProperty(value = JSON_PROPERTY_START, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setStart(@javax.annotation.Nullable Point start) {
+    this.start = start;
   }
 
 
-  public EventOccurred details(@javax.annotation.Nonnull Object details) {
-    this.details = details;
+  public UserScrolled end(@javax.annotation.Nonnull Point end) {
+    this.end = end;
     return this;
   }
 
   /**
-   * The details about the event.
-   * @return details
+   * Get end
+   * @return end
    */
   @javax.annotation.Nonnull
-  @JsonProperty(value = JSON_PROPERTY_DETAILS, required = true)
+  @JsonProperty(value = JSON_PROPERTY_END, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Object getDetails() {
-    return details;
+  public Point getEnd() {
+    return end;
   }
 
 
-  @JsonProperty(value = JSON_PROPERTY_DETAILS, required = true)
+  @JsonProperty(value = JSON_PROPERTY_END, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDetails(@javax.annotation.Nonnull Object details) {
-    this.details = details;
+  public void setEnd(@javax.annotation.Nonnull Point end) {
+    this.end = end;
+  }
+
+
+  public UserScrolled surfaceSize(@javax.annotation.Nullable Size surfaceSize) {
+    this.surfaceSize = surfaceSize;
+    return this;
+  }
+
+  /**
+   * Get surfaceSize
+   * @return surfaceSize
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_SURFACE_SIZE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Size getSurfaceSize() {
+    return surfaceSize;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_SURFACE_SIZE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSurfaceSize(@javax.annotation.Nullable Size surfaceSize) {
+    this.surfaceSize = surfaceSize;
+  }
+
+
+  public UserScrolled viewportSize(@javax.annotation.Nullable Size viewportSize) {
+    this.viewportSize = viewportSize;
+    return this;
+  }
+
+  /**
+   * Get viewportSize
+   * @return viewportSize
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_VIEWPORT_SIZE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Size getViewportSize() {
+    return viewportSize;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_VIEWPORT_SIZE, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setViewportSize(@javax.annotation.Nullable Size viewportSize) {
+    this.viewportSize = viewportSize;
   }
 
   /**
@@ -123,7 +185,7 @@ public class EventOccurred extends EventPayload {
    * If the property does not already exist, create it otherwise replace it.
    */
   @JsonAnySetter
-  public EventOccurred putAdditionalProperty(String key, Object value) {
+  public UserScrolled putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<>();
     }
@@ -150,7 +212,7 @@ public class EventOccurred extends EventPayload {
   }
 
   /**
-   * Return true if this EventOccurred object is equal to o.
+   * Return true if this UserScrolled object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -165,10 +227,12 @@ public class EventOccurred extends EventPayload {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class EventOccurred {\n");
+    sb.append("class UserScrolled {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    details: ").append(toIndentedString(details)).append("\n");
+    sb.append("    start: ").append(toIndentedString(start)).append("\n");
+    sb.append("    end: ").append(toIndentedString(end)).append("\n");
+    sb.append("    surfaceSize: ").append(toIndentedString(surfaceSize)).append("\n");
+    sb.append("    viewportSize: ").append(toIndentedString(viewportSize)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -188,8 +252,8 @@ public class EventOccurred extends EventPayload {
   static {
     // Initialize and register the discriminator mappings.
     Map<String, Class<?>> mappings = new HashMap<>();
-    mappings.put("EventOccurred", EventOccurred.class);
-    JSON.registerDiscriminator(EventOccurred.class, "@type", mappings);
+    mappings.put("UserScrolled", UserScrolled.class);
+    JSON.registerDiscriminator(UserScrolled.class, "@type", mappings);
   }
 }
 
