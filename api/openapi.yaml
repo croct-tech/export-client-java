@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.7.0
+  version: 0.7.1
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -1868,7 +1868,7 @@ components:
           postalCode: postalCode
           region: region
         lastModifiedTime: 6
-        gender: gender
+        gender: UNKNOWN
         jobTitle: jobTitle
         alternatePhone: alternatePhone
         avatar: avatar
@@ -1878,9 +1878,13 @@ components:
         firstName: firstName
         externalUserId: externalUserId
         phone: phone
-        activities: activities
+        activities:
+        - activities
+        - activities
         company: company
-        interests: interests
+        interests:
+        - interests
+        - interests
         email: email
         customAttributes:
           key: ""
@@ -1912,8 +1916,8 @@ components:
           nullable: true
           type: integer
         gender:
+          default: UNKNOWN
           description: The gender attribute.
-          nullable: true
           type: string
         email:
           description: The email attribute.
@@ -1950,13 +1954,17 @@ components:
           nullable: true
           type: string
         activities:
+          default: []
           description: The activities attribute.
-          nullable: true
-          type: string
+          items:
+            type: string
+          type: array
         interests:
+          default: []
           description: The interests attribute.
-          nullable: true
-          type: string
+          items:
+            type: string
+          type: array
         customAttributes:
           additionalProperties: {}
           description: The custom attributes.
@@ -1983,7 +1991,7 @@ components:
             postalCode: postalCode
             region: region
           lastModifiedTime: 6
-          gender: gender
+          gender: UNKNOWN
           jobTitle: jobTitle
           alternatePhone: alternatePhone
           avatar: avatar
@@ -1993,9 +2001,13 @@ components:
           firstName: firstName
           externalUserId: externalUserId
           phone: phone
-          activities: activities
+          activities:
+          - activities
+          - activities
           company: company
-          interests: interests
+          interests:
+          - interests
+          - interests
           email: email
           customAttributes:
             key: ""
@@ -2012,7 +2024,7 @@ components:
             postalCode: postalCode
             region: region
           lastModifiedTime: 6
-          gender: gender
+          gender: UNKNOWN
           jobTitle: jobTitle
           alternatePhone: alternatePhone
           avatar: avatar
@@ -2022,9 +2034,13 @@ components:
           firstName: firstName
           externalUserId: externalUserId
           phone: phone
-          activities: activities
+          activities:
+          - activities
+          - activities
           company: company
-          interests: interests
+          interests:
+          - interests
+          - interests
           email: email
           customAttributes:
             key: ""
