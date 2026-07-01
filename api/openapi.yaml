@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.7.1
+  version: 0.8.0
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -192,14 +192,14 @@ paths:
       - export
       x-accepts:
       - application/json
-  /events/{id}:
+  /events/{eventId}:
     get:
       operationId: exportEventById
       parameters:
       - description: The unique identifier of the event
         explode: false
         in: path
-        name: id
+        name: eventId
         required: true
         schema:
           format: uuid
@@ -375,12 +375,30 @@ components:
             $ref: "#/components/schemas/UserResponse"
       description: Success response
   schemas:
+    AddOperation:
+      description: "An operation to add a value into an array, map or property."
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - add
+          type: string
+        path:
+          description: The path where to add the value.
+          type: string
+        value:
+          description: The value to add. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
     ApiProblem:
       additionalProperties: {}
       example:
-        details: details
         title: title
         type: http://example.com/aeiou
+        details: details
       properties:
         title:
           type: string
@@ -393,12 +411,55 @@ components:
       - title
       - type
       type: object
+    AtomicPatch:
+      description: A sequence of operations to apply atomically to a target value.
+      properties:
+        operations:
+          description: The list of operations to be applied atomically.
+          items:
+            $ref: "#/components/schemas/AtomicPatch_operations_inner"
+          type: array
+      required:
+      - operations
+      type: object
+    Audience:
+      description: The information about an audience.
+      properties:
+        id:
+          description: The ID that uniquely identifies the audience.
+          nullable: false
+          type: string
+        name:
+          description: The name of the audience.
+          nullable: true
+          type: string
+        customId:
+          description: The custom ID of the audience.
+          nullable: true
+          type: string
+      required:
+      - id
+      type: object
+    AudienceMatched:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a user meets the criteria of one or more
+          audiences.
+        properties:
+          audiences:
+            items:
+              $ref: "#/components/schemas/Audience"
+            type: array
+        type: object
+        example: null
+      type: object
+      example: null
     Browser:
       description: The available information about a browser.
       example:
         name: name
-        type: WEB
         version: version
+        type: WEB
       properties:
         name:
           description: "The name of the browser, non-empty. For example, \"Chrome\"\
@@ -435,10 +496,10 @@ components:
     Campaign:
       example:
         name: name
-        term: term
         source: source
         medium: medium
         content: content
+        term: term
       properties:
         name:
           description: "The product promotion or strategic campaign. For example,\
@@ -465,6 +526,19 @@ components:
           nullable: true
           type: string
       type: object
+    CampaignDetected:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a marketing campaign was detected.
+        properties:
+          campaign:
+            $ref: "#/components/schemas/Campaign"
+        required:
+        - campaign
+        type: object
+        example: null
+      type: object
+      example: null
     Cart:
       description: A shopping cart in an online store.
       properties:
@@ -622,7 +696,8 @@ components:
             $ref: "#/components/schemas/Cart"
           orderId:
             description: The ID that uniquely identifies the order across the store.
-            format: uuid
+            maxLength: 50
+            minLength: 1
             nullable: true
             type: string
         required:
@@ -645,11 +720,78 @@ components:
         example: null
       type: object
       example: null
+    ClearOperation:
+      description: "An operation to clear the content of an array, map or property."
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - clear
+          type: string
+        path:
+          description: The path where to clear the content.
+          type: string
+      required:
+      - path
+      - type
+      type: object
+    CombineOperation:
+      description: An operation to combine arrays or maps.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - combine
+          type: string
+        path:
+          description: The path where to combine the values.
+          type: string
+        value:
+          description: The array or map to combine. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
+    Currency:
+      description: The official currency used in the location.
+      example:
+        name: name
+        code: code
+      nullable: true
+      properties:
+        name:
+          description: "The common name of the currency. For example, 'US Dollar'."
+          nullable: true
+          type: string
+        code:
+          description: "The currency code. For example, USD."
+          nullable: true
+          type: string
+      type: object
+    DecrementOperation:
+      description: An operation to decrement a number.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - decrement
+          type: string
+        path:
+          description: The path where to decrement the value.
+          type: string
+        value:
+          description: The amount to decrement. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
     Device:
       description: The available information about a device.
       example:
-        vendor: vendor
         name: name
+        vendor: vendor
         category: DESKTOP
         operatingSystem:
           name: name
@@ -694,18 +836,19 @@ components:
       - UNKNOWN
     Event:
       example:
-        payload:
-          '@type': '@type'
-        context:
-          metadata:
-            key: metadata
-          type: web
-        id: id
+        eventId: eventId
         sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         timestamp: 0
+        systemTimestamp: 6
+        context:
+          type: web
+          metadata:
+            key: metadata
+        payload:
+          type: type
       properties:
-        id:
+        eventId:
           description: The unique identifier of the event.
           type: string
         sessionId:
@@ -721,15 +864,21 @@ components:
             \ since epoch."
           format: int64
           type: integer
+        systemTimestamp:
+          description: "The timestamp when the event was ingested by the system, in\
+            \ milliseconds since epoch."
+          format: int64
+          type: integer
         context:
           $ref: "#/components/schemas/EventContext"
         payload:
           $ref: "#/components/schemas/EventPayload"
       required:
       - context
-      - id
+      - eventId
       - payload
       - sessionId
+      - systemTimestamp
       - timestamp
       - userId
       type: object
@@ -740,9 +889,9 @@ components:
           web: "#/components/schemas/WebContext"
         propertyName: type
       example:
+        type: web
         metadata:
           key: metadata
-        type: web
       nullable: true
       properties:
         type:
@@ -802,46 +951,58 @@ components:
           audienceMatched: "#/components/schemas/AudienceMatched"
           userClicked: "#/components/schemas/UserClicked"
           userScrolled: "#/components/schemas/UserScrolled"
-        propertyName: '@type'
+          sessionMerged: "#/components/schemas/SessionMerged"
+          sessionClosed: "#/components/schemas/SessionClosed"
+          sessionStarted: "#/components/schemas/SessionStarted"
+          postViewed: "#/components/schemas/PostViewed"
+          userProfileChanged: "#/components/schemas/UserProfileChanged"
+          campaignDetected: "#/components/schemas/CampaignDetected"
+          sessionAttributesChanged: "#/components/schemas/SessionAttributesChanged"
+          productOrdered: "#/components/schemas/ProductOrdered"
+          interestShown: "#/components/schemas/InterestShown"
+          linkOpened: "#/components/schemas/LinkOpened"
+        propertyName: type
       example:
-        '@type': '@type'
+        type: type
       properties:
-        '@type':
+        type:
           type: string
       required:
-      - '@type'
+      - type
       type: object
     EventResponse:
       example:
-        nextCursor: nextCursor
+        items:
+        - eventId: eventId
+          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          timestamp: 0
+          systemTimestamp: 6
+          context:
+            type: web
+            metadata:
+              key: metadata
+          payload:
+            type: type
+        - eventId: eventId
+          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          timestamp: 0
+          systemTimestamp: 6
+          context:
+            type: web
+            metadata:
+              key: metadata
+          payload:
+            type: type
         metadata:
-          organizationSlug: organizationSlug
-          applicationSlug: applicationSlug
           organizationName: organizationName
+          organizationSlug: organizationSlug
           workspaceName: workspaceName
           workspaceSlug: workspaceSlug
           applicationName: applicationName
-        items:
-        - payload:
-            '@type': '@type'
-          context:
-            metadata:
-              key: metadata
-            type: web
-          id: id
-          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          timestamp: 0
-        - payload:
-            '@type': '@type'
-          context:
-            metadata:
-              key: metadata
-            type: web
-          id: id
-          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          timestamp: 0
+          applicationSlug: applicationSlug
+        nextCursor: nextCursor
       properties:
         items:
           items:
@@ -855,35 +1016,6 @@ components:
       - items
       - metadata
       - nextCursor
-      type: object
-    SingleEventResponse:
-      example:
-        metadata:
-          organizationSlug: organizationSlug
-          applicationSlug: applicationSlug
-          organizationName: organizationName
-          workspaceName: workspaceName
-          workspaceSlug: workspaceSlug
-          applicationName: applicationName
-        event:
-          payload:
-            '@type': '@type'
-          context:
-            metadata:
-              key: metadata
-            type: web
-          id: id
-          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          timestamp: 0
-      properties:
-        metadata:
-          $ref: "#/components/schemas/EventResponse_metadata"
-        event:
-          $ref: "#/components/schemas/Event"
-      required:
-      - event
-      - metadata
       type: object
     EventType:
       enum:
@@ -912,6 +1044,16 @@ components:
       - audienceMatched
       - userClicked
       - userScrolled
+      - sessionMerged
+      - sessionClosed
+      - sessionStarted
+      - postViewed
+      - userProfileChanged
+      - campaignDetected
+      - sessionAttributesChanged
+      - productOrdered
+      - interestShown
+      - linkOpened
       type: string
       x-enum-varnames:
       - USER_SIGNED_UP
@@ -939,22 +1081,6 @@ components:
       - AUDIENCE_MATCHED
       - USER_CLICKED
       - USER_SCROLLED
-    Currency:
-      description: The official currency used in the location.
-      example:
-        code: code
-        name: name
-      nullable: true
-      properties:
-        name:
-          description: "The common name of the currency. For example, 'US Dollar'."
-          nullable: true
-          type: string
-        code:
-          description: "The currency code. For example, USD."
-          nullable: true
-          type: string
-      type: object
     GeoPoint:
       description: A geographic location represented by a latitude and longitude coordinates
         pair.
@@ -990,8 +1116,9 @@ components:
               \ if the sales team can close 10% of people who sign up for a newsletter,\
               \ and the average transaction is $500, then a possible value for newsletter\
               \ sign-ups can be $50 (i.e., 10% of $500)."
+            format: double
             nullable: true
-            type: string
+            type: number
           currency:
             description: "The currency in which the monetary value is expressed. The\
               \ currency should be specified using the 3-letter currency codes defined\
@@ -1009,34 +1136,104 @@ components:
         example: null
       type: object
       example: null
+    IncrementOperation:
+      description: An operation to increment a number.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - increment
+          type: string
+        path:
+          description: The path where to increment the value.
+          type: string
+        value:
+          description: The amount to increment. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
+    InterestShown:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a user has shown interest in something.
+        properties:
+          interests:
+            description: "The set of interests. For example, [\"music\", \"movies\"\
+              ]."
+            items:
+              type: string
+            type: array
+        required:
+        - interests
+        type: object
+        example: null
+      type: object
+      example: null
+    LeadGenerated:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a user became a lead.
+        properties:
+          leadId:
+            description: An identifier supplied by the application to uniquely identify
+              the lead.
+            type: string
+          currency:
+            description: The currency in which the lead value is accounted.
+            type: string
+          value:
+            description: The total value associated with the lead.
+            format: double
+            type: number
+          patch:
+            $ref: "#/components/schemas/AtomicPatch"
+        type: object
+        example: null
+      type: object
+      example: null
+    LinkOpened:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a link was opened.
+        properties:
+          link:
+            description: "The URI of the link. For example, \"https://croct.com/blog/awesome-post\"\
+              ."
+            type: string
+        type: object
+        example: null
+      type: object
+      example: null
     Location:
       description: An identification or estimation of a geographic location of an
         object.
       example:
         continent: AF
         country: country
-        languages:
-        - languages
-        - languages
+        region:
+          name: name
+          code: code
         city: city
-        timezone: timezone
-        postalCode: postalCode
+        district: district
+        timeZone: timeZone
         coordinates:
           latitude: 5.962133916683182
           longitude: 5.637376656633329
-        source: UNKNOWN
-        population: population
+        currency:
+          name: name
+          code: code
+        phoneCode: phoneCode
+        population: 2
+        postalCode: postalCode
+        languages:
+        - languages
+        - languages
         tags:
         - tags
         - tags
-        district: district
-        phoneCode: phoneCode
-        currency:
-          code: code
-          name: name
-        region:
-          code: code
-          name: name
+        source: UNKNOWN
       properties:
         continent:
           $ref: "#/components/schemas/LocationContinent"
@@ -1058,7 +1255,7 @@ components:
             \ than a neighborhood. For example, the district of Manhattan in New York."
           nullable: true
           type: string
-        timezone:
+        timeZone:
           description: "The time-zone ID as defined in IANA Time Zone Database. For\
             \ example, \"America/New_York\"."
           nullable: true
@@ -1075,8 +1272,9 @@ components:
         population:
           description: The approximate number of people living within the borders
             of the represented location.
+          format: int64
           nullable: true
-          type: string
+          type: integer
         postalCode:
           description: "The general postal code for the location, such as a starting\
             \ range, but it may also represent another relevant code for the area.\
@@ -1106,7 +1304,7 @@ components:
       - district
       - region
       - source
-      - timezone
+      - timeZone
       type: object
     LocationContinent:
       description: The continent of the location.
@@ -1157,6 +1355,24 @@ components:
       - INPUT
       - BROWSER
       - GPS
+    MergeOperation:
+      description: An operation to merge arrays or maps.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - merge
+          type: string
+        path:
+          description: The path where to merge the values.
+          type: string
+        value:
+          description: The array or map to merge. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
     NothingChanged:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
@@ -1198,7 +1414,8 @@ components:
       properties:
         orderId:
           description: The ID that uniquely identifies the order across the store.
-          format: uuid
+          maxLength: 50
+          minLength: 1
           type: string
         currency:
           description: "The currency in which the monetary values are expressed in\
@@ -1340,6 +1557,76 @@ components:
       - PLACED
       - PAID
       - COMPLETED
+    OrderSummary:
+      description: The details of an order.
+      properties:
+        orderId:
+          description: The ID that uniquely identifies the order across the store.
+          maxLength: 50
+          minLength: 1
+          type: string
+        currency:
+          description: The currency in which the monetary values are expressed in
+            the order.
+          type: string
+        quantity:
+          description: The quantity of items in the order.
+          type: integer
+        subtotal:
+          description: The total of all items and quantities in the order including
+            applied item promotions.
+          format: double
+          nullable: true
+          type: number
+        shippingPrice:
+          description: "The total shipping price for the order, including any handling\
+            \ charges."
+          format: double
+          nullable: true
+          type: number
+        taxes:
+          description: The taxes associated with the transaction.
+          nullable: true
+          type: object
+        costs:
+          description: "The costs associated with the transaction, such as manufacturing\
+            \ costs, shipping expenses not borne by the customer, or any other costs."
+          nullable: true
+          type: object
+        discount:
+          description: The amount of the discount applied to the order.
+          format: double
+          nullable: true
+          type: number
+        total:
+          description: "The total revenue or grand total associated with the transaction.\
+            \ It includes shipping, tax, and any other adjustment."
+          format: double
+          nullable: true
+          type: number
+        coupon:
+          description: "The coupon applied to the order. For example, \\\"SUPER_DEALS\\\
+            \"."
+          nullable: true
+          type: string
+        paymentMethod:
+          description: "The payment method used in the payment. For example, \\\"\
+            Credit Card\\\"."
+          nullable: true
+          type: string
+        installments:
+          description: "The number of installments of the transaction, non-negative."
+          nullable: true
+          type: integer
+        status:
+          $ref: "#/components/schemas/OrderStatus"
+      required:
+      - costs
+      - currency
+      - orderId
+      - quantity
+      - taxes
+      - total
     Point:
       description: A position in a two-dimensional space.
       properties:
@@ -1352,19 +1639,6 @@ components:
       required:
       - x
       - "y"
-      type: object
-    Size:
-      description: A two-dimensional size.
-      properties:
-        width:
-          description: The width in pixels.
-          type: integer
-        height:
-          description: The height in pixels.
-          type: integer
-      required:
-      - height
-      - width
       type: object
     PageLoaded:
       allOf:
@@ -1421,6 +1695,66 @@ components:
         - referrer
         - url
         - userAgent
+        type: object
+        example: null
+      type: object
+      example: null
+    PostDetails:
+      description: The detailed information of a post.
+      properties:
+        postId:
+          description: The ID that uniquely identifies the post.
+          type: string
+        url:
+          description: The URL of the post page.
+          nullable: true
+          type: string
+        title:
+          description: "The title of the post, non-empty."
+          type: string
+        tags:
+          description: The set of post tags.
+          items:
+            type: string
+          nullable: true
+          type: array
+        categories:
+          description: The categories the post belongs to.
+          items:
+            type: string
+          nullable: true
+          type: array
+        authors:
+          description: The authors of the post.
+          items:
+            nullable: true
+            type: string
+          type: array
+        publishTime:
+          description: "The timestamp of the post publication, in milliseconds since\
+            \ epoch."
+          format: int64
+          type: integer
+        updateTime:
+          description: "The timestamp of the post's last update, in milliseconds since\
+            \ epoch."
+          format: int64
+          nullable: true
+          type: integer
+      required:
+      - postId
+      - publishTime
+      - title
+      type: object
+    PostViewed:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a post was viewed.
+        properties:
+          post:
+            $ref: "#/components/schemas/PostDetails"
+        required:
+        - post
         type: object
         example: null
       type: object
@@ -1509,6 +1843,22 @@ components:
         example: null
       type: object
       example: null
+    ProductOrdered:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that an order was placed.
+        properties:
+          order:
+            $ref: "#/components/schemas/OrderSummary"
+          item:
+            $ref: "#/components/schemas/OrderItem"
+        required:
+        - item
+        - order
+        type: object
+        example: null
+      type: object
+      example: null
     ProductViewed:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
@@ -1525,8 +1875,8 @@ components:
     Region:
       description: "A subsection of a country, typically a state or province."
       example:
-        code: code
         name: name
+        code: code
       properties:
         name:
           description: "The subdivision name, non-empty. For example, \"Sao Paulo\"\
@@ -1542,67 +1892,85 @@ components:
       - code
       - name
       type: object
+    RemoveOperation:
+      description: An operation to remove a value from an array.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - remove
+          type: string
+        path:
+          description: The path where to remove the content.
+          type: string
+        value:
+          description: The value to remove. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
     Session:
       example:
         sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        referrer: referrer
         externalUserId: externalUserId
+        window:
+          start: 0
+          end: 6
         closeTime: 1
+        referrer: referrer
+        landingPageUrl: landingPageUrl
         campaign:
           name: name
-          term: term
           source: source
           medium: medium
           content: content
+          term: term
+        location:
+          continent: AF
+          country: country
+          region:
+            name: name
+            code: code
+          city: city
+          district: district
+          timeZone: timeZone
+          coordinates:
+            latitude: 5.962133916683182
+            longitude: 5.637376656633329
+          currency:
+            name: name
+            code: code
+          phoneCode: phoneCode
+          population: 2
+          postalCode: postalCode
+          languages:
+          - languages
+          - languages
+          tags:
+          - tags
+          - tags
+          source: UNKNOWN
         client:
           browser:
             name: name
-            type: WEB
             version: version
+            type: WEB
           device:
-            vendor: vendor
             name: name
+            vendor: vendor
             category: DESKTOP
             operatingSystem:
               name: name
               version: version
-        location:
-          continent: AF
-          country: country
-          languages:
-          - languages
-          - languages
-          city: city
-          timezone: timezone
-          postalCode: postalCode
-          coordinates:
-            latitude: 5.962133916683182
-            longitude: 5.637376656633329
-          source: UNKNOWN
-          population: population
-          tags:
-          - tags
-          - tags
-          district: district
-          phoneCode: phoneCode
-          currency:
-            code: code
-            name: name
-          region:
-            code: code
-            name: name
         attributes:
           key: ""
-        window:
-          start: 0
-          end: 6
-        landingPageUrl: landingPageUrl
         statistics:
-          pageViews: 2
-          tabViews: 7
-          orders: 9
+          pageViews: 7
+          tabViews: 9
+          orders: 3
       properties:
         sessionId:
           description: The ID that uniquely identifies the session across the application.
@@ -1660,128 +2028,186 @@ components:
       required:
       - organizationId
       type: object
+    SessionAttributesChanged:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - properties:
+          patch:
+            $ref: "#/components/schemas/AtomicPatch"
+        required:
+        - patch
+        type: object
+        example: null
+      type: object
+      example: null
+    SessionClosed:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a session is no longer active.
+        properties:
+          session:
+            $ref: "#/components/schemas/Session"
+        required:
+        - session
+        type: object
+        example: null
+      type: object
+      example: null
+    SessionMerged:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording there was a merge between sessions.
+        properties:
+          session:
+            $ref: "#/components/schemas/Session"
+          mergedSessions:
+            description: "The list of sessions that have been merged, ordered from\
+              \ oldest to most recent."
+            items:
+              $ref: "#/components/schemas/Session"
+            type: array
+        required:
+        - mergedSessions
+        - session
+        type: object
+        example: null
+      type: object
+      example: null
+    SessionStarted:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a session has started.
+        properties:
+          session:
+            $ref: "#/components/schemas/Session"
+        required:
+        - session
+        type: object
+        example: null
+      type: object
+      example: null
     SessionResponse:
       example:
-        nextCursor: nextCursor
         items:
         - sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          referrer: referrer
           externalUserId: externalUserId
+          window:
+            start: 0
+            end: 6
           closeTime: 1
+          referrer: referrer
+          landingPageUrl: landingPageUrl
           campaign:
             name: name
-            term: term
             source: source
             medium: medium
             content: content
+            term: term
+          location:
+            continent: AF
+            country: country
+            region:
+              name: name
+              code: code
+            city: city
+            district: district
+            timeZone: timeZone
+            coordinates:
+              latitude: 5.962133916683182
+              longitude: 5.637376656633329
+            currency:
+              name: name
+              code: code
+            phoneCode: phoneCode
+            population: 2
+            postalCode: postalCode
+            languages:
+            - languages
+            - languages
+            tags:
+            - tags
+            - tags
+            source: UNKNOWN
           client:
             browser:
               name: name
-              type: WEB
               version: version
+              type: WEB
             device:
-              vendor: vendor
               name: name
+              vendor: vendor
               category: DESKTOP
               operatingSystem:
                 name: name
                 version: version
-          location:
-            continent: AF
-            country: country
-            languages:
-            - languages
-            - languages
-            city: city
-            timezone: timezone
-            postalCode: postalCode
-            coordinates:
-              latitude: 5.962133916683182
-              longitude: 5.637376656633329
-            source: UNKNOWN
-            population: population
-            tags:
-            - tags
-            - tags
-            district: district
-            phoneCode: phoneCode
-            currency:
-              code: code
-              name: name
-            region:
-              code: code
-              name: name
           attributes:
             key: ""
-          window:
-            start: 0
-            end: 6
-          landingPageUrl: landingPageUrl
           statistics:
-            pageViews: 2
-            tabViews: 7
-            orders: 9
+            pageViews: 7
+            tabViews: 9
+            orders: 3
         - sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           parentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          referrer: referrer
           externalUserId: externalUserId
+          window:
+            start: 0
+            end: 6
           closeTime: 1
+          referrer: referrer
+          landingPageUrl: landingPageUrl
           campaign:
             name: name
-            term: term
             source: source
             medium: medium
             content: content
+            term: term
+          location:
+            continent: AF
+            country: country
+            region:
+              name: name
+              code: code
+            city: city
+            district: district
+            timeZone: timeZone
+            coordinates:
+              latitude: 5.962133916683182
+              longitude: 5.637376656633329
+            currency:
+              name: name
+              code: code
+            phoneCode: phoneCode
+            population: 2
+            postalCode: postalCode
+            languages:
+            - languages
+            - languages
+            tags:
+            - tags
+            - tags
+            source: UNKNOWN
           client:
             browser:
               name: name
-              type: WEB
               version: version
+              type: WEB
             device:
-              vendor: vendor
               name: name
+              vendor: vendor
               category: DESKTOP
               operatingSystem:
                 name: name
                 version: version
-          location:
-            continent: AF
-            country: country
-            languages:
-            - languages
-            - languages
-            city: city
-            timezone: timezone
-            postalCode: postalCode
-            coordinates:
-              latitude: 5.962133916683182
-              longitude: 5.637376656633329
-            source: UNKNOWN
-            population: population
-            tags:
-            - tags
-            - tags
-            district: district
-            phoneCode: phoneCode
-            currency:
-              code: code
-              name: name
-            region:
-              code: code
-              name: name
           attributes:
             key: ""
-          window:
-            start: 0
-            end: 6
-          landingPageUrl: landingPageUrl
           statistics:
-            pageViews: 2
-            tabViews: 7
-            orders: 9
+            pageViews: 7
+            tabViews: 9
+            orders: 3
+        nextCursor: nextCursor
       properties:
         items:
           items:
@@ -1792,6 +2218,82 @@ components:
       required:
       - items
       - nextCursor
+      type: object
+    SingleEventResponse:
+      example:
+        metadata:
+          organizationName: organizationName
+          organizationSlug: organizationSlug
+          workspaceName: workspaceName
+          workspaceSlug: workspaceSlug
+          applicationName: applicationName
+          applicationSlug: applicationSlug
+        event:
+          eventId: eventId
+          sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          timestamp: 0
+          systemTimestamp: 6
+          context:
+            type: web
+            metadata:
+              key: metadata
+          payload:
+            type: type
+      properties:
+        metadata:
+          $ref: "#/components/schemas/EventResponse_metadata"
+        event:
+          $ref: "#/components/schemas/Event"
+      required:
+      - event
+      - metadata
+      type: object
+    SetOperation:
+      description: An operation to set a value.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - set
+          type: string
+        path:
+          description: The path where to set the value.
+          type: string
+        value:
+          description: The value to set. Can be any JSON value.
+      required:
+      - path
+      - type
+      - value
+      type: object
+    Size:
+      description: A two-dimensional size.
+      properties:
+        width:
+          description: The width in pixels.
+          type: integer
+        height:
+          description: The height in pixels.
+          type: integer
+      required:
+      - height
+      - width
+      type: object
+    SlotPersonalized:
+      description: An event recording a slot personalization.
+      properties:
+        type:
+          description: The event type identifier.
+          type: string
+        personalization:
+          $ref: "#/components/schemas/SlotPersonalized_personalization"
+        metadata:
+          $ref: "#/components/schemas/SlotPersonalized_metadata"
+      required:
+      - metadata
+      - personalization
+      - type
       type: object
     TabOpened:
       allOf:
@@ -1856,41 +2358,56 @@ components:
         example: null
       type: object
       example: null
+    UnsetOperation:
+      description: An operation to unset a value.
+      properties:
+        type:
+          description: The discriminator identifying the operation.
+          enum:
+          - unset
+          type: string
+        path:
+          description: The path where to unset the value.
+          type: string
+      required:
+      - path
+      - type
+      type: object
     User:
       example:
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        externalUserId: externalUserId
+        firstName: firstName
         lastName: lastName
+        birthDate: 0
+        gender: UNKNOWN
+        email: email
         alternateEmail: alternateEmail
+        phone: phone
+        alternatePhone: alternatePhone
         address:
-          country: country
-          city: city
           street: street
           district: district
-          postalCode: postalCode
+          city: city
           region: region
-        lastModifiedTime: 6
-        gender: UNKNOWN
-        jobTitle: jobTitle
-        alternatePhone: alternatePhone
+          country: country
+          postalCode: postalCode
         avatar: avatar
+        company: company
         companyUrl: companyUrl
-        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        birthDate: 0
-        firstName: firstName
-        externalUserId: externalUserId
-        phone: phone
+        jobTitle: jobTitle
         activities:
         - activities
         - activities
-        company: company
         interests:
         - interests
         - interests
-        email: email
         customAttributes:
           key: ""
+        lastModifiedTime: 6
         statistics:
-          sessions: 5
           orders: 1
+          sessions: 5
       properties:
         userId:
           description: "The internal ID assigned to the user, unique across the workspace."
@@ -1977,76 +2494,89 @@ components:
         statistics:
           $ref: "#/components/schemas/User_statistics"
       type: object
+    UserProfileChanged:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a user profile has changed.
+        properties:
+          patch:
+            $ref: "#/components/schemas/AtomicPatch"
+        required:
+        - patch
+        type: object
+        example: null
+      type: object
+      example: null
     UserResponse:
       example:
-        nextCursor: nextCursor
         items:
-        - lastName: lastName
+        - userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          externalUserId: externalUserId
+          firstName: firstName
+          lastName: lastName
+          birthDate: 0
+          gender: UNKNOWN
+          email: email
           alternateEmail: alternateEmail
+          phone: phone
+          alternatePhone: alternatePhone
           address:
-            country: country
-            city: city
             street: street
             district: district
-            postalCode: postalCode
+            city: city
             region: region
-          lastModifiedTime: 6
-          gender: UNKNOWN
-          jobTitle: jobTitle
-          alternatePhone: alternatePhone
+            country: country
+            postalCode: postalCode
           avatar: avatar
+          company: company
           companyUrl: companyUrl
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          birthDate: 0
-          firstName: firstName
-          externalUserId: externalUserId
-          phone: phone
+          jobTitle: jobTitle
           activities:
           - activities
           - activities
-          company: company
           interests:
           - interests
           - interests
-          email: email
           customAttributes:
             key: ""
+          lastModifiedTime: 6
           statistics:
-            sessions: 5
             orders: 1
-        - lastName: lastName
+            sessions: 5
+        - userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          externalUserId: externalUserId
+          firstName: firstName
+          lastName: lastName
+          birthDate: 0
+          gender: UNKNOWN
+          email: email
           alternateEmail: alternateEmail
+          phone: phone
+          alternatePhone: alternatePhone
           address:
-            country: country
-            city: city
             street: street
             district: district
-            postalCode: postalCode
+            city: city
             region: region
-          lastModifiedTime: 6
-          gender: UNKNOWN
-          jobTitle: jobTitle
-          alternatePhone: alternatePhone
+            country: country
+            postalCode: postalCode
           avatar: avatar
+          company: company
           companyUrl: companyUrl
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          birthDate: 0
-          firstName: firstName
-          externalUserId: externalUserId
-          phone: phone
+          jobTitle: jobTitle
           activities:
           - activities
           - activities
-          company: company
           interests:
           - interests
           - interests
-          email: email
           customAttributes:
             key: ""
+          lastModifiedTime: 6
           statistics:
-            sessions: 5
             orders: 1
+            sessions: 5
+        nextCursor: nextCursor
       properties:
         items:
           items:
@@ -2094,56 +2624,10 @@ components:
           externalUserId:
             description: The external ID of the user.
             type: string
+          patch:
+            $ref: "#/components/schemas/AtomicPatch"
         required:
         - externalUserId
-        type: object
-        example: null
-      type: object
-      example: null
-    SlotPersonalized:
-      description: An event recording a slot personalization.
-      properties:
-        '@type':
-          description: The event type identifier.
-          type: string
-        personalization:
-          $ref: "#/components/schemas/SlotPersonalized_personalization"
-        metadata:
-          $ref: "#/components/schemas/SlotPersonalized_metadata"
-      required:
-      - '@type'
-      - metadata
-      - personalization
-      type: object
-    LeadGenerated:
-      allOf:
-      - $ref: "#/components/schemas/EventPayload"
-      - description: An event recording that a user became a lead.
-        properties:
-          leadId:
-            description: An identifier supplied by the application to uniquely identify
-              the lead.
-            type: string
-          currency:
-            description: The currency in which the lead value is accounted.
-            type: string
-          value:
-            description: The total value associated with the lead.
-            type: string
-        type: object
-        example: null
-      type: object
-      example: null
-    AudienceMatched:
-      allOf:
-      - $ref: "#/components/schemas/EventPayload"
-      - description: An event recording that a user meets the criteria of one or more
-          audiences.
-        properties:
-          audienceIds:
-            items:
-              $ref: "#/components/schemas/Audience"
-            type: array
         type: object
         example: null
       type: object
@@ -2187,11 +2671,11 @@ components:
       example:
         browser:
           name: name
-          type: WEB
           version: version
+          type: WEB
         device:
-          vendor: vendor
           name: name
+          vendor: vendor
           category: DESKTOP
           operatingSystem:
             name: name
@@ -2226,36 +2710,41 @@ components:
         example: null
       type: object
       example: null
-    Audience:
-      description: The information about an audience.
-      properties:
-        id:
-          description: The ID that uniquely identifies the audience.
-          nullable: false
-          type: string
-        name:
-          description: The name of the audience.
-          nullable: true
-          type: string
-        customId:
-          description: The custom ID of the audience.
-          nullable: true
-          type: string
-      required:
-      - audienceId
-      type: object
+    AtomicPatch_operations_inner:
+      discriminator:
+        mapping:
+          add: "#/components/schemas/AddOperation"
+          clear: "#/components/schemas/ClearOperation"
+          remove: "#/components/schemas/RemoveOperation"
+          combine: "#/components/schemas/CombineOperation"
+          decrement: "#/components/schemas/DecrementOperation"
+          increment: "#/components/schemas/IncrementOperation"
+          merge: "#/components/schemas/MergeOperation"
+          set: "#/components/schemas/SetOperation"
+          unset: "#/components/schemas/UnsetOperation"
+        propertyName: type
+      oneOf:
+      - $ref: "#/components/schemas/AddOperation"
+      - $ref: "#/components/schemas/ClearOperation"
+      - $ref: "#/components/schemas/RemoveOperation"
+      - $ref: "#/components/schemas/CombineOperation"
+      - $ref: "#/components/schemas/DecrementOperation"
+      - $ref: "#/components/schemas/IncrementOperation"
+      - $ref: "#/components/schemas/MergeOperation"
+      - $ref: "#/components/schemas/SetOperation"
+      - $ref: "#/components/schemas/UnsetOperation"
     EventOccurred_allOf_details:
       description: The details about the event.
       nullable: false
       type: object
     EventResponse_metadata:
       example:
-        organizationSlug: organizationSlug
-        applicationSlug: applicationSlug
         organizationName: organizationName
+        organizationSlug: organizationSlug
         workspaceName: workspaceName
         workspaceSlug: workspaceSlug
         applicationName: applicationName
+        applicationSlug: applicationSlug
       properties:
         organizationName:
           type: string
@@ -2293,9 +2782,9 @@ components:
     Session_statistics:
       description: The aggregated statistics of the session.
       example:
-        pageViews: 2
-        tabViews: 7
-        orders: 9
+        pageViews: 7
+        tabViews: 9
+        orders: 3
       properties:
         pageViews:
           description: The total number of page views.
@@ -2310,60 +2799,15 @@ components:
           format: int32
           type: integer
       type: object
-    User_address:
-      description: The address attribute.
-      example:
-        country: country
-        city: city
-        street: street
-        district: district
-        postalCode: postalCode
-        region: region
-      properties:
-        street:
-          nullable: true
-          type: string
-        district:
-          nullable: true
-          type: string
-        city:
-          nullable: true
-          type: string
-        region:
-          nullable: true
-          type: string
-        country:
-          nullable: true
-          type: string
-        postalCode:
-          nullable: true
-          type: string
-      type: object
-    User_statistics:
-      description: The aggregated statistics of the user.
-      example:
-        sessions: 5
-        orders: 1
-      properties:
-        orders:
-          description: The total number of orders placed across all applications in
-            a workspace.
-          format: int32
-          type: integer
-        sessions:
-          description: The total number of sessions across all applications in a workspace.
-          format: int32
-          type: integer
-      type: object
     SlotPersonalized_personalization_slotVersion:
       nullable: true
       properties:
         majorVersion:
           description: The major version.
-          type: string
+          type: integer
         minorVersion:
           description: The minor version.
-          type: string
+          type: integer
       type: object
     SlotPersonalized_personalization_assignedVariant:
       nullable: true
@@ -2449,6 +2893,51 @@ components:
       - slotCustomId
       - slotName
       - variantName
+      type: object
+    User_address:
+      description: The address attribute.
+      example:
+        street: street
+        district: district
+        city: city
+        region: region
+        country: country
+        postalCode: postalCode
+      properties:
+        street:
+          nullable: true
+          type: string
+        district:
+          nullable: true
+          type: string
+        city:
+          nullable: true
+          type: string
+        region:
+          nullable: true
+          type: string
+        country:
+          nullable: true
+          type: string
+        postalCode:
+          nullable: true
+          type: string
+      type: object
+    User_statistics:
+      description: The aggregated statistics of the user.
+      example:
+        orders: 1
+        sessions: 5
+      properties:
+        orders:
+          description: The total number of orders placed across all applications in
+            a workspace.
+          format: int32
+          type: integer
+        sessions:
+          description: The total number of sessions across all applications in a workspace.
+          format: int32
+          type: integer
       type: object
   securitySchemes:
     ApiKeyAuth:

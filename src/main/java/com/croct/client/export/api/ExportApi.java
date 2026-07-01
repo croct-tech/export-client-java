@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0-SNAPSHOT")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.24.0-SNAPSHOT")
 public class ExportApi {
   private ApiClient apiClient;
 
@@ -57,7 +57,7 @@ public class ExportApi {
   /**
    * 
    * 
-   * @param id The unique identifier of the event (required)
+   * @param eventId The unique identifier of the event (required)
    * @return SingleEventResponse
    * @throws ApiException if fails to make API call
    * @http.response.details
@@ -69,14 +69,14 @@ public class ExportApi {
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public SingleEventResponse exportEventById(@javax.annotation.Nonnull UUID id) throws ApiException {
-    return exportEventByIdWithHttpInfo(id).getData();
+  public SingleEventResponse exportEventById(@javax.annotation.Nonnull UUID eventId) throws ApiException {
+    return exportEventByIdWithHttpInfo(eventId).getData();
   }
 
   /**
    * 
    * 
-   * @param id The unique identifier of the event (required)
+   * @param eventId The unique identifier of the event (required)
    * @return ApiResponse&lt;SingleEventResponse&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
@@ -88,15 +88,15 @@ public class ExportApi {
        <tr><td> 0 </td><td> Request error </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<SingleEventResponse> exportEventByIdWithHttpInfo(@javax.annotation.Nonnull UUID id) throws ApiException {
+  public ApiResponse<SingleEventResponse> exportEventByIdWithHttpInfo(@javax.annotation.Nonnull UUID eventId) throws ApiException {
     // Check required parameters
-    if (id == null) {
-      throw new ApiException(400, "Missing the required parameter 'id' when calling exportEventById");
+    if (eventId == null) {
+      throw new ApiException(400, "Missing the required parameter 'eventId' when calling exportEventById");
     }
 
     // Path parameters
-    String localVarPath = "/events/{id}"
-            .replaceAll("\\{id}", apiClient.escapeString(id.toString()));
+    String localVarPath = "/events/{eventId}"
+            .replaceAll("\\{eventId}", apiClient.escapeString(eventId.toString()));
 
     String localVarAccept = apiClient.selectHeaderAccept("application/json");
     String localVarContentType = apiClient.selectHeaderContentType();
