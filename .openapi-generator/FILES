@@ -23,6 +23,7 @@ src/main/java/com/croct/client/export/auth/HttpBearerAuth.java
 src/main/java/com/croct/client/export/model/AbstractOpenApiSchema.java
 src/main/java/com/croct/client/export/model/AddOperation.java
 src/main/java/com/croct/client/export/model/ApiProblem.java
+src/main/java/com/croct/client/export/model/ApiProblemViolationsInner.java
 src/main/java/com/croct/client/export/model/AtomicPatch.java
 src/main/java/com/croct/client/export/model/AtomicPatchOperationsInner.java
 src/main/java/com/croct/client/export/model/Audience.java
@@ -44,6 +45,7 @@ src/main/java/com/croct/client/export/model/Currency.java
 src/main/java/com/croct/client/export/model/DecrementOperation.java
 src/main/java/com/croct/client/export/model/Device.java
 src/main/java/com/croct/client/export/model/DeviceCategory.java
+src/main/java/com/croct/client/export/model/EvaluationContext.java
 src/main/java/com/croct/client/export/model/Event.java
 src/main/java/com/croct/client/export/model/EventContext.java
 src/main/java/com/croct/client/export/model/EventOccurred.java
@@ -69,6 +71,7 @@ src/main/java/com/croct/client/export/model/OrderItem.java
 src/main/java/com/croct/client/export/model/OrderPlaced.java
 src/main/java/com/croct/client/export/model/OrderStatus.java
 src/main/java/com/croct/client/export/model/OrderSummary.java
+src/main/java/com/croct/client/export/model/PageInfo.java
 src/main/java/com/croct/client/export/model/PageLoaded.java
 src/main/java/com/croct/client/export/model/PageOpened.java
 src/main/java/com/croct/client/export/model/Point.java
@@ -78,6 +81,7 @@ src/main/java/com/croct/client/export/model/ProductAbandoned.java
 src/main/java/com/croct/client/export/model/ProductDetails.java
 src/main/java/com/croct/client/export/model/ProductOrdered.java
 src/main/java/com/croct/client/export/model/ProductViewed.java
+src/main/java/com/croct/client/export/model/QueryEvaluated.java
 src/main/java/com/croct/client/export/model/Region.java
 src/main/java/com/croct/client/export/model/RemoveOperation.java
 src/main/java/com/croct/client/export/model/Session.java
@@ -113,3 +117,4 @@ src/main/java/com/croct/client/export/model/UserSignedUp.java
 src/main/java/com/croct/client/export/model/UserStatistics.java
 src/main/java/com/croct/client/export/model/WebClient.java
 src/main/java/com/croct/client/export/model/WebContext.java
+src/main/java/com/croct/client/export/model/WebEvaluationContext.java

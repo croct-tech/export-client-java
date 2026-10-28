@@ -8,7 +8,7 @@ info:
     name: MIT
     url: https://choosealicense.com/licenses/mit
   title: Croct Export
-  version: 0.8.0
+  version: 0.9.0
 servers:
 - description: Production endpoint
   url: https://api.croct.io/export
@@ -76,7 +76,7 @@ paths:
           description: Success response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
@@ -84,6 +84,7 @@ paths:
       - export
       x-accepts:
       - application/json
+      - application/problem+json
   /session:
     get:
       operationId: exportSessions
@@ -130,7 +131,7 @@ paths:
           description: Success response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
@@ -138,6 +139,7 @@ paths:
       - export
       x-accepts:
       - application/json
+      - application/problem+json
   /user:
     get:
       operationId: exportUsers
@@ -184,7 +186,7 @@ paths:
           description: Success response
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
@@ -192,6 +194,7 @@ paths:
       - export
       x-accepts:
       - application/json
+      - application/problem+json
   /events/{eventId}:
     get:
       operationId: exportEventById
@@ -214,13 +217,13 @@ paths:
           description: Event found
         "404":
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
@@ -228,6 +231,7 @@ paths:
       - export
       x-accepts:
       - application/json
+      - application/problem+json
   /session/{sessionId}:
     get:
       operationId: exportSessionById
@@ -250,13 +254,13 @@ paths:
           description: Session found
         "404":
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
@@ -264,6 +268,7 @@ paths:
       - export
       x-accepts:
       - application/json
+      - application/problem+json
   /user/{userId}:
     get:
       operationId: exportUserById
@@ -286,13 +291,13 @@ paths:
           description: User found
         "404":
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
         default:
           content:
-            application/json:
+            application/problem+json:
               schema:
                 $ref: "#/components/schemas/ApiProblem"
           description: Request error
@@ -300,6 +305,7 @@ paths:
       - export
       x-accepts:
       - application/json
+      - application/problem+json
 components:
   parameters:
     WindowStart:
@@ -352,7 +358,7 @@ components:
   responses:
     ApiProblem:
       content:
-        application/json:
+        application/problem+json:
           schema:
             $ref: "#/components/schemas/ApiProblem"
       description: Request error
@@ -395,19 +401,30 @@ components:
       type: object
     ApiProblem:
       additionalProperties: {}
-      example:
-        title: title
-        type: http://example.com/aeiou
-        details: details
       properties:
         title:
           type: string
         type:
           format: url
           type: string
-        details:
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+        violations:
+          items:
+            $ref: "#/components/schemas/ApiProblem_violations_inner"
+          type: array
+        resourceType:
+          type: string
+        resourceId:
           type: string
       required:
+      - detail
+      - instance
+      - status
       - title
       - type
       type: object
@@ -904,6 +921,22 @@ components:
       required:
       - type
       type: object
+    EvaluationContext:
+      description: The context in which an evaluation was performed.
+      discriminator:
+        mapping:
+          web: "#/components/schemas/WebEvaluationContext"
+        propertyName: type
+      nullable: true
+      properties:
+        type:
+          description: The evaluation context type.
+          enum:
+          - web
+          type: string
+      required:
+      - type
+      type: object
     EventOccurred:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
@@ -947,6 +980,7 @@ components:
           productAbandoned: "#/components/schemas/ProductAbandoned"
           productViewed: "#/components/schemas/ProductViewed"
           slotPersonalized: "#/components/schemas/SlotPersonalized"
+          queryEvaluated: "#/components/schemas/QueryEvaluated"
           leadGenerated: "#/components/schemas/LeadGenerated"
           audienceMatched: "#/components/schemas/AudienceMatched"
           userClicked: "#/components/schemas/UserClicked"
@@ -1040,6 +1074,7 @@ components:
       - goalCompleted
       - eventOccurred
       - slotPersonalized
+      - queryEvaluated
       - leadGenerated
       - audienceMatched
       - userClicked
@@ -1077,6 +1112,7 @@ components:
       - GOAL_COMPLETED
       - EVENT_OCCURRED
       - SLOT_PERSONALIZED
+      - QUERY_EVALUATED
       - LEAD_GENERATED
       - AUDIENCE_MATCHED
       - USER_CLICKED
@@ -1640,6 +1676,25 @@ components:
       - x
       - "y"
       type: object
+    PageInfo:
+      description: Information about the page associated with an evaluation.
+      properties:
+        url:
+          description: The URL of the page.
+          type: string
+        title:
+          description: The title of the page.
+          nullable: true
+          type: string
+        referrer:
+          description: The URL of the referring page.
+          nullable: true
+          type: string
+      required:
+      - referrer
+      - title
+      - url
+      type: object
     PageLoaded:
       allOf:
       - $ref: "#/components/schemas/EventPayload"
@@ -1868,6 +1923,23 @@ components:
             $ref: "#/components/schemas/ProductDetails"
         required:
         - product
+        type: object
+        example: null
+      type: object
+      example: null
+    QueryEvaluated:
+      allOf:
+      - $ref: "#/components/schemas/EventPayload"
+      - description: An event recording that a query was evaluated.
+        properties:
+          query:
+            description: The evaluated query.
+            type: string
+          evaluationContext:
+            $ref: "#/components/schemas/EvaluationContext"
+        required:
+        - evaluationContext
+        - query
         type: object
         example: null
       type: object
@@ -2710,6 +2782,46 @@ components:
         example: null
       type: object
       example: null
+    WebEvaluationContext:
+      allOf:
+      - $ref: "#/components/schemas/EvaluationContext"
+      - description: The web-specific context associated with an evaluation.
+        properties:
+          timeZone:
+            description: "The time-zone ID. For example, America/Sao_Paulo."
+            nullable: true
+            type: string
+          campaign:
+            allOf:
+            - $ref: "#/components/schemas/Campaign"
+            nullable: true
+          page:
+            allOf:
+            - $ref: "#/components/schemas/PageInfo"
+            nullable: true
+          attributes:
+            additionalProperties: true
+            description: Custom attributes providing additional information about
+              the current context.
+            type: object
+        required:
+        - attributes
+        - campaign
+        - page
+        - timeZone
+        type: object
+        example: null
+      type: object
+      example: null
+    ApiProblem_violations_inner:
+      properties:
+        path:
+          type: string
+        reason:
+          type: string
+      required:
+      - reason
+      type: object
     AtomicPatch_operations_inner:
       discriminator:
         mapping:
@@ -2826,6 +2938,7 @@ components:
         audienceId:
           description: The ID that uniquely identifies the audience.
           format: uuid
+          nullable: true
           type: string
         slotId:
           description: The ID that uniquely identifies the slot.
@@ -2834,6 +2947,7 @@ components:
         experienceId:
           description: The ID that uniquely identifies the experience.
           format: uuid
+          nullable: true
           type: string
         contentId:
           description: The ID that uniquely identifies the content.
@@ -2847,12 +2961,17 @@ components:
           description: The locale of the content.
           nullable: true
           type: string
+        evaluationContext:
+          $ref: "#/components/schemas/EvaluationContext"
       required:
       - assignedVariant
       - audienceId
       - contentId
+      - evaluationContext
       - experienceId
+      - locale
       - slotId
+      - slotVersion
       type: object
     SlotPersonalized_metadata:
       description: Additional information about the personalization.

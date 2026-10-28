@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.24.0-SNAPSHOT")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0-SNAPSHOT")
 public class ExportApi {
   private ApiClient apiClient;
 
@@ -98,7 +98,7 @@ public class ExportApi {
     String localVarPath = "/events/{eventId}"
             .replaceAll("\\{eventId}", apiClient.escapeString(eventId.toString()));
 
-    String localVarAccept = apiClient.selectHeaderAccept("application/json");
+    String localVarAccept = apiClient.selectHeaderAccept("application/json", "application/problem+json");
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"ApiKeyAuth"};
     GenericType<SingleEventResponse> localVarReturnType = new GenericType<SingleEventResponse>() {};
@@ -156,7 +156,7 @@ public class ExportApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "cursor", cursor));
     localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "events", events));
 
-    String localVarAccept = apiClient.selectHeaderAccept("application/json");
+    String localVarAccept = apiClient.selectHeaderAccept("application/json", "application/problem+json");
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"ApiKeyAuth"};
     GenericType<EventResponse> localVarReturnType = new GenericType<EventResponse>() {};
@@ -208,7 +208,7 @@ public class ExportApi {
     String localVarPath = "/session/{sessionId}"
             .replaceAll("\\{sessionId}", apiClient.escapeString(sessionId.toString()));
 
-    String localVarAccept = apiClient.selectHeaderAccept("application/json");
+    String localVarAccept = apiClient.selectHeaderAccept("application/json", "application/problem+json");
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"ApiKeyAuth"};
     GenericType<Session> localVarReturnType = new GenericType<Session>() {};
@@ -263,7 +263,7 @@ public class ExportApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "pageSize", pageSize));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "cursor", cursor));
 
-    String localVarAccept = apiClient.selectHeaderAccept("application/json");
+    String localVarAccept = apiClient.selectHeaderAccept("application/json", "application/problem+json");
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"ApiKeyAuth"};
     GenericType<SessionResponse> localVarReturnType = new GenericType<SessionResponse>() {};
@@ -315,7 +315,7 @@ public class ExportApi {
     String localVarPath = "/user/{userId}"
             .replaceAll("\\{userId}", apiClient.escapeString(userId.toString()));
 
-    String localVarAccept = apiClient.selectHeaderAccept("application/json");
+    String localVarAccept = apiClient.selectHeaderAccept("application/json", "application/problem+json");
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"ApiKeyAuth"};
     GenericType<User> localVarReturnType = new GenericType<User>() {};
@@ -370,7 +370,7 @@ public class ExportApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "pageSize", pageSize));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "cursor", cursor));
 
-    String localVarAccept = apiClient.selectHeaderAccept("application/json");
+    String localVarAccept = apiClient.selectHeaderAccept("application/json", "application/problem+json");
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"ApiKeyAuth"};
     GenericType<UserResponse> localVarReturnType = new GenericType<UserResponse>() {};
